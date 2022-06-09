@@ -55,8 +55,8 @@
  
 
 
-<a-entity id="rig" rotation-reader movement-controls="speed: 0.1" position="0 0.01 1"> <!-- Player Character -->
-    <a-box id="body" plane-hit static-body="shape: box" position="0 0.05 0" width="0.25" height="0.25" depth="0.25" visible="false"></a-box>
+<a-entity id="rig" rotation-reader movement-controls="speed: 0.1" position="0 0.01 1" animation="property: object3D.position.z; to: -5; easing: linear; dur: 12000; dir: alternate; loop: true;" animation__2="property: object3D.rotation.z; to: 20; easing: linear; dur: 2000; dir: alternate; loop: false;"> <!-- Player Character -->
+    <a-box id="body" plane-hit static-body="shape: box" position="0 0.5 0" width="1" height="1" depth="0.5"></a-box>
         <a-entity id="camera" camera look-controls raycaster="far: 5; objects: .clickable" super-hands="colliderEvent: raycaster-intersection; colliderEventProperty: els; colliderEndEvent:raycaster-intersection-cleared; colliderEndEventProperty: clearedEls;" position="0 1.6 0">
             <a-entity id="crosshair" visible="false" cursor="rayOrigin:mouse" position="0 0 -0.2" geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003" material="color: #0055ff; shader: flat" raycaster="far: 5; objects: .clickable"></a-entity>
             <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity></a-entity>
