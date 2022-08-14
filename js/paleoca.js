@@ -95,5 +95,24 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
     }
 }})
 
+AFRAME.registerComponent("tour-guide", {
+    init: function() {
+        var rig = document.querySelector('#rig');
 
+        rig.addEventListener("animationcomplete__1", function(){
+            AFRAME.utils.entity.setComponentProperty(this, "alongpath.curve", "#track1");
+            AFRAME.utils.entity.setComponentProperty(this, "alongpath.dur", "50");
+            AFRAME.utils.entity.setComponentProperty(this, "alongpath.rotate", "true");
+        })
+
+        rig.addEventListener("movingended", function(){
+            AFRAME.utils.entity.setComponentProperty(this, "alongpath.curve", "#track2");
+            AFRAME.utils.entity.setComponentProperty(this, "alongpath.dur", "10000");
+            AFRAME.utils.entity.setComponentProperty(this, "alongpath.rotate", "true");
+            AFRAME.utils.entity.setComponentProperty(this, "alongpath.loop", "false");
+        })
+
+        
+    }
+    })
 
