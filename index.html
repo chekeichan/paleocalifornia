@@ -23,7 +23,7 @@
 <script src="https://cdn.jsdelivr.net/npm/aframe-fps-look-controls-component/dist/aframe-fps-look-controls-component.min.js"></script>
 <script src="js/aframe-alongpath-component.js"></script> <!-- Custom code to fix rig camera angle-->
 <script src="https://cdn.jsdelivr.net/npm/aframe-curves@1.0.0/build/curve.min.js"></script>
-
+<script src="js/aframe-surface-scatter.js"></script>
 <script src="js/paleoca.js"></script>
 </head>
 
@@ -55,10 +55,10 @@
  </a-assets>
 
 <a-entity id="rig" tour-guide rotation-reader movement-controls="speed: 0.1" position="0 0 0"
-alongpath="curve: #track1; dur: 10000; rotate: true;"
+alongpath="curve: #track1; dur: 20000; rotate: true; delay: 0"
 
 > <!-- Player Character -->
-
+<a-light id="shadowlight" color="white" position="0 4 0" light="type: point; intensity: 1; decay: 0.5; distance: 20"></a-light> 
     <a-entity gltf-model="" plane-hit static-body="shape: box" position="0 0.6 0"></a-entity>
         <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 5; objects: .clickable" super-hands="colliderEvent: raycaster-intersection; colliderEventProperty: els; colliderEndEvent:raycaster-intersection-cleared; colliderEndEventProperty: clearedEls;" position="0 1.6 0">
             <a-entity id="crosshair" visible="false" cursor="rayOrigin:mouse" position="0 0 -0.2" geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003" material="color: #0055ff; shader: flat" raycaster="far: 5; objects: .clickable"></a-entity>
@@ -68,38 +68,60 @@ alongpath="curve: #track1; dur: 10000; rotate: true;"
         <a-entity id="righthand" mixin="hand" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" blink-controls="cameraRig: #rig; teleportOrigin: #camera; hitCylinderColor: #e9974c; interval: 10; curveHitColor: #e9974c; curveNumberPoints: 40; curveShootingSpeed: 8"></a-entity>
  </a-entity>
  
-<a-light type="ambient" color="white" intensity="1.5"></a-light> 
-<a-light id="shadowlight" color="white" position="-1 8 4" light="type: point; intensity: 1.5; decay: 0.5; distance: 20"></a-light> 
+<a-light type="ambient" color="white" intensity="1"></a-light> 
+
 
 <a-curve id="track1" closed="false" tension="0" clone-along-curve="spacing: 0.06; scale:0.4 0.4 0.4;" gltf-model="models/raccoon.glb">
-  <a-curve-point id="track_turn1_1" position="0 0 0" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_2" position="0 0 -5" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_3" position="0 0 -10" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_4" position="0 0 -15" gltf-model="models/raccoon.glb"></a-curve-point>
-
-
-  <a-curve-point id="track_turn1_3" position="1.4 0 -18" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_4" position="5 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_4" position="10 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_4" position="15 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_4" position="20 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn2_1" position="24 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn2_3" position="29.5 0 -26" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn3_1" position="29.5 0 -35" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn3_3" position="35 0 -40" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn4_1" position="44 0 -40" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn4_3" position="50 0 -35" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn5_1" position="50 0 -17" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn5_3" position="44 0 -11" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn6_1" position="39 0 -5.5" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn6_3" position="45 0 0.5" gltf-model="models/raccoon.glb"></a-curve-point>
-  <a-curve-point id="track_turn7_1" position="53 0 -5" gltf-model="models/raccoon.glb"></a-curve-point>
-
+  <a-curve-point id="track_straight1_1" position="0 0 0" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_straight1_2" position="0 0 -5" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_straight1_3" position="0 0 -10" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_straight1_4" position="0.15 0 -15" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn1_1" position="1.6 0 -18" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn1_2" position="5 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn1_3" position="10 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_straight2_1a" position="15 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
 </a-curve>
 
-<a-entity gltf-model="models/track.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity> <!-- Temp Track -->
+<a-curve id="track2" closed="false" tension="0" clone-along-curve="spacing: 0.06; scale:0.4 0.4 0.4;" gltf-model="models/raccoon.glb">
+  <a-curve-point id="track_straight2_1b" position="15 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_straight2_2" position="20 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn2_1" position="25 0 -20.2" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn2_2" position="28.3 0 -22.2" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn2_3" position="29.5 0 -26" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_asympt1" position="29.5 0 -30" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn3_1" position="29.5 0 -35" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn3_2" position="31.1 0 -38.7" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn3_3" position="35 0 -40" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_asympt2" position="40 0 -40.15" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn4_1" position="45 0 -40" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn4_2" position="48 0 -38.6" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn4_3" position="49.5 0 -35" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_straight3_1" position="49.5 0 -30" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_straight3_2a" position="49.5 0 -25" gltf-model="models/raccoon.glb"></a-curve-point>
+</a-curve>
+
+<a-curve id="track3" closed="false" tension="0" clone-along-curve="spacing: 0.06; scale:0.4 0.4 0.4;" gltf-model="models/raccoon.glb">
+  <a-curve-point id="track_straight3_2b" position="49.5 0 -25" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_straight3_3" position="49.5 0 -20" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_straight3_4" position="49.5 0 -15.6" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn5_1" position="48.1 0 -12.3" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn5_3" position="44 0 -11" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn6_1" position="42 0 -8" gltf-model="models/raccoon.glb"></a-curve-point>
+  
+  <a-curve-point id="track_turn6_1" position="39 0 -5.5" gltf-model="models/raccoon.glb"></a-curve-point>
+
+  <a-curve-point id="track_turn6_1" position="43 0 -2" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn6_3" position="45 0 0.5" gltf-model="models/raccoon.glb"></a-curve-point>
+  <a-curve-point id="track_turn7_1" position="53 0 -5" gltf-model="models/raccoon.glb"></a-curve-point>
+</a-curve>
+
+<a-entity gltf-model="models/track.glb" static-body position="0 0.05 0" rotation="0 0 0"></a-entity> <!-- Temp Track -->
+<a-entity gltf-model="models/floorplan.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
+<a-entity gltf-model="models/plants.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity> 
 <a-entity gltf-model="models/mammoth.glb" static-body position="2 0 2" rotation="0 0 0"></a-entity> <!-- Demo Place -->
-<a-entity gltf-model="models/raccoon.glb" static-body position="0 0 0"></a-entity> <!-- Demo Place -->
+<a-entity gltf-model="models/raccoon.glb" id="raccoon" static-body position="0 0 0"></a-entity> <!-- Demo Place -->
+<a-entity gltf-model="models/raccoons.glb" static-body position="0 0 0"></a-entity>
+<a-entity gltf-model="models/rockspawner.glb" static-body position="0 0 0" surface-scatter="object:#raccoon;count:25;"></a-entity>
 
     <a-box position="2 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
       <a-sphere position="3 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>

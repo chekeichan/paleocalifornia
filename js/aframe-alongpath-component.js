@@ -63,7 +63,7 @@
 	        dur: {default: 1000},
 	        delay: {default: 0},
 	        loop: {default: false},
-	        rotate: {default: false},
+	        rotate: {default: true},
 	        resetonplay: {default:true}
 	    },
 
@@ -133,12 +133,13 @@
 	                if ((this.data.loop === false) && i >= 1) {
 	                    // Set the end-position
 	                    this.el.setAttribute('position', curve.points[curve.points.length - 1]);
-
 	                    // We have reached the end of the path and are not going
 	                    // to loop back to the beginning therefore set final state
 	                    this.el.removeState("moveonpath");
 	                    this.el.addState("endofpath");
-	                    this.el.emit("movingended");
+
+	                    this.el.emit("movingended__" + this.data.curve); // Code to personalize each emit
+
 	                } else if ((this.data.loop === true) && i >= 1) {
 	                    // We have reached the end of the path
 	                    // but we are looping through the curve,
@@ -164,23 +165,24 @@
 	                    var nextPosition = curve.getPoint(this.getI_(nextInterval, this.data.delay, this.data.dur));
 
 						camerax = this.el.object3D.position.x; // Keith Chan's code to get the camera to face the right direction. Using lookAt with the camera inverts the direction it is facing. The following calculations finds the anti-slope of the line segment between the rig and the next curve point then feeds the re-inverted coordinates to lookAt 
-						cameraz = this.el.object3D.position.z; // Rig x and y positions
-						targetx = nextPosition.x; // Next curve point x and y positions
-						targetz = nextPosition.z;
+						var cameraz = this.el.object3D.position.z; // Rig x and y positions
+						var targetx = nextPosition.x; // Next curve point x and y positions
+						var targetz = nextPosition.z;
 
-						run = targetx - camerax; // x portion of slope
-						runinv = -(run); // Flips sign on run
-						runnew = camerax + runinv; // Inverted x coordinate
+						var run = targetx - camerax; // x portion of slope
+						var runinv = -(run); // Flips sign on run
+						var runnew = camerax + runinv; // Inverted x coordinate
 
-						rise = targetz - cameraz; // y portion of slope
-						riseinv = -(rise); // Flips sign on rise
-						risenew = cameraz + riseinv; // Inverted y coordinate
+						var rise = targetz - cameraz; // y portion of slope
+						var riseinv = -(rise); // Flips sign on rise
+						var risenew = cameraz + riseinv; // Inverted y coordinate
 
 						nextPosition.x = runnew; // Feeding new coordinates 
 						nextPosition.z = risenew;
 
-	                    this.el.object3D.lookAt(nextPosition)
-						
+	                    if (i < 1){ // View gets weird on i = 1
+							this.el.object3D.lookAt(nextPosition);
+						}
 
 	                }
 
