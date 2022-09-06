@@ -97,6 +97,7 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
 
 AFRAME.registerComponent("tour-guide", {
     init: function() {
+        var move = "curve: #track1; dur: 20000; rotate: true; delay: 0"
         var rig = document.querySelector('#rig');
         rig.addEventListener("movingended__#track1", function(){
                     AFRAME.utils.entity.setComponentProperty(rig, "alongpath.curve", "#track2");

@@ -31,6 +31,7 @@
 <a-scene look-switch grab-panels warp device-set device-orientation-permission-ui physics="iterations: 30;" inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: green" renderer="colorManagement: true; foveationLevel: 2;" background="color: #FAFAFA" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
        
 <a-assets timeout="80000"> <!-- Loads models -->
+  <a-asset-item id="" response-type="arraybuffer" src=""></a-asset-item>
 
                 <a-mixin id="obj" hoverable grabbable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, abuttondown, bbuttondown, xbuttondown, ybuttondown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, abuttonup, bbuttonup, xbuttonup, ybuttonup, thumbstickup, mouseup" scale="1 1 1" rotation="0 0 0" shadow></a-mixin>
                 <a-mixin id="button" static-body hoverable clickable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, thumbstickup, mouseup" shadow></a-mixin>
@@ -54,12 +55,12 @@
 				 <a-mixin id="mapmarker" scale ="0.17 0.1 0.17" rotation="-90 0 0" geometry="primitive: cone; radiusBottom: 0.15; radiusTop: 0.02; segmentsRadial: 6" material="color: #ffaa00; emissive: #ffaa00; emissiveIntensity: 0.5; flatShading:  true;"></a-mixin>
  </a-assets>
 
-<a-entity id="rig" tour-guide rotation-reader movement-controls="speed: 0.1" position="0 0 0"
-alongpath="curve: #track1; dur: 20000; rotate: true; delay: 0"
+<a-entity id="rig" tour-guide rotation-reader movement-controls="speed: 0.1" position="29.5 0 -28.7" rotation="0 50 0"
+
 
 > <!-- Player Character -->
 <a-light id="shadowlight" color="white" position="0 4 0" light="type: point; intensity: 1; decay: 0.5; distance: 20"></a-light> 
-    <a-entity gltf-model="" plane-hit static-body="shape: box" position="0 0.6 0"></a-entity>
+    <a-entity gltf-model="models/pod.glb" plane-hit static-body="shape: box" position="0 0.6 0"></a-entity>
         <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 5; objects: .clickable" super-hands="colliderEvent: raycaster-intersection; colliderEventProperty: els; colliderEndEvent:raycaster-intersection-cleared; colliderEndEventProperty: clearedEls;" position="0 1.6 0">
             <a-entity id="crosshair" visible="false" cursor="rayOrigin:mouse" position="0 0 -0.2" geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003" material="color: #0055ff; shader: flat" raycaster="far: 5; objects: .clickable"></a-entity>
             <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity></a-entity>
@@ -121,7 +122,9 @@ alongpath="curve: #track1; dur: 20000; rotate: true; delay: 0"
 <a-entity gltf-model="models/mammoth.glb" static-body position="2 0 2" rotation="0 0 0"></a-entity> <!-- Demo Place -->
 <a-entity gltf-model="models/raccoon.glb" id="raccoon" static-body position="0 0 0"></a-entity> <!-- Demo Place -->
 <a-entity gltf-model="models/raccoons.glb" static-body position="0 0 0"></a-entity>
-<a-entity gltf-model="models/rockspawner.glb" static-body position="0 0 0" surface-scatter="object:#raccoon;count:25;"></a-entity>
+<a-entity gltf-model="models/raccoon-a.glb" static-body position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer></a-entity>
+<a-entity gltf-model="models/westernwheatgrass.glb" id="wheatgrass" static-body position="26 1.1 -32.5"></a-entity>
+<a-entity gltf-model="models/grassspawn.glb" static-body visible="true" position="0 -0.02 0" surface-scatter="object:#wheatgrass;count:50;"></a-entity>
 
     <a-box position="2 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
       <a-sphere position="3 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
