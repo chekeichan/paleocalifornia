@@ -95,6 +95,22 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
     }
 }})
 
+AFRAME.registerComponent("tour-start", {
+    init: function() {
+        var el = this.el;
+        var rig = document.querySelector('#rig');
+        var pod = document.querySelector('#pod');
+
+        el.addEventListener("grab-start", function(evt) {
+            pod.object3D.visible = true;
+            rig.object3D.position.set(0, 0, 0);
+            rig.setAttribute('rotation', {y: 1.5708});
+            rig.removeAttribute('movement-controls');
+            rig.setAttribute('alongpath', {curve: '#track1', dur: 24000})
+        })
+    }}
+)
+
 AFRAME.registerComponent("tour-guide", {
     init: function() {
         var move = "curve: #track1; dur: 20000; rotate: true; delay: 0"
