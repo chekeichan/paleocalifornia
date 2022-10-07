@@ -69,7 +69,7 @@
         <a-entity id="righthand" mixin="hand" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" blink-controls="cameraRig: #rig; teleportOrigin: #camera; hitCylinderColor: #e9974c; interval: 10; curveHitColor: #e9974c; curveNumberPoints: 40; curveShootingSpeed: 8"></a-entity>
  </a-entity>
  
-<a-light type="ambient" color="white" intensity="1"></a-light> 
+<a-light type="ambient" color="white" intensity="0.5"></a-light> 
 
 
 <a-curve id="track1" closed="false" tension="0" clone-along-curve="spacing: 0.06; scale:0.4 0.4 0.4;" gltf-model="models/button.glb">
@@ -127,7 +127,8 @@
 <a-entity gltf-model="models/raccoon-baby.glb" static-body position="28.75 3.18 -30.52" rotation="0 -7 0" animation-mixer="clip: raccoon.baby1.hanging"></a-entity>
 <a-entity gltf-model="models/westernwheatgrass.glb" id="wheatgrass" static-body position="26 1.1 -32.5"></a-entity>
 <a-entity gltf-model="models/grassspawn.glb" static-body position="0 -0.02 0" surface-scatter="object:#wheatgrass;count:50;"></a-entity>
-<a-entity gltf-model="models/timetunnel.glb" static-body position="-4 0 3" rotation="0 0 0" animation-mixer="clip: Undulate" animation-mixer="clip: TimeTunnel.door.exit*; loop: once; clampWhenFinished: true"></a-entity>
+<a-entity gltf-model="models/timetunnel1-outside.glb" static-body position="0 0 0" rotation="0 0 0" animation-mixer="clip: TimeTunnel.door.entrance*; loop: once; clampWhenFinished: true"></a-entity>
+<a-entity id="cats" gltf-model="models/timetunnel1-inside.glb" static-body position="0 0 0" rotation="0 0 0"  animation-mixer="clip: Undulate"></a-entity>
 
     <a-box position="2 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
       <a-sphere position="3 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
