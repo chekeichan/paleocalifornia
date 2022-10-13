@@ -208,13 +208,12 @@
 
 	    updateActiveTrigger: function() {
 	        for (var i = 0; i < this.triggers.length; i++) {
-	            if (this.triggers[i].object3D) {
+				if (this.triggers[i].object3D) {
 	                if (this.triggers[i].object3D.position.distanceTo(this.el.object3D.position) <= this.data.triggerRadius) {
 	                    // If this element is not the active trigger, activate it - and if necessary deactivate other triggers.
 	                    if (this.activeTrigger && (this.activeTrigger != this.triggers[i])) {
 	                        this.activeTrigger.removeState("alongpath-active-trigger");
 	                        this.activeTrigger.emit("alongpath-trigger-deactivated");
-
 	                        this.activeTrigger = this.triggers[i];
 	                        this.activeTrigger.addState("alongpath-active-trigger");
 	                        this.activeTrigger.emit("alongpath-trigger-activated");
@@ -222,6 +221,7 @@
 	                        this.activeTrigger = this.triggers[i];
 	                        this.activeTrigger.addState("alongpath-active-trigger");
 	                        this.activeTrigger.emit("alongpath-trigger-activated");
+							console.log(this.activeTrigger.id);
 	                    }
 
 	                    break;

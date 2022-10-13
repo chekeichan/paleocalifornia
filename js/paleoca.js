@@ -106,23 +106,55 @@ AFRAME.registerComponent("tour-start", {
             rig.object3D.position.set(0, 0, 0);
             rig.setAttribute('rotation', {y: 1.5708});
             rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track1', dur: 24000})
+            rig.setAttribute('alongpath', {curve: '#track1', dur: 35000, triggerRadius: 0.1})
         })
     }}
 )
 
 AFRAME.registerComponent("tour-guide", {
     init: function() {
-        var move = "curve: #track1; dur: 20000; rotate: true; delay: 0"
         var rig = document.querySelector('#rig');
+        var sceneEl = document.querySelector('a-scene');
+        var timetunneldoor1 = document.querySelector('#timetunnel1-outside');
+
+        sceneEl.addEventListener("alongpath-trigger-activated", function(e) {
+            console.log(e.target);
+
+                switch(e.target.id) {
+                    case "track_turn1_1":
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.*open");
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
+                        console.log('door open 1');
+                        break;
+                    case "track_turn1_3":
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.*close");
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
+                        console.log('door close 1');
+                        break;
+                    case "track_straight2_1b":
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.*open");
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
+                        console.log('door open 2');
+                        break;
+                }    
+
+
+})
+        
         rig.addEventListener("movingended__#track1", function(){
                     AFRAME.utils.entity.setComponentProperty(rig, "alongpath.curve", "#track2");
-                    AFRAME.utils.entity.setComponentProperty(rig, "alongpath.dur", "24000");
+                    AFRAME.utils.entity.setComponentProperty(rig, "alongpath.dur", "60000");
+                    AFRAME.utils.entity.setComponentProperty(rig, "alongpath.triggerRadius", "0.1");
+                    
         })
         rig.addEventListener("movingended__#track2", function(){
             AFRAME.utils.entity.setComponentProperty(rig, "alongpath.curve", "#track3");
-            AFRAME.utils.entity.setComponentProperty(rig, "alongpath.dur", "24000");
-})
+            AFRAME.utils.entity.setComponentProperty(rig, "alongpath.dur", "35000");
+            AFRAME.utils.entity.setComponentProperty(rig, "alongpath.triggerRadius", "0.1");
+        })
 
         
     }

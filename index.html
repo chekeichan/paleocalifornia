@@ -76,9 +76,9 @@
   <a-curve-point id="track_straight1_1" position="0 0 0" gltf-model="models/button.glb"></a-curve-point>
   <a-curve-point id="track_straight1_2" position="0 0 -5" gltf-model="models/button.glb"></a-curve-point>
   <a-curve-point id="track_straight1_3" position="0 0 -10" gltf-model="models/button.glb"></a-curve-point>
-  <a-curve-point id="track_straight1_4" position="0.15 0 -15" gltf-model="models/button.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_1" position="1.6 0 -18" gltf-model="models/button.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_2" position="4.7 0 -19.86" gltf-model="models/button.glb"></a-curve-point>
+  <a-curve-point id="track_straight1_4" position="0.3 0 -15.7" gltf-model="models/button.glb"></a-curve-point>
+  <a-curve-point id="track_turn1_1" position="1.98 0 -18.58" gltf-model="models/button.glb"></a-curve-point>
+  <a-curve-point id="track_turn1_2" position="4.7 0 -19.79" gltf-model="models/button.glb"></a-curve-point>
   <a-curve-point id="track_turn1_3" position="10 0 -20" gltf-model="models/button.glb"></a-curve-point>
   <a-curve-point id="track_straight2_1a" position="15 0 -20" gltf-model="models/button.glb"></a-curve-point>
 </a-curve>
@@ -122,13 +122,15 @@
 <a-entity id="startbutton" class="clickable" gltf-model="models/button.glb" tour-start static-body position="-8 1 0" rotation="0 0 0"></a-entity> 
 <a-entity gltf-model="models/mammoth.glb" static-body position="2 0 2" rotation="0 0 0"></a-entity> <!-- Demo Place -->
 <a-entity gltf-model="models/raccoon-adult.glb" static-body position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing"></a-entity>
-<a-entity gltf-model="models/raccoon-adult.glb" static-body position="25.9 1.1 -24.5" rotation="0 -75 0" animation-mixer="clip: raccoon.adult.scrounging"></a-entity>
+<a-entity gltf-model="models/raccoon-adult.glb" static-body position="33.6 1.51 -28" rotation="0 -75 0" animation-mixer="clip: raccoon.adult.scrounging"></a-entity>
 <a-entity gltf-model="models/raccoon-adult.glb" static-body position="29.5 3.49 -30.15" rotation="0 75 0" animation-mixer="clip: raccoon.adult.log"></a-entity>
-<a-entity gltf-model="models/raccoon-baby.glb" static-body position="28.75 3.18 -30.52" rotation="0 -7 0" animation-mixer="clip: raccoon.baby1.hanging"></a-entity>
+<a-entity gltf-model="models/raccoon-baby.glb" static-body position="28.75 3.18 -30.52" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Hanging"></a-entity>
+<a-entity gltf-model="models/raccoon-baby.glb" static-body position="27.2 2.39 -30.05" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing1"></a-entity>
+<a-entity gltf-model="models/raccoon-baby.glb" static-body position="27.16 1.61 -30.07" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing2"></a-entity>
 <a-entity gltf-model="models/westernwheatgrass.glb" id="wheatgrass" static-body position="26 1.1 -32.5"></a-entity>
 <a-entity gltf-model="models/grassspawn.glb" static-body position="0 -0.02 0" surface-scatter="object:#wheatgrass;count:50;"></a-entity>
-<a-entity gltf-model="models/timetunnel1-outside.glb" static-body position="0 0 0" rotation="0 0 0" animation-mixer="clip: TimeTunnel.door.entrance*; loop: once; clampWhenFinished: true"></a-entity>
-<a-entity id="cats" gltf-model="models/timetunnel1-inside.glb" static-body position="0 0 0" rotation="0 0 0"  animation-mixer="clip: Undulate"></a-entity>
+<a-entity id="timetunnel1-outside" gltf-model="models/timetunnel1-outside.glb" static-body position="0 0 0" rotation="0 0 0"  ></a-entity>
+<a-entity id="timetunnel1-inside" gltf-model="models/timetunnel1-inside.glb" static-body position="0 0 0" rotation="0 0 0"  animation-mixer="clip: TimeTunnel.Undulate"></a-entity>
 
     <a-box position="2 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
       <a-sphere position="3 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
