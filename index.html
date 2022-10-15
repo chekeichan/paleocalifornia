@@ -59,8 +59,8 @@
 
 
 > <!-- Player Character -->
-<a-light id="shadowlight" color="white" position="0 4 0" light="type: point; intensity: 1; decay: 0.5; distance: 20"></a-light> 
-    <a-entity id="pod" gltf-model="models/pod.glb" plane-hit static-body="shape: box" visible="false" position="0 0.6 0"></a-entity>
+<a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light>
+  <a-entity id="pod" gltf-model="models/pod.glb" plane-hit static-body="shape: box" visible="false" position="0 0.6 0"></a-entity>
         <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 5; objects: .clickable" super-hands="colliderEvent: raycaster-intersection; colliderEventProperty: els; colliderEndEvent:raycaster-intersection-cleared; colliderEndEventProperty: clearedEls;" position="0 1.6 0">
             <a-entity id="crosshair" visible="false" cursor="rayOrigin:mouse" position="0 0 -0.2" geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003" material="color: #0055ff; shader: flat" raycaster="far: 5; objects: .clickable"></a-entity>
             <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity></a-entity>
@@ -69,8 +69,9 @@
         <a-entity id="righthand" mixin="hand" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" blink-controls="cameraRig: #rig; teleportOrigin: #camera; hitCylinderColor: #e9974c; interval: 10; curveHitColor: #e9974c; curveNumberPoints: 40; curveShootingSpeed: 8"></a-entity>
  </a-entity>
  
-<a-light type="ambient" color="white" intensity="0.5"></a-light> 
-
+<a-light type="ambient" color="white" intensity="0.25"></a-light> 
+<a-light id="timetunnellight" color="#e757fb" position="12 1.6 -20" light="type: point; intensity: 3.1; decay: 0.5; distance: 10.6"></a-light>
+<a-light id="raccoonlight" color="#6458fa" position="31 9.1 -29" light="type: point; intensity: 3.1; decay: 0.5; distance: 10.6"></a-light>
 
 <a-curve id="track1" closed="false" tension="0" clone-along-curve="spacing: 0.06; scale:0.4 0.4 0.4;" gltf-model="models/button.glb">
   <a-curve-point id="track_straight1_1" position="0 0 0" gltf-model="models/button.glb"></a-curve-point>
@@ -117,12 +118,13 @@
 </a-curve>
 
 <a-entity gltf-model="models/track.glb" static-body position="0 0.05 0" rotation="0 0 0"></a-entity> <!-- Temp Track -->
-<a-entity gltf-model="models/floorplan.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
-<a-entity gltf-model="models/plants.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity> 
+<a-entity gltf-model="models/start.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
+<a-entity gltf-model="models/scene1.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
+<!-- <a-entity gltf-model="models/plants.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>  -->
 <a-entity id="startbutton" class="clickable" gltf-model="models/button.glb" tour-start static-body position="-8 1 0" rotation="0 0 0"></a-entity> 
 <a-entity gltf-model="models/mammoth.glb" static-body position="2 0 2" rotation="0 0 0"></a-entity> <!-- Demo Place -->
 <a-entity gltf-model="models/raccoon-adult.glb" static-body position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing"></a-entity>
-<a-entity gltf-model="models/raccoon-adult.glb" static-body position="33.6 1.51 -28" rotation="0 -75 0" animation-mixer="clip: raccoon.adult.scrounging"></a-entity>
+<a-entity gltf-model="models/raccoon-adult.glb" static-body position="27.2 1.27 -26.86" rotation="0 -75 0" animation-mixer="clip: raccoon.adult.scrounging"></a-entity>
 <a-entity gltf-model="models/raccoon-adult.glb" static-body position="29.5 3.49 -30.15" rotation="0 75 0" animation-mixer="clip: raccoon.adult.log"></a-entity>
 <a-entity gltf-model="models/raccoon-baby.glb" static-body position="28.75 3.18 -30.52" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Hanging"></a-entity>
 <a-entity gltf-model="models/raccoon-baby.glb" static-body position="27.2 2.39 -30.05" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing1"></a-entity>
