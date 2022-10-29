@@ -57,14 +57,13 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
             }
         } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
             console.log('VR detected');
+            
+            // rig.removeAttribute('movement-controls'); // Remove non-working controls
 
-            rig.removeAttribute('movement-controls'); // Remove non-working controls
-            handleft.setAttribute('smooth-locomotion', {target: '#rig', reference: '#camera'});
-            handright.setAttribute('snap-turn', {target: '#rig', reference: '#camera'});
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
             console.log('PC detected');
 
-            rig.setAttribute("movement-controls", "speed", 0.15);
+            rig.setAttribute("movement-controls", "speed", 0.3);
             for (let each of grabbable) {
                 each.removeAttribute('dynamic-body');
                 each.removeAttribute('grabbable');
@@ -105,8 +104,9 @@ AFRAME.registerComponent("tour-start", {
             pod.object3D.visible = true;
             rig.object3D.position.set(0, 0, 0);
             rig.setAttribute('rotation', {y: 1.5708});
+            rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track1', dur: 35000, triggerRadius: 0.1})
+            rig.setAttribute('alongpath', {curve: '#track1', dur: 55000, triggerRadius: 0.1})
         })
     }}
 )
@@ -116,28 +116,35 @@ AFRAME.registerComponent("tour-guide", {
         var rig = document.querySelector('#rig');
         var sceneEl = document.querySelector('a-scene');
         var timetunneldoor1 = document.querySelector('#timetunnel1-outside');
+        var startdoors = document.querySelector('#start-doors');
 
         sceneEl.addEventListener("alongpath-trigger-activated", function(e) {
             console.log(e.target);
 
                 switch(e.target.id) {
+                    case "track_straight1_1":
+                        AFRAME.utils.entity.setComponentProperty(startdoors, "animation-mixer.clip", "start.door.*.open");
+                        AFRAME.utils.entity.setComponentProperty(startdoors, "animation-mixer.loop", "once");
+                        AFRAME.utils.entity.setComponentProperty(startdoors, "animation-mixer.clampWhenFinished", "true");
+                        console.log('start door open');
+                        break;
                     case "track_turn1_1":
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.*open");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
-                        console.log('door open 1');
+                        console.log('time door open 1');
                         break;
                     case "track_turn1_3":
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.*close");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
-                        console.log('door close 1');
+                        console.log('time door close 1');
                         break;
                     case "track_straight2_1b":
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.*open");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
-                        console.log('door open 2');
+                        console.log('time door open 2');
                         break;
                 }    
 
@@ -146,7 +153,7 @@ AFRAME.registerComponent("tour-guide", {
         
         rig.addEventListener("movingended__#track1", function(){
                     AFRAME.utils.entity.setComponentProperty(rig, "alongpath.curve", "#track2");
-                    AFRAME.utils.entity.setComponentProperty(rig, "alongpath.dur", "60000");
+                    AFRAME.utils.entity.setComponentProperty(rig, "alongpath.dur", "80000");
                     AFRAME.utils.entity.setComponentProperty(rig, "alongpath.triggerRadius", "0.1");
                     
         })
