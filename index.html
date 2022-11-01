@@ -60,7 +60,7 @@
 
 
 > <!-- Player Character -->
-<a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light>
+<!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
   <a-entity id="pod" gltf-model="models/pod.glb" plane-hit static-body="shape: box" visible="false" position="0 0.6 0"></a-entity>
         <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 5; objects: .clickable" super-hands="colliderEvent: raycaster-intersection; colliderEventProperty: els; colliderEndEvent:raycaster-intersection-cleared; colliderEndEventProperty: clearedEls;" position="0 1.6 0">
             <a-entity id="crosshair" visible="false" cursor="rayOrigin:mouse" position="0 0 -0.2" geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003" material="color: #0055ff; shader: flat" raycaster="far: 5; objects: .clickable"></a-entity>
@@ -70,21 +70,22 @@
         <a-entity id="righthand" mixin="hand" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" blink-controls="cameraRig: #rig; teleportOrigin: #camera; hitCylinderColor: #e9974c; interval: 10; curveHitColor: #e9974c; curveNumberPoints: 40; curveShootingSpeed: 8"></a-entity>
  </a-entity>
  
-<a-light type="ambient" color="white" intensity="0.25"></a-light> 
-<a-light id="startlight" color="#white" position="0 5.96 -1.04" light="type: point; intensity: 1.27; decay: 1; distance: 15"></a-light>
-<a-light id="timetunnellight" color="#e757fb" position="12 1.6 -20" light="type: point; intensity: 3.1; decay: 0.5; distance: 10.6"></a-light>
-<a-light id="raccoonlight" color="#6458fa" position="31 9.1 -29" light="type: point; intensity: 3; decay: 1; distance: 15"></a-light>
+<a-light type="ambient" color="white" intensity="0.1"></a-light> 
+<a-light id="startlight" class="starttoggle" color="#white" position="0 5.96 -1.04" light="type: point; intensity: 2.24; decay: 1; distance: 15"></a-light>
+<a-light id="startlight2" class="starttoggle" color="#white" position="0 5.4 -17.4" light="type: point; intensity: 0.3; decay: 1; distance: 15"></a-light>
+<a-light id="timetunnellight" color="#0bee8d" position="14.4 1.6 -20" light="type: point; intensity: 0.5; decay: 1; distance: 11"></a-light>
+<a-light id="raccoonlight" color="#6458fa" position="31 9.1 -29" light="type: point; intensity: 3; decay: 1; distance: 30"></a-light> <!-- 15 distance -->
 <a-entity gltf-model="#navmesh" id="nav" nav-mesh position="0 0 0" visible="false"></a-entity> <!-- Nav Mesh -->
 
 <a-curve id="track1" closed="false" tension="0" clone-along-curve="spacing: 0.06; scale:0.4 0.4 0.4;" gltf-model="models/buttonf.glb">
-  <a-curve-point id="track_straight1_1" position="0 0 0" gltf-model="models/button.glb"></a-curve-point>
-  <a-curve-point id="track_straight1_2" position="0 0 -5" gltf-model="models/button.glb"></a-curve-point>
-  <a-curve-point id="track_straight1_3" position="0 0 -10" gltf-model="models/button.glb"></a-curve-point>
-  <a-curve-point id="track_straight1_4" position="0.44 0 -17.2" gltf-model="models/button.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_1" position="1.9 0 -19.38" gltf-model="models/button.glb"></a-curve-point>
-  <a-curve-point id="track_turn1_2" position="4.7 0 -19.9" gltf-model="models/button.glb"></a-curve-point>
+  <a-curve-point id="track_straight1_1" position="0 0 0" gltf-model="models/buttonf.glb"></a-curve-point>
+  <a-curve-point id="track_straight1_2" position="0 0 -5" gltf-model="models/buttonf.glb"></a-curve-point>
+  <a-curve-point id="track_straight1_3" position="0.3 0 -9.6" gltf-model="models/buttonf.glb"></a-curve-point>
+  <a-curve-point id="track_straight1_4" position="0.19 0 -14.1" gltf-model="models/buttonf.glb"></a-curve-point>
+  <a-curve-point id="track_turn1_1" position="1.27 0 -18.9" gltf-model="models/buttonf.glb"></a-curve-point>
+  <a-curve-point id="track_turn1_2" position="5.7 0 -19.9" gltf-model="models/buttonf.glb"></a-curve-point>
   <a-curve-point id="track_turn1_3" position="10 0 -20" gltf-model="models/buttonf.glb"></a-curve-point>
-  <a-curve-point id="track_straight2_1a" position="15 0 -20" gltf-model="models/button.glb"></a-curve-point>
+  <a-curve-point id="track_straight2_1a" position="15 0 -20" gltf-model="models/buttonf.glb"></a-curve-point>
 </a-curve>
 
 <a-curve id="track2" closed="false" tension="0" clone-along-curve="spacing: 0.06; scale:0.4 0.4 0.4;" gltf-model="models/buttonf.glb">
@@ -120,14 +121,21 @@
   <a-curve-point id="track_turn7_1" position="53 0 -5" gltf-model="models/buttonf.glb"></a-curve-point>
 </a-curve>
 
-<a-entity gltf-model="models/track.glb" static-body position="0 0.05 0" rotation="0 0 0" visible="true"></a-entity> <!-- Temp Track -->
+<a-text visible="true" position="6 4 -2" rotation="0 -90 0" value="PaleoCA"  color="black" width="10" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="true" position="6 3.4 -1.9" rotation="0 -90 0" value="By Keith Chan"  color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="true" position="6 2.5 -1.9" rotation="0 -90 0" value="Experience in development"  color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="true" position="6 2.954 0" rotation="0 -90 0" value="Special thanks to A-Frame, La Brea Tar Pits, jack.simmons, and Point Cloud Productions"  color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="true" position="44 2.5 -42.5" rotation="0 -90 0" value="Thanks for previewing PaleoCA!"  color="#707070" width="3" line-height="50" text="wrapCount: 20"></a-text>
+
+<a-entity gltf-model="models/track.glb" static-body position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
 <a-entity gltf-model="models/start.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="start-doors" gltf-model="models/start-doors.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity gltf-model="models/la.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
+<a-entity gltf-model="models/wallplug.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity gltf-model="models/scene1.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <!-- <a-entity gltf-model="models/plants.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>  -->
 <a-entity id="startbutton" class="clickable" gltf-model="models/button.glb" tour-start static-body position="-8 0.57 0" rotation="0 0 0"></a-entity> 
-<a-entity gltf-model="models/mammoth.glb" static-body position="2 0 2" rotation="0 0 0"></a-entity> <!-- Demo Place -->
+<a-entity gltf-model="models/mammoth.glb" static-body position="39 0 -44.6" rotation="0 -42 0"></a-entity> <!-- Demo Place -->
 <a-entity gltf-model="models/raccoon-adult.glb" static-body position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing"></a-entity>
 <a-entity gltf-model="models/raccoon-adult.glb" static-body position="27.2 1.1 -26.86" rotation="0 65 0" animation-mixer="clip: raccoon.adult.scrounging"></a-entity>
 <a-entity gltf-model="models/raccoon-adult.glb" static-body position="29.5 3.49 -30.15" rotation="0 75 0" animation-mixer="clip: raccoon.adult.log"></a-entity>
@@ -139,12 +147,6 @@
 <a-entity id="timetunnel1-outside" gltf-model="models/timetunnel1-outside.glb" static-body position="0 0 0" rotation="0 0 0"  ></a-entity>
 <a-entity id="timetunnel1-inside" gltf-model="models/timetunnel1-inside.glb" static-body position="0 0 0" rotation="0 0 0"  animation-mixer="clip: TimeTunnel.Undulate"></a-entity>
 
-
-    <a-box position="2 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="3 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="4 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="3 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
 </a-scene>
 </body>
 </html> 

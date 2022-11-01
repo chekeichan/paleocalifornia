@@ -117,6 +117,14 @@ AFRAME.registerComponent("tour-guide", {
         var sceneEl = document.querySelector('a-scene');
         var timetunneldoor1 = document.querySelector('#timetunnel1-outside');
         var startdoors = document.querySelector('#start-doors');
+        var starttoggle = sceneEl.querySelectorAll('.starttoggle');
+
+        var visiswitch = function(zone) {
+            console.log(starttoggle);
+            for (let each of zone) {
+               each.object3D.visible = false;
+           }
+           }
 
         sceneEl.addEventListener("alongpath-trigger-activated", function(e) {
             console.log(e.target);
@@ -139,6 +147,10 @@ AFRAME.registerComponent("tour-guide", {
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
                         console.log('time door close 1');
+                        break;
+                    case "track_straight2_1a":
+                        visiswitch(starttoggle);
+                        console.log('start room off');
                         break;
                     case "track_straight2_1b":
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.*open");
