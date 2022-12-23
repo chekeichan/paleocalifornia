@@ -56,7 +56,7 @@
 				 <a-mixin id="mapmarker" scale ="0.17 0.1 0.17" rotation="-90 0 0" geometry="primitive: cone; radiusBottom: 0.15; radiusTop: 0.02; segmentsRadial: 6" material="color: #ffaa00; emissive: #ffaa00; emissiveIntensity: 0.5; flatShading:  true;"></a-mixin>
  </a-assets>
 
-<a-entity id="rig" tour-guide rotation-reader movement-controls="speed: 0.15; constrainToNavMesh: true" position="-10 1 0" rotation="0 -90 0"
+<a-entity id="rig" tour-guide rotation-reader movement-controls="speed: 0.15; constrainToNavMesh: true" position="38.9 0.6 -40" rotation="0 -90 0">  <!-- position="-10 1 0"-->
 
 
 > <!-- Player Character -->
@@ -135,16 +135,18 @@
 <a-entity gltf-model="models/scene1.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <!-- <a-entity gltf-model="models/plants.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>  -->
 <a-entity id="startbutton" class="clickable" gltf-model="models/button.glb" tour-start static-body position="-8 0.57 0" rotation="0 0 0"></a-entity> 
-<a-entity gltf-model="models/mammoth.glb" static-body position="39 0 -44.6" rotation="0 -42 0"></a-entity> <!-- Demo Place -->
+<a-entity gltf-model="models/mammoth.glb" static-body position="39 0 -44.6" rotation="0 -42 0" visible="false"></a-entity>
 <a-entity gltf-model="models/raccoon-adult.glb" static-body position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing"></a-entity>
-<a-entity gltf-model="models/raccoon-adult.glb" static-body position="27.2 1.1 -26.86" rotation="0 65 0" animation-mixer="clip: raccoon.adult.scrounging"></a-entity>
+<a-entity gltf-model="models/raccoon-adult.glb" static-body position="26.85 1.1 -37" rotation="0 65 0" animation-mixer="clip: raccoon.adult.scrounging"></a-entity>
 <a-entity gltf-model="models/raccoon-adult.glb" static-body position="29.5 3.49 -30.15" rotation="0 75 0" animation-mixer="clip: raccoon.adult.log"></a-entity>
 <a-entity gltf-model="models/raccoon-baby.glb" static-body position="28.75 3.18 -30.52" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Hanging"></a-entity>
 <a-entity gltf-model="models/raccoon-baby.glb" static-body position="27.2 2.39 -30.05" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing1"></a-entity>
 <a-entity gltf-model="models/raccoon-baby.glb" static-body position="27.16 1.61 -30.07" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing2"></a-entity>
 <a-entity gltf-model="models/westernwheatgrassnight.glb" id="wheatgrassnight" static-body position="26 1.1 -32.5"></a-entity>
-<a-entity gltf-model="models/grassspawn.glb" static-body position="0 -0.04 0" surface-scatter="object:#wheatgrassnight;count:100;"></a-entity>
-<a-entity id="timetunnel1-outside" gltf-model="models/timetunnel1-outside.glb" static-body position="0 0 0" rotation="0 0 0"  ></a-entity>
+<a-entity gltf-model="models/grassspawn.glb" static-body position="0 -0.04 0" surface-scatter="object:#wheatgrassnight;count:100"></a-entity>
+<a-entity id="sleepy shasta" gltf-model="models/shastasloth.glb" static-body position="38.719 -0.04 -42.519" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleep*"></a-entity>
+<a-entity id="eating shasta" gltf-model="models/shastasloth.glb" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eat*"></a-entity>
+<a-entity id="timetunnel1-outside" gltf-model="models/timetunnel1-outside.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-inside" gltf-model="models/timetunnel1-inside.glb" static-body position="0 0 0" rotation="0 0 0"  animation-mixer="clip: TimeTunnel.Undulate"></a-entity>
 
 </a-scene>
