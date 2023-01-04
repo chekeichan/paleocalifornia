@@ -119,6 +119,10 @@ AFRAME.registerComponent("tour-guide", {
         var startdoors = document.querySelector('#start-doors');
         var starttoggle = sceneEl.querySelectorAll('.starttoggle');
 
+        var sleepyshasta = document.querySelector('#sleepy-shasta');
+        var eatingshasta = document.querySelector('#eating-shasta');
+        var joshuatree = document.querySelector('#joshua-tree');
+
         var visiswitch = function(zone) {
             console.log(starttoggle);
             for (let each of zone) {
@@ -159,6 +163,44 @@ AFRAME.registerComponent("tour-guide", {
                         console.log('time door open 2');
                         break;
                 }    
+
+
+})
+
+sceneEl.addEventListener("animation-loop", function(e) {
+    console.log(e.target.id);
+    switch(e.target.id) {
+        case "sleepy-shasta":
+            var rand = Math.floor(Math.random() * 10);
+            console.log(rand);
+            if (rand === 0) {
+                AFRAME.utils.entity.setComponentProperty(sleepyshasta, "animation-mixer.clip", "shasta.waking");
+                AFRAME.utils.entity.setComponentProperty(sleepyshasta, "animation-mixer.clampWhenFinished", "true");
+            console.log('waking');
+            } else {
+                AFRAME.utils.entity.setComponentProperty(sleepyshasta, "animation-mixer.clip", "shasta.sleeping");
+                AFRAME.utils.entity.setComponentProperty(sleepyshasta, "animation-mixer.clampWhenFinished", "true");
+                console.log('sleeping');
+            }
+            break;
+        case "eating-shasta":
+            var rand = Math.floor(Math.random() * 10);
+            console.log(rand);
+            if (rand > 0) {
+                AFRAME.utils.entity.setComponentProperty(eatingshasta, "animation-mixer.clip", "shasta.looking");
+                AFRAME.utils.entity.setComponentProperty(eatingshasta, "animation-mixer.clampWhenFinished", "true");
+                AFRAME.utils.entity.setComponentProperty(joshuatree, "animation-mixer.clip", "joshuatree.swaying");
+            console.log('looking');
+            } else {
+                AFRAME.utils.entity.setComponentProperty(eatingshasta, "animation-mixer.clip", "shasta.eating");
+                AFRAME.utils.entity.setComponentProperty(eatingshasta, "animation-mixer.clampWhenFinished", "true");
+                AFRAME.utils.entity.setComponentProperty(joshuatree, "animation-mixer.clip", "joshuatree.eaten");
+                console.log('eating');
+            }
+            break;
+    }
+
+   
 
 
 })
