@@ -28,7 +28,7 @@
 </head>
 
 <body>
-<a-scene look-switch grab-panels warp device-set device-orientation-permission-ui physics="iterations: 30;" inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: blue" renderer="colorManagement: true; foveationLevel: 2;" background="color: #FAFAFA" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
+<a-scene look-switch grab-panels warp device-set device-orientation-permission-ui physics="iterations: 30;" inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: blue" renderer="colorManagement: true; foveationLevel: 2;" background="color: #FAFAFA" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
        
 <a-assets timeout="80000"> <!-- Loads models -->
   <a-asset-item id="" response-type="arraybuffer" src=""></a-asset-item>
@@ -132,7 +132,7 @@
 <a-entity id="start-doors" gltf-model="models/start-doors.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity gltf-model="models/la.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity gltf-model="models/wallplug.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
-<a-entity gltf-model="models/scene1.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>
+<a-entity gltf-model="models/scene1.glb" static-body position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
 <!-- <a-entity gltf-model="models/plants.glb" static-body position="0 0 0" rotation="0 0 0"></a-entity>  -->
 <a-entity id="startbutton" class="clickable" gltf-model="models/button.glb" tour-start static-body position="-8 0.57 0" rotation="0 0 0"></a-entity> 
 <a-entity gltf-model="models/mammoth.glb" static-body position="39 0 -44.6" rotation="0 -42 0" visible="false"></a-entity>
@@ -144,7 +144,7 @@
 <a-entity gltf-model="models/raccoon-baby.glb" static-body position="27.16 1.61 -30.07" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing2"></a-entity>
 <a-entity gltf-model="models/westernwheatgrassnight.glb" id="wheatgrassnight" static-body position="26 1.1 -32.5"></a-entity>
 <a-entity gltf-model="models/grassspawn.glb" static-body position="0 -0.04 0" surface-scatter="object:#wheatgrassnight;count:100"></a-entity>
-<a-entity id="mountainlion1" gltf-model="models/mountainlion.glb" static-body position="28.3 1.47 -45.8." rotation="0 150 0" animation-mixer="clip: *resting"></a-entity>
+<a-entity id="mountainlion1" gltf-model="models/mountainlion.glb" static-body position="28.3 1.47 -45.8." rotation="0 150 0" animation-mixer="clip: *resting" shadow="cast: false"></a-entity>
 <a-entity id="sleepy-shasta" gltf-model="models/shastasloth.glb" static-body position="38.719 -0.04 -42.519" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleeping; clampWhenFinished: true"></a-entity>
 <a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true"></a-entity>
 <a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *"></a-entity>
