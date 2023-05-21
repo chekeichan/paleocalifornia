@@ -1,31 +1,5 @@
 console.warn = console.error = () => {}; // Suppresses Three.js warnings. Remove to debug
 
-// PC Look Preference Switcher
-AFRAME.registerComponent("look-switch", {
-    init: function() {
-        var sceneEl = this.el.sceneEl;
-        var canvasEl = sceneEl.canvas;
-        var camera = document.querySelector('#camera');
-        var PCmode = 0;
-        window.addEventListener("keydown", function(e){ // Mouselook toggle
-            if(e.keyCode === 77 && PCmode == 0) { // Swipe to FPS
-                camera.setAttribute('look-controls', {enabled: false});
-                camera.setAttribute('fps-look-controls', 'userHeight', 0);
-                PCmode = 1;
-            } else if (e.keyCode === 77 && PCmode == 1) { // FPS to swipe
-                camera.removeAttribute('fps-look-controls');
-                camera.setAttribute('look-controls', {enabled: true});
-                canvasEl.onclick = null; // Removes FPS components taking mouse on click
-                document.exitPointerLock();
-
-                document.querySelector('#crosshair').object3D.visible = false;
-                PCmode = 0;
-    
-            }
-        });
-    }
-    })
-
 AFRAME.registerComponent('device-set', { // Device-specific settings
     init: function() {
         var sceneEl = document.querySelector('a-scene');
@@ -117,8 +91,10 @@ AFRAME.registerComponent("tour-guide", {
         var sceneEl = document.querySelector('a-scene');
         var timetunneldoor1 = document.querySelector('#timetunnel1-outside');
         var startdoors = document.querySelector('#start-doors');
-        var starttoggle = sceneEl.querySelectorAll('.starttoggle');
+        var scene1toggle = sceneEl.querySelectorAll('.scene1');
 
+        var scene2animations = document.querySelector('#scene2');
+        var timetunnel = document.querySelector('#timetunnel1-inside');
         var sleepyshasta = document.querySelector('#sleepy-shasta');
         var eatingshasta = document.querySelector('#eating-shasta');
         var joshuatree = document.querySelector('#joshua-tree');
@@ -140,27 +116,41 @@ AFRAME.registerComponent("tour-guide", {
                         AFRAME.utils.entity.setComponentProperty(startdoors, "animation-mixer.clampWhenFinished", "true");
                         console.log('start door open');
                         break;
+                    case "track_straight1_3":
+                        AFRAME.utils.entity.setComponentProperty(timetunnel, "animation-mixer.clip", "TimeTunnel.Undulate");
+                        console.log('Time Tunnel undulate on');
+                        break;
                     case "track_turn1_1":
-                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.*open");
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.open");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
                         console.log('time door open 1');
                         break;
                     case "track_turn1_3":
-                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.*close");
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.close");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
                         console.log('time door close 1');
                         break;
                     case "track_straight2_1a":
-                        visiswitch(starttoggle);
+                        visiswitch(scene1toggle);
                         console.log('start room off');
                         break;
                     case "track_straight2_1b":
-                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.*open");
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.open");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
                         console.log('time door open 2');
+                        break;
+                    case "track_turn2_2":
+                        AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.close");
+                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
+                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
+                         console.log('time door close 2');
+                        break;
+                    case "track_turn2_2":
+                        AFRAME.utils.entity.setComponentProperty(timetunnel, "animation-mixer.clip", "off");
+                        console.log('Time Tunnel undulate off');
                         break;
                 }    
 
