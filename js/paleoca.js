@@ -80,7 +80,7 @@ AFRAME.registerComponent("tour-start", {
             rig.setAttribute('rotation', {y: 1.5708});
             rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track1', dur: 55000, triggerRadius: 0.1})
+            rig.setAttribute('alongpath', {curve: '#track1', dur: 75000, triggerRadius: 0.1}) // Set to #track1 dur 75000 for tour start
         })
     }}
 )
@@ -93,11 +93,12 @@ AFRAME.registerComponent("tour-guide", {
         var startdoors = document.querySelector('#start-doors');
         var scene1toggle = sceneEl.querySelectorAll('.scene1');
 
-        var scene2animations = document.querySelector('#scene2');
+        var scene2animations = sceneEl.querySelectorAll('.scene2anim');
         var timetunnel = document.querySelector('#timetunnel1-inside');
         var sleepyshasta = document.querySelector('#sleepy-shasta');
         var eatingshasta = document.querySelector('#eating-shasta');
         var joshuatree = document.querySelector('#joshua-tree');
+        var sbc1 = sceneEl.querySelectorAll('.scene2sbc');
 
         var visiswitch = function(zone) {
             console.log(starttoggle);
@@ -117,8 +118,11 @@ AFRAME.registerComponent("tour-guide", {
                         console.log('start door open');
                         break;
                     case "track_straight1_3":
-                        AFRAME.utils.entity.setComponentProperty(timetunnel, "animation-mixer.clip", "TimeTunnel.Undulate");
-                        console.log('Time Tunnel undulate on');
+                        AFRAME.utils.entity.setComponentProperty(timetunnel, "animation-mixer.timeScale", "1");
+                        for (let each of scene2animations) {
+                            AFRAME.utils.entity.setComponentProperty(each, "animation-mixer.timeScale", "1");
+                        };
+                        console.log('Time Tunnel undulate and scene 2 animations on');
                         break;
                     case "track_turn1_1":
                         AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.open");
@@ -149,9 +153,17 @@ AFRAME.registerComponent("tour-guide", {
                          console.log('time door close 2');
                         break;
                     case "track_turn2_2":
-                        AFRAME.utils.entity.setComponentProperty(timetunnel, "animation-mixer.clip", "off");
+                        AFRAME.utils.entity.setComponentProperty(timetunnel, "animation-mixer.timeScale", "0");
                         console.log('Time Tunnel undulate off');
                         break;
+                    case "track_turn4_1":
+                        for (let each of sbc1) {
+                            AFRAME.utils.entity.setComponentProperty(each, "animation-mixer.timeScale", "1");
+                            AFRAME.utils.entity.setComponentProperty(timetunneldoor1, "animation-mixer.loop", "once");
+                            AFRAME.utils.entity.setComponentProperty(each, "animation-mixer.clampWhenFinished", "true");
+                        };
+                        console.log('SBC sequence');
+                    break;
                 }    
 
 
