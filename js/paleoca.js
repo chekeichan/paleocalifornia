@@ -117,6 +117,12 @@ AFRAME.registerComponent("tour-guide", {
                         AFRAME.utils.entity.setComponentProperty(startdoors, "animation-mixer.clampWhenFinished", "true");
                         console.log('start door open');
                         break;
+                    case "track_straight1_2":
+                        AFRAME.utils.entity.setComponentProperty(startdoors, "animation-mixer.clip", "start.door.*.close");
+                        AFRAME.utils.entity.setComponentProperty(startdoors, "animation-mixer.loop", "once");
+                        AFRAME.utils.entity.setComponentProperty(startdoors, "animation-mixer.clampWhenFinished", "true");
+                        console.log('start door close');
+                        break;
                     case "track_straight1_3":
                         AFRAME.utils.entity.setComponentProperty(timetunnel, "animation-mixer.timeScale", "1");
                         for (let each of scene2animations) {
