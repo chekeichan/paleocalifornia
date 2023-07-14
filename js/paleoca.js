@@ -13,7 +13,7 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
         var state = "stand";
         if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
             sceneEl.setAttribute("vr-mode-ui", "enabled", "false");
-            rig.setAttribute("movement-controls", "speed", 0.15);
+            // rig.setAttribute("movement-controls", "speed", 0.15);
             document.querySelector('#GL-SP').object3D.visible = true;
             document.querySelector('#SMH-SP').object3D.visible = true;
             for (let each of tablestand) {
@@ -37,34 +37,34 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
             console.log('PC detected');
 
-            rig.setAttribute("movement-controls", "speed", 0.3);
-            for (let each of grabbable) {
-                each.removeAttribute('dynamic-body');
-                each.removeAttribute('grabbable');
-                each.setAttribute('static-body');
-                each.object3D.position.y +=0.25;
-            }
-            for (let each of tablestand) {
-                let poss = each.getAttribute('position');
-                each.object3D.position.y += 0.25;
-            }
-            for (let each of standup) { // Stands up small objects
-                each.removeAttribute('dynamic-body');
-                each.removeAttribute('grabbable');
-                each.setAttribute('static-body');
-                each.setAttribute('rotation', {z: 90});
-                each.object3D.position.y += 0.15;
-            }
-            window.addEventListener("keydown", function(e){ // Crouch key for PC
-                if(e.keyCode === 67 && state == "stand") { 
-                    camera.setAttribute('position', {y: 1.0});
-                    state = "crouch";
-                } else if (e.keyCode === 67 && state == "crouch") {
-                    camera.setAttribute('position', {y: 1.6});
-                    state ="stand";
+            // rig.setAttribute("movement-controls", "speed", 0.3);
+            // for (let each of grabbable) {
+            //     each.removeAttribute('dynamic-body');
+            //     each.removeAttribute('grabbable');
+            //     each.setAttribute('static-body');
+            //     each.object3D.position.y +=0.25;
+            // }
+            // for (let each of tablestand) {
+            //     let poss = each.getAttribute('position');
+            //     each.object3D.position.y += 0.25;
+            // }
+            // for (let each of standup) { // Stands up small objects
+            //     each.removeAttribute('dynamic-body');
+            //     each.removeAttribute('grabbable');
+            //     each.setAttribute('static-body');
+            //     each.setAttribute('rotation', {z: 90});
+            //     each.object3D.position.y += 0.15;
+            // }
+            // window.addEventListener("keydown", function(e){ // Crouch key for PC
+            //     if(e.keyCode === 67 && state == "stand") { 
+            //         camera.setAttribute('position', {y: 1.0});
+            //         state = "crouch";
+            //     } else if (e.keyCode === 67 && state == "crouch") {
+            //         camera.setAttribute('position', {y: 1.6});
+            //         state ="stand";
         
-                }
-            });
+            //     }
+            // });
     }
 }})
 
@@ -72,14 +72,16 @@ AFRAME.registerComponent("tour-start", {
     init: function() {
         var el = this.el;
         var rig = document.querySelector('#rig');
+        var podplaceholder = document.querySelector('#podplaceholder');
         var pod = document.querySelector('#pod');
 
         el.addEventListener("grab-start", function(evt) {
+            podplaceholder.object3D.visible = false;
             pod.object3D.visible = true;
             rig.object3D.position.set(0, 0, 0);
             rig.setAttribute('rotation', {y: 1.5708});
-            rig.setAttribute("movement-controls", "constrainToNavMesh", false);
-            rig.removeAttribute('movement-controls');
+            // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
+            // rig.removeAttribute('movement-controls');
             rig.setAttribute('alongpath', {curve: '#track1', dur: 75000, triggerRadius: 0.1}) // Set to #track1 dur 75000 for tour start
         })
     }}
@@ -281,3 +283,28 @@ sceneEl.addEventListener("animation-loop", function(e) {
     }
     })
 
+    AFRAME.registerComponent('change-color-on-click', {
+        init: function () {    
+          var el = this.el;
+          var originalColor = el.getAttribute('material').color;
+          el.addEventListener('raycaster-intersected', function () {
+            el.setAttribute('material', 'color', 'yellow');
+          });
+          el.addEventListener('mousedown', function () {
+            el.setAttribute('material', 'color', 'white');
+          });
+          el.addEventListener('mouseup', function () {
+            el.setAttribute('material', 'color', 'orange');
+          });
+          el.addEventListener('raycaster-intersected-cleared', function () {
+            el.setAttribute('material', 'color', originalColor);
+          });
+        }
+      });
+    
+      AFRAME.registerComponent('raycaster-listen', {
+        init: function () {
+          this.el.setAttribute('change-color-on-click', '');
+        }
+    
+      });
