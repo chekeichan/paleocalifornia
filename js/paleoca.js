@@ -6,16 +6,11 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
         var tablestand = sceneEl.querySelectorAll('.table');
         var standup = sceneEl.querySelectorAll('.standup');
         var grabbable = sceneEl.querySelectorAll('.grabbable');
-        var rig = document.querySelector('#rig');
-        var camera = document.querySelector('#camera');
-        var handleft = document.querySelector('#lefthand');
-        var handright = document.querySelector('#righthand');
-        var state = "stand";
+
         if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
             sceneEl.setAttribute("vr-mode-ui", "enabled", "false");
             // rig.setAttribute("movement-controls", "speed", 0.15);
             document.querySelector('#GL-SP').object3D.visible = true;
-            document.querySelector('#SMH-SP').object3D.visible = true;
             for (let each of tablestand) {
                 each.object3D.position.y += 0.25;
             }
@@ -30,41 +25,14 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
                 each.object3D.position.y += 0.2;
             }
         } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
+            document.querySelector('#GL-VR').object3D.visible = true;
             console.log('VR detected');
             
             // rig.removeAttribute('movement-controls'); // Remove non-working controls
 
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
             console.log('PC detected');
-
-            // rig.setAttribute("movement-controls", "speed", 0.3);
-            // for (let each of grabbable) {
-            //     each.removeAttribute('dynamic-body');
-            //     each.removeAttribute('grabbable');
-            //     each.setAttribute('static-body');
-            //     each.object3D.position.y +=0.25;
-            // }
-            // for (let each of tablestand) {
-            //     let poss = each.getAttribute('position');
-            //     each.object3D.position.y += 0.25;
-            // }
-            // for (let each of standup) { // Stands up small objects
-            //     each.removeAttribute('dynamic-body');
-            //     each.removeAttribute('grabbable');
-            //     each.setAttribute('static-body');
-            //     each.setAttribute('rotation', {z: 90});
-            //     each.object3D.position.y += 0.15;
-            // }
-            // window.addEventListener("keydown", function(e){ // Crouch key for PC
-            //     if(e.keyCode === 67 && state == "stand") { 
-            //         camera.setAttribute('position', {y: 1.0});
-            //         state = "crouch";
-            //     } else if (e.keyCode === 67 && state == "crouch") {
-            //         camera.setAttribute('position', {y: 1.6});
-            //         state ="stand";
-        
-            //     }
-            // });
+            document.querySelector('#GL-PC').object3D.visible = true;
     }
 }})
 
@@ -82,7 +50,7 @@ AFRAME.registerComponent("tour-start", {
             rig.setAttribute('rotation', {y: 1.5708});
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track2', dur: 75000, triggerRadius: 0.1}) // Set to #track1 dur 75000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track1', dur: 80000, triggerRadius: 0.1}) // Set to #track1 dur 75000 for tour start
         })
     }}
 )
@@ -153,7 +121,7 @@ AFRAME.registerComponent("tour-guide", {
                         aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
                         aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
                         console.log('time door close 1');
-                        aniswitch(ambilight, 'animation', {property: 'light.intensity', to: 0.05, dur: 2000});
+                        aniswitch(ambilight, 'animation', {property: 'light.intensity', to: 0.05, dur: 8000});
                         console.log('ambient light dim');
                         break;
                         break;
@@ -163,8 +131,8 @@ AFRAME.registerComponent("tour-guide", {
                         aniswitch(light1, "position", {x: 31, y: 9.1, z: -29});
                         aniswitch(light1, "color", "#6458fa");
                         aniswitch(light1, 'animation', {property: 'light.intensity', from: 1.5, to: 2, dur: 2000});
-                        aniswitch(light1, "decay", 0.45);
-                        aniswitch(light1, "distance", 10);
+                        aniswitch(light1, "decay", 0.01);
+                        aniswitch(light1, "distance", 11.9);
                         console.log('light1 move to raccoons')
                         break;
                     case "track_straight2_1b":
@@ -306,17 +274,23 @@ sceneEl.addEventListener("animation-loop", function(e) {
 
 })
         
-        rig.addEventListener("movingended__#track1", function(){
-                    aniswitch(rig, "alongpath.curve", "#track2");
-                    aniswitch(rig, "alongpath.dur", "80000");
-                    aniswitch(rig, "alongpath.triggerRadius", "0.1");
+rig.addEventListener("movingended__#track0", function(){
+    aniswitch(rig, "alongpath.curve", "#track1");
+    aniswitch(rig, "alongpath.dur", "80000");
+    aniswitch(rig, "alongpath.triggerRadius", "0.1");
+    
+})
+rig.addEventListener("movingended__#track1", function(){
+   aniswitch(rig, "alongpath.curve", "#track2");
+    aniswitch(rig, "alongpath.dur", "151000");
+    aniswitch(rig, "alongpath.triggerRadius", "0.1");
                     
         })
-        rig.addEventListener("movingended__#track2", function(){
-            aniswitch(rig, "alongpath.curve", "#track3");
-            aniswitch(rig, "alongpath.dur", "35000"); // 35000
-            aniswitch(rig, "alongpath.triggerRadius", "0.1");
-        })
+rig.addEventListener("movingended__#track2", function(){
+     aniswitch(rig, "alongpath.curve", "#track3");
+    aniswitch(rig, "alongpath.dur", "53000"); // 30000
+    aniswitch(rig, "alongpath.triggerRadius", "0.1");
+})
 
         
     }
