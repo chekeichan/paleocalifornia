@@ -42,10 +42,12 @@ AFRAME.registerComponent("tour-start", {
         var rig = document.querySelector('#rig');
         var podplaceholder = document.querySelector('#podplaceholder');
         var pod = document.querySelector('#pod');
+        var podpanel = document.querySelector('#podpanel');
 
         el.addEventListener("grab-start", function(evt) {
             podplaceholder.object3D.visible = false;
             pod.object3D.visible = true;
+            podpanel.object3D.visible = true;
             rig.object3D.position.set(0, 0, 0);
             rig.setAttribute('rotation', {y: 1.5708});
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
@@ -67,12 +69,16 @@ AFRAME.registerComponent("tour-guide", {
         var timetunneldoor1 = document.querySelector('#timetunnel1-outside');
         var timetunneldoor2 = sceneEl.querySelectorAll('.linkedtunnelout');
         var startdoors = document.querySelector('#start-doors');
+        var startscenetoggle = sceneEl.querySelectorAll('.startscene');
         var scene1toggle = sceneEl.querySelectorAll('.scene1');
+        var scene2toggle = sceneEl.querySelectorAll('.scene2');
 
         var scene2animations = sceneEl.querySelectorAll('.scene2anim');
         var timetunnel1 = document.querySelector('#timetunnel1-inside');
         var timetunnel2 = sceneEl.querySelectorAll('.linkedtunnel');
         var sleepyshasta = document.querySelector('#sleepy-shasta');
+        var crickets1 = document.querySelector('#crickets1');
+        var crickets2 = document.querySelector('#crickets2');
         var eatingshasta = document.querySelector('#eating-shasta');
         var joshuatree = document.querySelector('#joshua-tree');
         var sbc1 = sceneEl.querySelectorAll('.scene2sbc');
@@ -81,15 +87,19 @@ AFRAME.registerComponent("tour-guide", {
             for (let each of zone) {
                each.object3D.visible = toggle;
            }
-           }
+        };
 
         var aniswitch = function(entity, setting, detail) {
             AFRAME.utils.entity.setComponentProperty(entity, setting, detail);
-           }
+        };
+        
+        var aniswitchdelay = function(entity, setting, detail, delay) {
+            setTimeout(() => {
+                AFRAME.utils.entity.setComponentProperty(entity, setting, detail);
+            }, delay);
+        };
 
         sceneEl.addEventListener("alongpath-trigger-activated", function(e) {
-            console.log(e.target);
-
                 switch(e.target.id) {
                     case "track_straight1_1":
                         aniswitch(startdoors, "animation-mixer.clip", "start.door.*.open");
@@ -104,6 +114,7 @@ AFRAME.registerComponent("tour-guide", {
                         console.log('start door close');
                         break;
                     case "track_straight1_3":
+                        visiswitch(scene2toggle, "true");
                         aniswitch(timetunnel1, "animation-mixer.timeScale", "1");
                         for (let each of scene2animations) {
                             aniswitch(each, "animation-mixer.timeScale", "1");
@@ -111,6 +122,7 @@ AFRAME.registerComponent("tour-guide", {
                         console.log('Time Tunnel undulate, scene 2 animations on');
                         break;
                     case "track_turn1_1":
+                        visiswitch(startscenetoggle, "false");
                         aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.open");
                         aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
                         aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
@@ -124,9 +136,8 @@ AFRAME.registerComponent("tour-guide", {
                         aniswitch(ambilight, 'animation', {property: 'light.intensity', to: 0.05, dur: 8000});
                         console.log('ambient light dim');
                         break;
-                        break;
                     case "track_straight2_1a":
-                        visiswitch(scene1toggle);
+                        visiswitch(scene1toggle, "false");
                         console.log('scene 1 off');
                         aniswitch(light1, "position", {x: 31, y: 9.1, z: -29});
                         aniswitch(light1, "color", "#6458fa");
@@ -134,8 +145,9 @@ AFRAME.registerComponent("tour-guide", {
                         aniswitch(light1, "decay", 0.01);
                         aniswitch(light1, "distance", 11.9);
                         console.log('light1 move to raccoons')
+
                         break;
-                    case "track_straight2_1b":
+                    case "track_straight2_2":
                         aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.open");
                         aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
                         aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
@@ -146,6 +158,9 @@ AFRAME.registerComponent("tour-guide", {
                         aniswitch(light2, "decay", 0.1);
                         aniswitch(light2, "distance", 7);
                         console.log('light2 move to sbc dawn')
+                        crickets1.components.sound.playSound();
+                        crickets2.components.sound.playSound();
+                        console.log('play cricket sounds')
                         break;
                     case "track_turn2_2":
                         aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.close");
@@ -160,6 +175,7 @@ AFRAME.registerComponent("tour-guide", {
                     case "track_asympt1":
                         aniswitch(ambilight, 'animation', {property: 'light.intensity', to: 0.01, dur: 4000});
                         console.log('ambient light dim');
+                        
                         break;
                     case "track_turn3_3":
                         aniswitch(timelight, "position", {x: 50, y: 1.6, z: -15});
@@ -167,7 +183,7 @@ AFRAME.registerComponent("tour-guide", {
                         break;
                     case "track_turn4_1":
                     for (let each of sbc1) {
-                        aniswitch(each, "animation-mixer.timeScale", "1");
+                        aniswitchdelay(each, "animation-mixer.timeScale", "1", "5000");
                         aniswitch(each, "animation-mixer.loop", "once");
                         aniswitch(each, "animation-mixer.clampWhenFinished", "true");
                     };
@@ -194,6 +210,7 @@ AFRAME.registerComponent("tour-guide", {
                         console.log('time door entrance open 2');
                     break;
                     case "track_straight5_3":
+                        visiswitch(startscenetoggle, "true");
                         for (let each of timetunneldoor2) {
                             aniswitch(each, "animation-mixer.clip", "TimeTunnel.door.entrance.close");
                             aniswitch(each, "animation-mixer.loop", "once");
@@ -218,6 +235,8 @@ AFRAME.registerComponent("tour-guide", {
                         console.log('time door exit open 2');
                     break;
                     case "track_straight_end_1_4":
+                        visiswitch(scene1toggle, "true");
+                        visiswitch(scene2toggle, "false");
                         aniswitch(light2, "position", {x: 0, y: 5.4, z: -17.4});
                         aniswitch(light2, "color", "white");
                         aniswitch(light2, 'intensity', "0.3");
@@ -296,15 +315,56 @@ rig.addEventListener("movingended__#track2", function(){
     }
     })
 
-    AFRAME.registerComponent('change-color-on-click', {
+    AFRAME.registerComponent('buttonlogic', {
         init: function () {    
           var el = this.el;
           var originalColor = el.getAttribute('material').color;
+          var vignette = document.querySelector('#vignette');
+          var vignettetext = document.querySelectorAll('.vignettetext');
+          var trackorbstext = document.querySelectorAll('.trackorbstext');
+          var track = document.querySelectorAll('.track');
+          var track1 = document.querySelector('#track1');
+
           el.addEventListener('raycaster-intersected', function () {
             el.setAttribute('material', 'color', 'yellow');
           });
-          el.addEventListener('mousedown', function () {
+
+          el.addEventListener('grab-end', function () {
             el.setAttribute('material', 'color', 'white');
+            console.log(el.id);
+            switch(el.id) {
+                case "settingsvignettebutt":
+                case "podvignettebutt":
+                    vignette.object3D.visible = !vignette.getAttribute("visible");
+                    console.log('vignette toggle '+vignette.object3D.visible);
+                    if (vignette.object3D.visible === true) {
+                        for (let each of vignettetext) {
+                            AFRAME.utils.entity.setComponentProperty(each, "value", "Vignette: On");
+                        };
+                    } else {
+                        for (let each of vignettetext) {
+                            AFRAME.utils.entity.setComponentProperty(each, "value", "Vignette: Off");
+                        };                    }
+                break;
+                case "settingstrackorbsbutt":
+                case "podtrackorbsbutt":
+                    for (let each of track) {
+                        each.object3D.visible = !each.getAttribute("visible");
+                        console.log('track toggle '+each.object3D.visible);
+                    };
+                        if (track1.object3D.visible === true) {
+                            for (let each of trackorbstext) {
+                                AFRAME.utils.entity.setComponentProperty(each, "value", "Track Orbs: On");
+                            };
+                        } else {
+                            for (let each of trackorbstext) {
+                                AFRAME.utils.entity.setComponentProperty(each, "value", "Track Orbs: Off");
+                            };
+                            
+                        }
+                    
+                break;
+            }
           });
           el.addEventListener('mouseup', function () {
             el.setAttribute('material', 'color', 'orange');
@@ -315,9 +375,4 @@ rig.addEventListener("movingended__#track2", function(){
         }
       });
     
-      AFRAME.registerComponent('raycaster-listen', {
-        init: function () {
-          this.el.setAttribute('change-color-on-click', '');
-        }
-    
-      });
+  
