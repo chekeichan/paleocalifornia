@@ -17,12 +17,10 @@
 <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
 <script src="js/aframe-physics-system.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-aabb-collider-component@3.1.0/dist/aframe-aabb-collider-component.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/super-hands@^3.0.1/dist/super-hands.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
 <script src="js/aframe-alongpath-component.js"></script> <!-- Custom code to fix rig camera angle-->
 <script src="https://cdn.jsdelivr.net/npm/aframe-curves@1.0.0/build/curve.min.js"></script>
 <script src="js/aframe-surface-scatter.min.js"></script>
-<script src="js/aframe-html.min.js"></script>
 <script src="js/paleoca.js"></script>
 </head>
 
@@ -35,6 +33,11 @@
     <a-asset-item id="startdoors" response-type="arraybuffer" src="models/start-doors.glb"></a-asset-item>
     <a-asset-item id="podstart" response-type="arraybuffer" src="models/pod-start.glb"></a-asset-item>
     <a-asset-item id="timetunnel-outside" response-type="arraybuffer" src="models/timetunnel-outside.glb"></a-asset-item>
+
+    <a-asset-item id="swinging-door-sound" response-type="arraybuffer" src="sounds/swinging-door.mp3"></a-asset-item>
+    <a-asset-item id="cricket-sound" response-type="arraybuffer" src="sounds/crickets.mp3"></a-asset-item>
+    <a-asset-item id="raccoon-yelp-sound" response-type="arraybuffer" src="sounds/raccoon-yelp.mp3"></a-asset-item>
+    <a-asset-item id="timetunnel-door-sound" response-type="arraybuffer" src="sounds/timetunnel-door.mp3"></a-asset-item>
 
     <a-mixin id="obj" hoverable grabbable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, abuttondown, bbuttondown, xbuttondown, ybuttondown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, abuttonup, bbuttonup, xbuttonup, ybuttonup, thumbstickup, mouseup" scale="1 1 1" rotation="0 0 0" shadow></a-mixin>
     <a-mixin id="button" static-body hoverable clickable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, thumbstickup, mouseup" shadow></a-mixin>
@@ -65,14 +68,7 @@
 <a-entity id="rig" tour-guide rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
 <!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
   <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 0.5 0"></a-entity>
-<!-- Time Pod Panel-->
-<a-entity id="podpanel" visible="false" position="-0.20 0.776 -0.16" rotation="0 0 0"> 
-  <a-entity id="podvignettebutt" mixin="podbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.06" visible="true"></a-entity>
-  <a-text id="podvignettetext" class="vignettetext" mixin="text-pod" position="0.05 0.15 0.05" rotation="0 0 0" value="Vignette: Off"></a-text>
-  <a-entity id="podtrackorbsbutt" mixin="podbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.05 0.06" visible="true"></a-entity>
-  <a-text id="podtrackorbstext" class="trackorbstext" mixin="text-pod" position="0.05 0.05 0.05" rotation="0 0 0" value="Track Orbs: Off"></a-text>
-</a-entity>
-        <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 5; objects: .clickable" super-hands="colliderEvent: raycaster-intersection; colliderEventProperty: els; colliderEndEvent:raycaster-intersection-cleared; colliderEndEventProperty: clearedEls;" position="0 1.6 0">
+        <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 5; objects: .clickable"  position="0 1.6 0">
           <a-entity id="crosshair" visible="false" cursor="rayOrigin:mouse" position="0 0 -0.2" geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003" material="color: #0055ff; shader: flat" raycaster="far: 5; objects: .clickable"></a-entity>
           <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity><!-- Transition animation -->
           <a-entity id="vignette" position="0 0 -0.05" scale="1 0.73 1" visible="false" geometry="primitive: ring; radiusInner: 0.055; radiusOuter: 0.2" material="color: #0c0c0c; side: front; shader: flat"></a-entity>
@@ -167,14 +163,14 @@
 <a-entity id="settingspanel" position="-4.527 1.237 6.344" rotation="-62.62 -126.72 0"> 
   <a-text id="settingstitle" mixin="text-title" position="-0.032 0.356 0.052" rotation="0 0 0" value="Options"></a-text>
   <!-- <a-entity id="settingsbackground" mixin="panel-background" static-body="shape: box;" class="clickable static" position="0.518 0.025 0" visible="true"></a-entity> -->
-  <a-entity id="settingsvignettebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
-  <a-text id="settingsvignettetext" class="vignettetext" mixin="text-label" position="0.1 0.15 0.05" rotation="0 0 0" value="Vignette: Off"></a-text>
-  <a-entity id="settingstrackorbsbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0 0.05" visible="true"></a-entity>
-  <a-text id="settingstrackorbstext" class="trackorbstext" mixin="text-label" position="0.1 0.0 0.05" rotation="0 0 0" value="Track Orbs: Off"></a-text>
-  <a-entity id="settingsnarrationbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
-  <a-text id="settingsnarrationtext" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Narration: Educational"></a-text>
-  <a-entity id="settingssoundcheck" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
-  <a-text id="settingssoundchecktext" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Sound Check"></a-text>
+  <a-entity id="vignettebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
+  <a-text id="vignettetext" mixin="text-label" position="0.1 0.15 0.05" rotation="0 0 0" value="Vignette: Off"></a-text>
+  <a-entity id="trackorbsbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0 0.05" visible="true"></a-entity>
+  <a-text id="trackorbstext" mixin="text-label" position="0.1 0.0 0.05" rotation="0 0 0" value="Track Orbs: Off"></a-text>
+  <a-entity id="narrationbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
+  <a-text id="narrationtext" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Narration: Educational"></a-text>
+  <a-entity id="soundcheck" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
+  <a-text id="soundchecktext" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Sound Check"></a-text>
 </a-entity>
 
 <!-- Instructions Panel-->
@@ -185,15 +181,15 @@
   <a-text id="GL-SP" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag across screen\nSelect: tap screen\n\n1. Check options on right panel\n2. Select center orb to start ride!"></a-text>
 </a-entity>
 
-<a-text visible="true" class="startscene" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="true" class="startscene" position="2.42 3.5 -2" rotation="0 -90 0" value="By Keith Chan" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="true" class="startscene" position="2.35 3.3 3.24" rotation="0 -90 0" value="Experience in development" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="true" class="startscene" position="6 1 0" rotation="0 -90 0" value="Special thanks to A-Frame, La Brea Tar Pits, jack.simmons, and Point Cloud Productions"  color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="true" class="startscene" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
+<a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="true" class="scene0" position="2.42 3.5 -2" rotation="0 -90 0" value="By Keith Chan" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="true" class="scene0" position="2.35 3.3 3.24" rotation="0 -90 0" value="Experience in development" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="true" class="scene0" position="6 1 0" rotation="0 -90 0" value="Special thanks to A-Frame, La Brea Tar Pits, jack.simmons, and Point Cloud Productions"  color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="true" class="scene0" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
 <a-entity gltf-model="models/track.glb" static-body position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
-<a-entity gltf-model="#start" class="startscene" static-body position="0 0 0" rotation="0 0 0"></a-entity>
+<a-entity gltf-model="#start" class="scene0" static-body position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity id="podplaceholder" gltf-model="#podstart" static-body="shape: box" visible="true" position="0 0 0"></a-entity>
-<a-entity id="start-doors" class="startscene" visible="true" gltf-model="#startdoors" static-body position="0 0 0" rotation="0 0 0"></a-entity>
+<a-entity id="start-doors" class="scene0" visible="true" gltf-model="#startdoors" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="startbutton" class="startscene clickable" gltf-model="models/button.glb" tour-start static-body position="-4.34 0.57 5" rotation="0 0 0"></a-entity> 
 <a-entity id="timetunnel1-outside" gltf-model="#timetunnel-outside" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-inside" gltf-model="models/timetunnel-inside.glb" static-body position="0 0 0" rotation="0 0 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
@@ -203,10 +199,19 @@
 <a-entity id="timetunnel3-inside" class="linkedtunnel" gltf-model="models/timetunnel-inside.glb" static-body position="20.15 0 37.626" rotation="0 90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
 
 <a-entity gltf-model="models/scene1.glb" class="scene1" static-body position="0 0 0" rotation="0 0 0"></a-entity>
+<a-entity id="swinging-door" class="scene1sound" position="0.07 1.7 -3.4" sound="src: #swinging-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-1-entrance" class="scene1sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-1-exit" class="scene1sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-2-entrance" class="scene2sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-3-exit" class="scene0sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 
 <a-entity gltf-model="models/scene2.glb" class="scene2" static-body position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
-<a-entity id="crickets1" class="scene2sound" position="30 1.35 -20" sound="src: url(sounds/crickets.mp3); maxDistance: 20"></a-entity>
-<a-entity id="crickets2" class="scene2sound" position="28 1.35 -39" sound="src: url(sounds/crickets.mp3); maxDistance: 20"></a-entity>
+<a-entity id="crickets1" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
+<a-entity id="crickets2" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
+<a-entity id="crickets3" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
+<a-entity id="raccoon-yelp" class="scene2sound" position="28.1 3.22 -30" sound="src: #raccoon-yelp-sound; loop: true; maxDistance: 4"></a-entity>
+
+
 <a-entity gltf-model="models/plants-scene2-anim.glb" class="scene2 scene2sbc" static-body position="52.055 1.647 -40.55" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; timeScale: 0" shadow="recieve: true"></a-entity>
 <!-- <a-entity gltf-model="models/mammoth.glb" static-body position="39 0 -44.6" rotation="0 -42 0" visible="true"></a-entity> -->
 <a-entity gltf-model="models/raccoon-adult.glb" class="scene2 scene2anim" static-body position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing; timeScale: 0"></a-entity>
@@ -219,21 +224,21 @@
 <a-entity gltf-model="models/scene2rock-night.glb" id="scene2rocknight" static-body visible="false"></a-entity>
 <a-entity gltf-model="models/grassspawn.glb" static-body position="0 -0.04 0" surface-scatter="object:#wheatgrassnight; count:100; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
 <a-entity gltf-model="models/rockspawn.glb" static-body position="0 -0.04 0" surface-scatter="object:#scene2rocknight; count:30; scaleJitter: 1 1 1; rotationJitter: 360 360 360; uniformJitter: false" shadow="cast: false; receive: false"></a-entity>
-<a-entity id="mountainlion1" gltf-model="models/mountainlion.glb" class="scene2anim" static-body position="28.3 1.47 -45.8." rotation="0 150 0" animation-mixer="clip: *resting; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="mountainlion1" gltf-model="models/mountainlion.glb" class="scene2anim" static-body position="28.75 1.32 -44.67." rotation="0 140.7 0" animation-mixer="clip: *resting; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="sleepy-shasta" gltf-model="models/shastasloth.glb" class="scene2anim" static-body position="38.86 -0.03 -43.54" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleeping; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *; timeScale: 0"></a-entity>
-<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2sbc" static-body position="51.97 1.78 -40.55" rotation="0 0 0" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; timeScale: 0"></a-entity>
+<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2sbc" static-body position="52.08 1.79 -40.55" rotation="0 0 0" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2anim" static-body position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose; clampWhenFinished: false; timeScale: 0"></a-entity>
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
   <a-text position="-1 1 0" value="Welcome to PaleoCA!" color="black" width="2" text="wrapCount: 20"></a-text>
-  <a-entity mixin="credit-text" class="credits" id="credits-1" position="-1 0 0" text="value:  Environment, primate models, and text by Dr. Keith Chan. 
+  <a-entity mixin="credit-text" class="credits" id="credits-1" position="-1 0 0" text="value: By Dr. Keith Chan. 
   
   This program is presented with the CC-Attribution-NonCommercial-ShareAlike 3.0 license. You may display this app and modify its code for your non-commericial use.
     
-  The information presented is one common view of the scientific evidence, but not necessarily the only one.
+  The information on prehistoric life presented here is one common view of the scientific evidence, but not necessarily the only one.
   
   Contact me: drkeithcchan@gmail.com
   Github: https://github.com/chekeichan/PaleoCA
@@ -243,37 +248,60 @@
 <!-- Credits and Info -->
 <a-entity id="creditsbackground" mixin="index-background" static-body="shape: box;" class="clickable static" position="-7.37 2.14 7.04" rotation="0 158.3 0" visible="true">
 <a-text position="-1 1 0" value="Credits and Info" color="black" width="2" text="wrapCount: 20"></a-text>
-<a-entity mixin="credit-text" class="credits" id="credits-1" position="-1 0 0" text="value:  Environment, primate models, and text by Dr. Keith Chan. 
+<a-entity mixin="credit-text" class="credits" id="credits-1" position="-1 0 0" text="value: -=3D Model Sources=-
+-Scene 0: Lobby-
+Room and Time Pod
+Keith Chan (CC BY-NC-SA 3.0)
 
-This program is presented with the CC-Attribution-NonCommercial-ShareAlike 3.0 license. You may display this app and modify its code for your non-commericial use.
-  
-The information presented is one common view of the scientific evidence, but not necessarily the only one.
+-Scene 1: Los Angeles-
+Los Angeles (Downtown), USA. 
+jack.simmons (CC Attribution)
+https://skfb.ly/ooAUG
 
-Contact me: drkeithcchan@gmail.com
-Github: https://github.com/chekeichan/PaleoCA
-Stay up to date: http://www.keithcchan.com/tag/paleoca;"></a-entity>
+Room and Time Tunnel
+Keith Chan (CC BY-NC-SA 3.0)
 
-<a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1 0 0" text="value: -Model Sources-
-All models are used under Creative Commons or similar licenses. Models have been converted to low poly for VR presentation.
+-Scene 2: Pinyon-Juniper Woodland-
+Landscape and Plants
+Keith Chan (CC BY-NC-SA 3.0)
 
--Starting Area-
-Crystal structure of monoclonal human anti-rhesus D Fc and IgG1 t125(yb2/0) in the presence of EDTA
-NIH 3D Print Exchange (Public Domain)
-https://3dprint.nih.gov/discover/3dpx-007943
+Low poly raccoon (Procyon lotor)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/otsOA
 
--LA Model-
-Neanderthal Composite reference
-Sawyer, G. J., &amp; Maley, B. (2005). Neanderthal reconstructed. The Anatomical Record Part B: The New Anatomist, 283B(1), 23–31.
+Low poly mountain lion (Puma concolor)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/otsBt
 
--Scene 2-
--=Early Primate Fossils=-
-Sahelanthropus tchadensis
-svtlille (CC-Attribution)
-https://sketchfab.com/3d-models/sahelanthropus-tchadensis-1771d060561f4c74b651ee2
+Low poly saber-toothed cat (Smilodon fatalis)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/ospHy
 
-Australopithecus aethiopicus
-Geoffrey Marchal (CC-Attribution-NonCommercial)
-https://sketchfab.com/3d-models/paranthropus-aethiopicus-b45efcb8b6fa459bb7f0e5726ac1d3e7
+Low poly Shasta ground sloth (Nothrotheriops)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/ospTG
+"></a-entity>
+
+<a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1 0 0" text="value: -Sound Sources-
+120827 Raccoon, bark, screech, yelp, squeal, backyard, Toronto.wav
+Thomas Ryder Payne (CC0 1.0)
+https://freesound.org/s/616622/
+
+big thud2.wav
+Reitanna Seishin (CC0 1.0)
+https://freesound.org/s/332668/
+
+Crickets At Night - Clean sound
+Defelozedd94 (CC0 1.0)
+https://freesound.org/s/522298/
+
+long wispy woosh4.wav
+newagesoup (CC0 1.0)
+https://freesound.org/s/377827/
+
+Sci-Fi Doors-Airlock Sound Effect
+Ryan King (CC0 1.0)
+https://freesound.org/s/607265/
 
 Australopithecus platyops
 Geoffrey Marchal (CC-Attribution-NonCommercial)
@@ -299,26 +327,38 @@ https://www.morphosource.org/concern/media/000394515
 ;"></a-entity>
 
 <a-entity mixin="credit-text" class="credits" id="credits-3" position="-0.7 2 -7.49" visible="false" text="value: VR Sources
-Diego Marcos, Don McCurdy, and Kevin Ngo
 A-Frame
+Diego Marcos, Don McCurdy, and Kevin Ngo
+https://github.com/aframevr/aframe
 
-n5ro and Don McCurdy
-A-Frame Extras
-A-Frame Physics System
+A-Frame Along Path Component
+protyze
+https://github.com/protyze/aframe-alongpath-component
 
+A-Frame Curves
+Ada Rose Cannon
+https://github.com/AdaRoseCannon/aframe-curves
+
+A-Frame Event Set
 Kevin Ngo
-A-Frame Event Set Component
-A-Frame AABB Collider
+https://github.com/amitwaghmare/aframe-event-set-component
 
-Will Murphy
-A-Frame Physics Extras
-Super-Hands
+A-Frame Extras
+c-frame, Don McCurdy, n5ro
+https://github.com/c-frame/aframe-extras
 
-Jure Triglav and Fernando Serrano
-A-Frame Blink Controls Component
+A-Frame Super Hands
+c-frame and Will Murphy
+https://github.com/c-frame/aframe-super-hands-component
 
-Ben Erwin and Piotr Adam Milewski
-Special Fixes;"></a-entity>
+A-Frame Surface Scatter
+Ada Rose Cannon
+https://github.com/AdaRoseCannon/aframe-surface-scatter
+
+Special Thanks
+Ben Erwin and Point Cloud Productions
+Natural History Museum of Los Angeles County
+;"></a-entity>
 </a-entity></a-entity>
 
 </a-scene>
