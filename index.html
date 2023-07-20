@@ -16,8 +16,8 @@
 <script src="https://cdn.jsdelivr.net/gh/zach-capalbo/aframe-extras/dist/aframe-extras.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
 <script src="js/aframe-physics-system.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aframe-aabb-collider-component@3.1.0/dist/aframe-aabb-collider-component.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/aframe-aabb-collider-component@3.1.0/dist/aframe-aabb-collider-component.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script> -->
 <script src="js/aframe-alongpath-component.js"></script> <!-- Custom code to fix rig camera angle-->
 <script src="https://cdn.jsdelivr.net/npm/aframe-curves@1.0.0/build/curve.min.js"></script>
 <script src="js/aframe-surface-scatter.min.js"></script>
@@ -65,7 +65,7 @@
  </a-assets>
 
 <!-- Player Character -->
-<a-entity id="rig" tour-guide rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
+<a-entity id="rig" tour-guide tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
 <!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
   <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 0.5 0"></a-entity>
         <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 5; objects: .clickable"  position="0 1.6 0">
@@ -89,7 +89,7 @@
 <!-- <a-light id="scene2light4" color="#fedccb" position="47.8.2 4.7 -37.2" light="type: point; intensity: 2; decay: 0.1; distance: 7"></a-light> SBC dawn light-->
 
 <a-curve id="track0" closed="false" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Pre-Start -->
-  <a-curve-point id="track_straight0_0" position="0 0 4.999" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight0_0" position="0 0 5.0001" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight1_0a" position="0 0 5" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
@@ -201,9 +201,9 @@
 <a-entity gltf-model="models/scene1.glb" class="scene1" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="swinging-door" class="scene1sound" position="0.07 1.7 -3.4" sound="src: #swinging-door-sound; loop: false; maxDistance: 4"></a-entity>
 <a-entity id="timetunnel-door-1-entrance" class="scene1sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel-door-1-exit" class="scene1sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel-door-2-entrance" class="scene2sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel-door-3-exit" class="scene0sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-1-exit" class="scene1sound" position="22.22 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-2-entrance" class="scene2sound" position="49.89 1.6 --23.2" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-3-exit" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 
 <a-entity gltf-model="models/scene2.glb" class="scene2" static-body position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
 <a-entity id="crickets1" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
@@ -247,8 +247,9 @@
 
 <!-- Credits and Info -->
 <a-entity id="creditsbackground" mixin="index-background" static-body="shape: box;" class="clickable static" position="-7.37 2.14 7.04" rotation="0 158.3 0" visible="true">
-<a-text position="-1 1 0" value="Credits and Info" color="black" width="2" text="wrapCount: 20"></a-text>
-<a-entity mixin="credit-text" class="credits" id="credits-1" position="-1 0 0" text="value: -=3D Model Sources=-
+  <a-entity id="creditbutt" mixin="settingsbutton button" togg-cred static-body="shape: box;" class="scene0 clickable static" position="0 0.15 0.05" visible="true"></a-entity>
+  <a-text position="-1 1 0" value="Credits and Info" color="black" width="2" text="wrapCount: 20"></a-text>
+  <a-entity mixin="credit-text" class="credits" id="credits-1" position="-1 0 0" text="value: -=3D Model Sources=-
 -Scene 0: Lobby-
 Room and Time Pod
 Keith Chan (CC BY-NC-SA 3.0)
@@ -282,7 +283,7 @@ Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/ospTG
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1 0 0" text="value: -Sound Sources-
+  <a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1 0 0" text="value: -Sound Sources-
 120827 Raccoon, bark, screech, yelp, squeal, backyard, Toronto.wav
 Thomas Ryder Payne (CC0 1.0)
 https://freesound.org/s/616622/
@@ -326,7 +327,7 @@ Original Source: Morphosource. The University of the Witwatersrand. Collection U
 https://www.morphosource.org/concern/media/000394515
 ;"></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-3" position="-0.7 2 -7.49" visible="false" text="value: VR Sources
+  <a-entity mixin="credit-text" class="credits" id="credits-3" position="-0.7 2 -7.49" visible="false" text="value: VR Sources
 A-Frame
 Diego Marcos, Don McCurdy, and Kevin Ngo
 https://github.com/aframevr/aframe

@@ -1,4 +1,4 @@
-console.warn = console.error = () => {}; // Suppresses Three.js warnings. Remove to debug
+// console.warn = console.error = () => {}; // Suppresses Three.js warnings. Remove to debug
 
 AFRAME.registerComponent('device-set', { // Device-specific settings
     init: function() {
@@ -42,18 +42,75 @@ AFRAME.registerComponent("tour-start", {
         var rig = document.querySelector('#rig');
         var podplaceholder = document.querySelector('#podplaceholder');
         var pod = document.querySelector('#pod');
+        var transition = document.querySelector("#transition");
 
-        el.addEventListener("grab-start", function(evt) {
+        var transitionclose = function() {
+            transition.dispatchEvent(new CustomEvent("transitionclose"));
+            setTimeout(function(){warpwarp();}, 700); // value has to match animation speed, I guess?!
+        };
+
+        var warpwarp = function() {
+            rig.object3D.position.set(0, 0, 5);
+            rig.object3D.rotation.set(0, 0, 0);
             podplaceholder.object3D.visible = false;
             pod.object3D.visible = true;
-            rig.object3D.position.set(0, 0, 0);
-            rig.setAttribute('rotation', {y: 1.5708});
+            // if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC and mobile mode
+            //     rig.components['movement-controls'].updateNavLocation();
+            // }
+            setTimeout(function(){transitionopen();}, 700)
+        };
+        
+        var transitionopen = function() {
+            transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track1', dur: 80000, triggerRadius: 0.1}) // Set to #track1 dur 75000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track1', dur: 80000, triggerRadius: 0.1}) // Set to #track1 dur 80000 for tour start
+        };
+
+        el.addEventListener("mouseup", function(evt) {
+            transitionclose();
+
         })
     }}
-)
+);
+
+AFRAME.registerComponent("tour-end", {
+    init: function() {
+        var el = this.el;
+        var rig = document.querySelector('#rig');
+        var podplaceholder = document.querySelector('#podplaceholder');
+        var pod = document.querySelector('#pod');
+        var transition = document.querySelector("#transition");
+
+        var transitionclose = function() {
+            transition.dispatchEvent(new CustomEvent("transitionclose"));
+            setTimeout(function(){warpwarp();}, 700); // value has to match animation speed, I guess?!
+        };
+
+        var warpwarp = function() {
+            rig.object3D.position.set(-6.5, 0.6, 5);
+            rig.object3D.rotation.set(0, -1.5, 0);
+            podplaceholder.object3D.visible = true;
+            pod.object3D.visible = false;
+            // if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC and mobile mode
+            //     rig.components['movement-controls'].updateNavLocation();
+            // }
+            setTimeout(function(){transitionopen();}, 700)
+        };
+        
+        var transitionopen = function() {
+            transition.dispatchEvent(new CustomEvent("transitionopen"));
+            // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
+            // rig.removeAttribute('movement-controls');
+        };
+
+        el.addEventListener("endtour", function(evt) {
+            transitionclose();
+            rig.removeAttribute('alongpath');
+
+        })
+    }}
+);
 
 AFRAME.registerComponent("tour-guide", {
     init: function() {
@@ -158,12 +215,14 @@ AFRAME.registerComponent("tour-guide", {
                         aniswitch(light1, "distance", 11.9);
                         console.log('light1 move to raccoons')
                         break;
-                    case "track_straight2_2":
+                    case "track_straight2_1b":
                         aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.open");
                         aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
                         aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
                         timetunneldoor1exit.components.sound.playSound();
                         console.log('time door open 2');
+                        break;
+                    case "track_straight2_2":
                         aniswitch(light2, "position", {x: 49.65, y: 4.7, z: -22.5});
                         aniswitch(light2, "color", "#fedccb");
                         aniswitch(light2, "intensity", 2);
@@ -251,6 +310,7 @@ AFRAME.registerComponent("tour-guide", {
                             aniswitch(each, "animation-mixer.loop", "once");
                             aniswitch(each, "animation-mixer.clampWhenFinished", "true");
                         };
+                        timetunneldoor3exit.components.sound.playSound();
                         console.log('time door exit open 2');
                         for (let each of scene2animations) {
                             aniswitch(each, "animation-mixer.timeScale", "0");
@@ -273,6 +333,10 @@ AFRAME.registerComponent("tour-guide", {
                         };
                         timetunneldoor3exit.components.sound.playSound();
                         console.log('time door exit close 2');
+                    break;
+                    case "track_straight_end_1_6":
+                        rig.dispatchEvent(new CustomEvent("endtour"));
+                        console.log('dismount to starting platform');
                     break;
                 }    
 
@@ -395,5 +459,24 @@ rig.addEventListener("movingended__#track2", function(){
           });
         }
       });
+
+// Credits Flipper
+AFRAME.registerComponent("togg-cred", {
+    init: function() {
+        var el = this.el;
+      var counter = 0;  
+        var creditslist = document.getElementsByClassName("credits");
+        el.addEventListener("mouseup", function(evt) {
+        for (let each of creditslist) {
+                    each.setAttribute("visible", false);     
+            }
+            counter++;
+            if (counter > 2) { // Value is total panels minus one
+                counter = 0;
+             }
+            creditslist[counter].setAttribute("visible", true);
+        })
+    }}
+)
     
   
