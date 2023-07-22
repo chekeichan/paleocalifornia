@@ -38,18 +38,18 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
 
 AFRAME.registerComponent("tour-start", {
     init: function() {
-        var el = this.el;
-        var rig = document.querySelector('#rig');
-        var podplaceholder = document.querySelector('#podplaceholder');
-        var pod = document.querySelector('#pod');
-        var transition = document.querySelector("#transition");
+        const el = this.el;
+        const rig = document.querySelector('#rig');
+        const podplaceholder = document.querySelector('#podplaceholder');
+        const pod = document.querySelector('#pod');
+        const transition = document.querySelector("#transition");
 
-        var transitionclose = function() {
+        const transitionclose = function() {
             transition.dispatchEvent(new CustomEvent("transitionclose"));
             setTimeout(function(){warpwarp();}, 700); // value has to match animation speed, I guess?!
         };
 
-        var warpwarp = function() {
+        const warpwarp = function() {
             rig.object3D.position.set(0, 0, 5);
             rig.object3D.rotation.set(0, 0, 0);
             podplaceholder.object3D.visible = false;
@@ -60,7 +60,7 @@ AFRAME.registerComponent("tour-start", {
             setTimeout(function(){transitionopen();}, 700)
         };
         
-        var transitionopen = function() {
+        const transitionopen = function() {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
@@ -76,29 +76,35 @@ AFRAME.registerComponent("tour-start", {
 
 AFRAME.registerComponent("tour-end", {
     init: function() {
-        var el = this.el;
-        var rig = document.querySelector('#rig');
-        var podplaceholder = document.querySelector('#podplaceholder');
-        var pod = document.querySelector('#pod');
-        var transition = document.querySelector("#transition");
+        const el = this.el;
+        const rig = document.querySelector('#rig');
+        const podplaceholder = document.querySelector('#podplaceholder');
+        const pod = document.querySelector('#pod');
+        const transition = document.querySelector("#transition");
 
-        var transitionclose = function() {
+        const transitionclose = function() {
             transition.dispatchEvent(new CustomEvent("transitionclose"));
             setTimeout(function(){warpwarp();}, 700); // value has to match animation speed, I guess?!
         };
 
-        var warpwarp = function() {
+        const warpwarp = function() {
             rig.object3D.position.set(-6.5, 0.6, 5);
             rig.object3D.rotation.set(0, -1.5, 0);
             podplaceholder.object3D.visible = true;
             pod.object3D.visible = false;
+            AFRAME.utils.entity.setComponentProperty(light1, "position", {x: -4.2, y: 3.6, z: 5});
+            AFRAME.utils.entity.setComponentProperty(light1, "color", "white");
+            AFRAME.utils.entity.setComponentProperty(light1, 'animation', {property: 'light.intensity', from: 2, to: 1.5, dur: 2000});
+            AFRAME.utils.entity.setComponentProperty(light1, "decay", 1);
+            AFRAME.utils.entity.setComponentProperty(light1, "distance", 15);
+            console.log('light1 move to end')
             // if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC and mobile mode
             //     rig.components['movement-controls'].updateNavLocation();
             // }
             setTimeout(function(){transitionopen();}, 700)
         };
         
-        var transitionopen = function() {
+        const transitionopen = function() {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
@@ -112,7 +118,7 @@ AFRAME.registerComponent("tour-end", {
     }}
 );
 
-AFRAME.registerComponent("tour-guide", {
+AFRAME.registerComponent("tour-mechanics", {
     init: function() {
         var rig = document.querySelector('#rig');
         var sceneEl = document.querySelector('a-scene');
@@ -124,29 +130,33 @@ AFRAME.registerComponent("tour-guide", {
         
         var scene0toggle = sceneEl.querySelectorAll('.scene0');
         var startdoors = document.querySelector('#start-doors');
-        var swingingdoor = document.querySelector('#swinging-door');
+        var swingingdoor = document.querySelector('#swinging-door-s');
 
         var scene1toggle = sceneEl.querySelectorAll('.scene1');
+        var timetunnel1insidesound = document.querySelector('#timetunnel1-inside-s');
 
         var scene2toggle = sceneEl.querySelectorAll('.scene2');
         var scene2animations = sceneEl.querySelectorAll('.scene2anim');
         var sleepyshasta = document.querySelector('#sleepy-shasta');
-        var crickets1 = document.querySelector('#crickets1');
-        var crickets2 = document.querySelector('#crickets2');
-        var crickets3 = document.querySelector('#crickets3');
-        var raccoonyelp = document.querySelector('#raccoon-yelp');
+        var crickets1 = document.querySelector('#crickets1-s');
+        var crickets2 = document.querySelector('#crickets2-s');
+        var crickets3 = document.querySelector('#crickets3-s');
+        var raccoonyelp = document.querySelector('#raccoon-yelp-s');
+        var sbcplants1 = document.querySelector('#sbcplants1-s');
+        var sbcplants2 = document.querySelector('#sbcplants2-s');
+
         var eatingshasta = document.querySelector('#eating-shasta');
         var joshuatree = document.querySelector('#joshua-tree');
         var sbc1 = sceneEl.querySelectorAll('.scene2sbc');
 
         var timetunneldoor1 = document.querySelector('#timetunnel1-outside');
         var timetunnel1 = document.querySelector('#timetunnel1-inside');
-        var timetunneldoor1ent = document.querySelector('#timetunnel-door-1-entrance');
-        var timetunneldoor1exit = document.querySelector('#timetunnel-door-1-exit');
+        var timetunneldoor1ent = document.querySelector('#timetunnel-door-1-entrance-s');
+        var timetunneldoor1exit = document.querySelector('#timetunnel-door-1-exit-s');
         var timetunneldoor2 = sceneEl.querySelectorAll('.linkedtunnelout');
         var timetunnel2 = sceneEl.querySelectorAll('.linkedtunnel');
-        var timetunneldoor2ent = document.querySelector('#timetunnel-door-2-entrance');
-        var timetunneldoor3exit = document.querySelector('#timetunnel-door-3-exit');
+        var timetunneldoor2ent = document.querySelector('#timetunnel-door-2-entrance-s');
+        var timetunneldoor3exit = document.querySelector('#timetunnel-door-3-exit-s');
 
         var visiswitch = function(zone, toggle) {
             for (let each of zone) {
@@ -161,6 +171,12 @@ AFRAME.registerComponent("tour-guide", {
         var aniswitchdelay = function(entity, setting, detail, delay) {
             setTimeout(() => {
                 AFRAME.utils.entity.setComponentProperty(entity, setting, detail);
+            }, delay);
+        };
+
+        var audiswitchdelay = function(entity, toggle, delay) {
+            setTimeout(() => {
+                entity.components.sound[toggle + 'Sound']();
             }, delay);
         };
 
@@ -195,6 +211,8 @@ AFRAME.registerComponent("tour-guide", {
                         aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
                         timetunneldoor1ent.components.sound.playSound();
                         console.log('time door open 1');
+                        timetunnel1insidesound.components.sound.playSound();
+                        console.log('time tunnel 1 inside sound on');
                         break;
                      case "track_turn1_3":
                         aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.close");
@@ -237,14 +255,16 @@ AFRAME.registerComponent("tour-guide", {
                         aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
                         aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
                         console.log('time door close 2');
-                        aniswitch(timetunnel1, "animation-mixer.timeScale", "0");
-                        console.log('Time Tunnel undulate off');
+                        audiswitchdelay(timetunnel1insidesound, stop, 1600)
+                        console.log('time tunnel 1 inside sound off');
                         crickets2.components.sound.playSound();
                         console.log('play cricket sounds')
                         raccoonyelp.components.sound.playSound();
                         console.log('play raccoon yelp')
                         break;
                     case "track_turn2_3":
+                        aniswitch(timetunnel1, "animation-mixer.timeScale", "0");
+                        console.log('Time Tunnel undulate off');
                         crickets3.components.sound.playSound();
                         console.log('play cricket sounds')
                         break;
@@ -266,6 +286,8 @@ AFRAME.registerComponent("tour-guide", {
                             aniswitch(each, "animation-mixer.loop", "once");
                             aniswitch(each, "animation-mixer.clampWhenFinished", "true");
                         };
+                        audiswitchdelay(sbcplants1, play, 5200);
+                        audiswitchdelay(sbcplants2, play, 17740);
                         console.log('SBC sequence');
                     break;
                     case "track_turn4_2":
@@ -304,7 +326,7 @@ AFRAME.registerComponent("tour-guide", {
                         aniswitch(light1, 'animation', {property: 'light.intensity', from: 2, to: 1.5, dur: 2000});
                         aniswitch(light1, "decay", 1);
                         aniswitch(light1, "distance", 15);
-                        console.log('light1 move to end')
+                        console.log('light1 move to scene 0 for dismount')
                         for (let each of timetunneldoor2) {
                             aniswitch(each, "animation-mixer.clip", "TimeTunnel.door.exit.open");
                             aniswitch(each, "animation-mixer.loop", "once");
@@ -316,6 +338,10 @@ AFRAME.registerComponent("tour-guide", {
                             aniswitch(each, "animation-mixer.timeScale", "0");
                         };
                         console.log('Scene 2 looping animations off');
+                    break;
+                    case "track_straight_end_1_3":
+                        aniswitch(ambilight, 'animation', {property: 'light.intensity', to: 0.1, dur: 4000});
+                        console.log('ambient light back to original');
                     break;
                     case "track_straight_end_1_4":
                         visiswitch(scene1toggle, "true");
@@ -333,8 +359,15 @@ AFRAME.registerComponent("tour-guide", {
                         };
                         timetunneldoor3exit.components.sound.playSound();
                         console.log('time door exit close 2');
+
                     break;
                     case "track_straight_end_1_6":
+                        aniswitch(timelight, "position", {x: 14.4, y: 1.6, z: -20});
+                        console.log('time light 1 to original position');
+                        for (let each of timetunnel2) {
+                            aniswitch(each, "animation-mixer.timeScale", "0");
+                        };
+                        console.log('Time Tunnel 2 undulate off');
                         rig.dispatchEvent(new CustomEvent("endtour"));
                         console.log('dismount to starting platform');
                     break;
@@ -343,20 +376,13 @@ AFRAME.registerComponent("tour-guide", {
 
 })
 
-/* aniswitch(light1, "position", {x: -4.2, y: 3.6, z: 5});
-                        aniswitch(light1, "color", "white");
-                        aniswitch(light1, 'animation', {property: 'light.intensity', from: 2, to: 1.5, dur: 2000});
-                        aniswitch(light1, "decay", 1);
-                        aniswitch(light1, "distance", 15);
-                        console.log('light1 move to end') */
-
 sceneEl.addEventListener("animation-loop", function(e) {
     console.log(e.target.id);
     switch(e.target.id) {
         case "sleepy-shasta":
             var rand = Math.floor(Math.random() * 10);
             console.log(rand);
-            if (rand === 0) {
+            if (rand < 3) {
                 aniswitch(sleepyshasta, "animation-mixer.clip", "shasta.waking");
                 aniswitch(sleepyshasta, "animation-mixer.clampWhenFinished", "true");
             console.log('waking');
@@ -369,7 +395,7 @@ sceneEl.addEventListener("animation-loop", function(e) {
         case "eating-shasta":
             var rand = Math.floor(Math.random() * 10);
             console.log(rand);
-            if (rand > 0) {
+            if (rand > 8) {
                 aniswitch(eatingshasta, "animation-mixer.clip", "shasta.looking");
                 aniswitch(eatingshasta, "animation-mixer.clampWhenFinished", "true");
                 aniswitch(joshuatree, "animation-mixer.clip", "joshuatree.swaying");
@@ -412,13 +438,13 @@ rig.addEventListener("movingended__#track2", function(){
 
     AFRAME.registerComponent('buttonlogic', {
         init: function () {    
-          var el = this.el;
-          var originalColor = el.getAttribute('material').color;
-          var vignette = document.querySelector('#vignette');
-          var vignettetext = document.querySelector('#vignettetext');
-          var trackorbstext = document.querySelector('#trackorbstext');
-          var track = document.querySelectorAll('.track');
-          var track1 = document.querySelector('#track1');
+          const el = this.el;
+          const originalColor = el.getAttribute('material').color;
+          const vignette = document.querySelector('#vignette');
+          const vignettetext = document.querySelector('#vignettetext');
+          const trackorbstext = document.querySelector('#trackorbstext');
+          const track = document.querySelectorAll('.track');
+          const track1 = document.querySelector('#track1');
 
           el.addEventListener('raycaster-intersected', function () {
             el.setAttribute('material', 'color', 'yellow');
@@ -463,15 +489,15 @@ rig.addEventListener("movingended__#track2", function(){
 // Credits Flipper
 AFRAME.registerComponent("togg-cred", {
     init: function() {
-        var el = this.el;
-      var counter = 0;  
-        var creditslist = document.getElementsByClassName("credits");
+        const el = this.el;
+      let counter = 0;  
+        const creditslist = document.querySelectorAll(".credits");
         el.addEventListener("mouseup", function(evt) {
         for (let each of creditslist) {
                     each.setAttribute("visible", false);     
             }
             counter++;
-            if (counter > 2) { // Value is total panels minus one
+            if (counter > 4) { // Value is total panels minus one
                 counter = 0;
              }
             creditslist[counter].setAttribute("visible", true);

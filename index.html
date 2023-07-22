@@ -37,7 +37,10 @@
     <a-asset-item id="swinging-door-sound" response-type="arraybuffer" src="sounds/swinging-door.mp3"></a-asset-item>
     <a-asset-item id="cricket-sound" response-type="arraybuffer" src="sounds/crickets.mp3"></a-asset-item>
     <a-asset-item id="raccoon-yelp-sound" response-type="arraybuffer" src="sounds/raccoon-yelp.mp3"></a-asset-item>
+    <a-asset-item id="timetunnel-sound" response-type="arraybuffer" src="sounds/timetunnel.mp3"></a-asset-item>
     <a-asset-item id="timetunnel-door-sound" response-type="arraybuffer" src="sounds/timetunnel-door.mp3"></a-asset-item>
+    <a-asset-item id="sbc-plants1" response-type="arraybuffer" src="sounds/sbcplants1.mp3"></a-asset-item>
+    <a-asset-item id="sbc-plants2" response-type="arraybuffer" src="sounds/sbcplants2.mp3"></a-asset-item>
 
     <a-mixin id="obj" hoverable grabbable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, abuttondown, bbuttondown, xbuttondown, ybuttondown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, abuttonup, bbuttonup, xbuttonup, ybuttonup, thumbstickup, mouseup" scale="1 1 1" rotation="0 0 0" shadow></a-mixin>
     <a-mixin id="button" static-body hoverable clickable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, thumbstickup, mouseup" shadow></a-mixin>
@@ -55,7 +58,7 @@
     <a-mixin id="table-caption" text="align: right; color: black; lineHeight: 55; wrap-count: 50"></a-mixin>
     <a-mixin id="scale-box" visible="false"></a-mixin>
     <a-mixin id="panel-background" geometry="primitive: box; height: 1; width: 1.25; depth: 0.1; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
-    <a-mixin id="index-background" geometry="primitive: plane; height: 2.5; width: 2.25; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
+    <a-mixin id="index-background" geometry="primitive: plane; height: 3; width: 2.25; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
     <a-mixin id="scale-text" text="color: black; width: 2; wrapCount: 45"></a-mixin>
     <a-mixin id="credit-text" text="anchor: align; color: black; width: 2; wrapCount: 50; lineHeight: 55"></a-mixin>
 		<a-mixin id="settingsbutton" scale ="0.17 0.1 0.17" rotation="-90 0 0" geometry="primitive: cylinder; height: 0.5; segmentsHeight: 2; segmentsRadial: 6; radius: 0.3" material="color: #ffaa00; emissive: #ffaa00; emissiveIntensity: 0.5; flatShading:  true;"></a-mixin>
@@ -65,7 +68,7 @@
  </a-assets>
 
 <!-- Player Character -->
-<a-entity id="rig" tour-guide tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
+<a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
 <!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
   <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 0.5 0"></a-entity>
         <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 5; objects: .clickable"  position="0 1.6 0">
@@ -184,7 +187,6 @@
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="true" class="scene0" position="2.42 3.5 -2" rotation="0 -90 0" value="By Keith Chan" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="true" class="scene0" position="2.35 3.3 3.24" rotation="0 -90 0" value="Experience in development" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="true" class="scene0" position="6 1 0" rotation="0 -90 0" value="Special thanks to A-Frame, La Brea Tar Pits, jack.simmons, and Point Cloud Productions"  color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="true" class="scene0" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
 <a-entity gltf-model="models/track.glb" static-body position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
 <a-entity gltf-model="#start" class="scene0" static-body position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
@@ -195,21 +197,24 @@
 <a-entity id="timetunnel1-inside" gltf-model="models/timetunnel-inside.glb" static-body position="0 0 0" rotation="0 0 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
 <a-entity id="timetunnel2-outside" class="linkedtunnelout" gltf-model="#timetunnel-outside" static-body position="29.8 0 -29" rotation="0 -90 0"></a-entity>
 <a-entity id="timetunnel2-inside" class="linkedtunnel" gltf-model="models/timetunnel-inside.glb" static-body position="29.8 0 -29" rotation="0 -90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
-<a-entity id="timetunnel3-outside" class="linkedtunnelout" gltf-model="#timetunnel-outside" static-body position="20.15 0 37.626" rotation="0 90 0"></a-entity>
-<a-entity id="timetunnel3-inside" class="linkedtunnel" gltf-model="models/timetunnel-inside.glb" static-body position="20.15 0 37.626" rotation="0 90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
+<a-entity id="timetunnel3-outside" class="linkedtunnelout" gltf-model="#timetunnel-outside" static-body position="20.22 0 37.626" rotation="0 90 0"></a-entity>
+<a-entity id="timetunnel3-inside" class="linkedtunnel" gltf-model="models/timetunnel-inside.glb" static-body position="20.17 0 37.626" rotation="0 90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
 
 <a-entity gltf-model="models/scene1.glb" class="scene1" static-body position="0 0 0" rotation="0 0 0"></a-entity>
-<a-entity id="swinging-door" class="scene1sound" position="0.07 1.7 -3.4" sound="src: #swinging-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel-door-1-entrance" class="scene1sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel-door-1-exit" class="scene1sound" position="22.22 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel-door-2-entrance" class="scene2sound" position="49.89 1.6 --23.2" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel-door-3-exit" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="swinging-door-s" class="scene1sound" position="0.07 1.7 -3.4" sound="src: #swinging-door-sound; loop: false; maxDistance: 10"></a-entity>
+<a-entity id="timetunnel1-inside-s" class="scene1sound" position="13.9 1.7 -20" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; volume: 1"></a-entity>
+<a-entity id="timetunnel-door-1-entrance-s" class="scene1sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-1-exit-s" class="scene1sound" position="22.22 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-2-entrance-s" class="scene2sound" position="49.89 1.6 -23.2" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel-door-3-exit-s" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 
 <a-entity gltf-model="models/scene2.glb" class="scene2" static-body position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
-<a-entity id="crickets1" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
-<a-entity id="crickets2" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
-<a-entity id="crickets3" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
-<a-entity id="raccoon-yelp" class="scene2sound" position="28.1 3.22 -30" sound="src: #raccoon-yelp-sound; loop: true; maxDistance: 4"></a-entity>
+<a-entity id="crickets1-s" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
+<a-entity id="crickets2-s" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
+<a-entity id="crickets3-s" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; maxDistance: 10"></a-entity>
+<a-entity id="raccoon-yelp-s" class="scene2sound" position="28.1 3.22 -30" sound="src: #raccoon-yelp-sound; loop: true; maxDistance: 4"></a-entity>
+<a-entity id="sbcplants1-s" class="scene2sound" position="51.8 2 -40.5" sound="src: #sbc-plants1; maxDistance: 10"></a-entity>
+<a-entity id="sbcplants2-s" class="scene2sound" position="53.3 2.17 -34.3" sound="src: #sbc-plants2; maxDistance: 10"></a-entity>
 
 
 <a-entity gltf-model="models/plants-scene2-anim.glb" class="scene2 scene2sbc" static-body position="52.055 1.647 -40.55" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; timeScale: 0" shadow="recieve: true"></a-entity>
@@ -228,13 +233,13 @@
 <a-entity id="sleepy-shasta" gltf-model="models/shastasloth.glb" class="scene2anim" static-body position="38.86 -0.03 -43.54" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleeping; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *; timeScale: 0"></a-entity>
-<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2sbc" static-body position="52.08 1.79 -40.55" rotation="0 0 0" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; timeScale: 0"></a-entity>
+<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2sbc" static-body position="52.08 1.805 -40.55" rotation="0 0 0" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2anim" static-body position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose; clampWhenFinished: false; timeScale: 0"></a-entity>
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
   <a-text position="-1 1 0" value="Welcome to PaleoCA!" color="black" width="2" text="wrapCount: 20"></a-text>
-  <a-entity mixin="credit-text" class="credits" id="credits-1" position="-1 0 0" text="value: By Dr. Keith Chan. 
+  <a-entity mixin="credit-text" class="" id="" position="-1 0 0" text="value: By Dr. Keith Chan
   
   This program is presented with the CC-Attribution-NonCommercial-ShareAlike 3.0 license. You may display this app and modify its code for your non-commericial use.
     
@@ -247,8 +252,8 @@
 
 <!-- Credits and Info -->
 <a-entity id="creditsbackground" mixin="index-background" static-body="shape: box;" class="clickable static" position="-7.37 2.14 7.04" rotation="0 158.3 0" visible="true">
-  <a-entity id="creditbutt" mixin="settingsbutton button" togg-cred static-body="shape: box;" class="scene0 clickable static" position="0 0.15 0.05" visible="true"></a-entity>
-  <a-text position="-1 1 0" value="Credits and Info" color="black" width="2" text="wrapCount: 20"></a-text>
+  <a-entity id="creditbutt" mixin="settingsbutton button" togg-cred static-body="shape: box;" class="scene0 clickable static" position="-1.3 -2.2 0" visible="true"></a-entity>
+  <a-text position="-1 1.3 0" value="Credits and Info" color="black" width="2" text="wrapCount: 20"></a-text>
   <a-entity mixin="credit-text" class="credits" id="credits-1" position="-1 0 0" text="value: -=3D Model Sources=-
 -Scene 0: Lobby-
 Room and Time Pod
@@ -269,8 +274,9 @@ Keith Chan (CC BY-NC-SA 3.0)
 Low poly raccoon (Procyon lotor)
 Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/otsOA
+"></a-entity>
 
-Low poly mountain lion (Puma concolor)
+  <a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1 0 0" text="value: Low poly mountain lion (Puma concolor)
 Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/otsBt
 
@@ -283,7 +289,7 @@ Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/ospTG
 "></a-entity>
 
-  <a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1 0 0" text="value: -Sound Sources-
+  <a-entity mixin="credit-text" class="credits" id="credits-3" visible="false" position="-1 0 0" text="value: -Sound Sources-
 120827 Raccoon, bark, screech, yelp, squeal, backyard, Toronto.wav
 Thomas Ryder Payne (CC0 1.0)
 https://freesound.org/s/616622/
@@ -296,38 +302,24 @@ Crickets At Night - Clean sound
 Defelozedd94 (CC0 1.0)
 https://freesound.org/s/522298/
 
+hegelmoney-clip.flac
+shimsewn (CC0 1.0)
+https://freesound.org/s/61299/
+
 long wispy woosh4.wav
 newagesoup (CC0 1.0)
 https://freesound.org/s/377827/
 
+moving plant
+Eelke (CC0 1.0)
+https://freesound.org/s/185368/
+
 Sci-Fi Doors-Airlock Sound Effect
 Ryan King (CC0 1.0)
 https://freesound.org/s/607265/
+"></a-entity>
 
-Australopithecus platyops
-Geoffrey Marchal (CC-Attribution-NonCommercial)
-https://sketchfab.com/3d-models/kenyanthropus-platyops-8b7d057abe2c4d50bc90ad5e3d7146fb
-
--= Homo Fossils=-
-Homo habilis
-African Fossils (CC-Attribution-NonCommercial-ShareAlike 3.0)
-https://africanfossils.org/hominids/knmer-1470
-
-Atapuerca 5
-Geoffrey Marchal (CC-Attribution-NonCommercial)
-https://sketchfab.com/3d-models/homo-heidelbergensis-8b07fb8f41a74d589be05e7152a79612
-
-La Chapelle aux Saints 1
-Anatomical Museum (MyMiniFactory Exclusive - Credit - Remix - Noncommercial)
-https://www.myminifactory.com/object/3d-print-the-old-man-of-la-chapelle-70057
-
-Homo naledi - Leti
-Media 000394515: Letimela Reconstruction By Prof Lee Berger [Mesh] [Laser]
-Original Source: Morphosource. The University of the Witwatersrand. Collection U.W. 110. Managed by Sonia Sequeria (CC Attribution-NonCommercial 4.0 International )
-https://www.morphosource.org/concern/media/000394515
-;"></a-entity>
-
-  <a-entity mixin="credit-text" class="credits" id="credits-3" position="-0.7 2 -7.49" visible="false" text="value: VR Sources
+  <a-entity mixin="credit-text" class="credits" id="credits-4" position="-1 0 0" visible="false" text="value: VR Sources
 A-Frame
 Diego Marcos, Don McCurdy, and Kevin Ngo
 https://github.com/aframevr/aframe
@@ -347,8 +339,9 @@ https://github.com/amitwaghmare/aframe-event-set-component
 A-Frame Extras
 c-frame, Don McCurdy, n5ro
 https://github.com/c-frame/aframe-extras
+"></a-entity>
 
-A-Frame Super Hands
+<a-entity mixin="credit-text" class="credits" id="credits-5" position="-1 0 0" visible="false" text="value: A-Frame Super Hands
 c-frame and Will Murphy
 https://github.com/c-frame/aframe-super-hands-component
 
