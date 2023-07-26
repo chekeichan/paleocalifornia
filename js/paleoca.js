@@ -51,7 +51,7 @@ AFRAME.registerComponent("tour-start", {
 
         const warpwarp = function() {
             rig.object3D.position.set(0, 0, 5);
-            rig.object3D.rotation.set(0, 0, 0);
+            camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
             podplaceholder.object3D.visible = false;
             pod.object3D.visible = true;
             // if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC and mobile mode
@@ -64,7 +64,7 @@ AFRAME.registerComponent("tour-start", {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track1', dur: 80000, triggerRadius: 0.1}) // Set to #track1 dur 80000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track3', dur: 30000, triggerRadius: 0.1}) // Set to #track1 dur 80000 for tour start
         };
 
         el.addEventListener("mouseup", function(evt) {
@@ -78,6 +78,7 @@ AFRAME.registerComponent("tour-end", {
     init: function() {
         const el = this.el;
         const rig = document.querySelector('#rig');
+        const camera = document.querySelector('#camera');
         const podplaceholder = document.querySelector('#podplaceholder');
         const pod = document.querySelector('#pod');
         const transition = document.querySelector("#transition");
@@ -89,7 +90,8 @@ AFRAME.registerComponent("tour-end", {
 
         const warpwarp = function() {
             rig.object3D.position.set(-6.5, 0.6, 5);
-            rig.object3D.rotation.set(0, -1.5, 0);
+            // rig.object3D.rotation.set(0, -1.5, 0);
+            camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(-90),0);
             podplaceholder.object3D.visible = true;
             pod.object3D.visible = false;
             AFRAME.utils.entity.setComponentProperty(light1, "position", {x: -4.2, y: 3.6, z: 5});
@@ -120,43 +122,45 @@ AFRAME.registerComponent("tour-end", {
 
 AFRAME.registerComponent("tour-mechanics", {
     init: function() {
-        var rig = document.querySelector('#rig');
-        var sceneEl = document.querySelector('a-scene');
-        var ambilight = document.querySelector('#ambientlight');
-        var light1 = document.querySelector('#light1');
-        var light2 = document.querySelector('#light2');
-        var timelight = document.querySelector('#timetunnellight');
-        var timelight2 = document.querySelector('#timetunnellight2');
+        const rig = document.querySelector('#rig');
+        const sceneEl = document.querySelector('a-scene');
+        const ambilight = document.querySelector('#ambientlight');
+        const light1 = document.querySelector('#light1');
+        const light2 = document.querySelector('#light2');
+        const timelight = document.querySelector('#timetunnellight');
+        const timelight2 = document.querySelector('#timetunnellight2');
         
-        var scene0toggle = sceneEl.querySelectorAll('.scene0');
-        var startdoors = document.querySelector('#start-doors');
-        var swingingdoor = document.querySelector('#swinging-door-s');
+        const scene0toggle = sceneEl.querySelectorAll('.scene0');
+        const startdoors = document.querySelector('#start-doors');
+        const swingingdoor = document.querySelector('#swinging-door-s');
 
-        var scene1toggle = sceneEl.querySelectorAll('.scene1');
-        var timetunnel1insidesound = document.querySelector('#timetunnel1-inside-s');
+        const scene1toggle = sceneEl.querySelectorAll('.scene1');
+        const timetunnel1insidesound = document.querySelector('#timetunnel1-inside-s');
+        const timetunnel2insidesound = document.querySelector('#timetunnel2-inside-s');
+        const timetunnel3insidesound = document.querySelector('#timetunnel3-inside-s');
 
-        var scene2toggle = sceneEl.querySelectorAll('.scene2');
-        var scene2animations = sceneEl.querySelectorAll('.scene2anim');
-        var sleepyshasta = document.querySelector('#sleepy-shasta');
-        var crickets1 = document.querySelector('#crickets1-s');
-        var crickets2 = document.querySelector('#crickets2-s');
-        var crickets3 = document.querySelector('#crickets3-s');
-        var raccoonyelp = document.querySelector('#raccoon-yelp-s');
-        var sbcplants1 = document.querySelector('#sbcplants1-s');
-        var sbcplants2 = document.querySelector('#sbcplants2-s');
+        const scene2toggle = sceneEl.querySelectorAll('.scene2');
+        const scene2animations = sceneEl.querySelectorAll('.scene2anim');
+        const sleepyshasta = document.querySelector('#sleepy-shasta');
+        const crickets1 = document.querySelector('#crickets1-s');
+        const crickets2 = document.querySelector('#crickets2-s');
+        const crickets3 = document.querySelector('#crickets3-s');
+        const raccoonyelp = document.querySelector('#raccoon-yelp-s');
+        const sbcplants1 = document.querySelector('#sbcplants1-s');
+        const sbcplants2 = document.querySelector('#sbcplants2-s');
 
-        var eatingshasta = document.querySelector('#eating-shasta');
-        var joshuatree = document.querySelector('#joshua-tree');
-        var sbc1 = sceneEl.querySelectorAll('.scene2sbc');
+        const eatingshasta = document.querySelector('#eating-shasta');
+        const joshuatree = document.querySelector('#joshua-tree');
+        const sbc1 = sceneEl.querySelectorAll('.scene2sbc');
 
-        var timetunneldoor1 = document.querySelector('#timetunnel1-outside');
-        var timetunnel1 = document.querySelector('#timetunnel1-inside');
-        var timetunneldoor1ent = document.querySelector('#timetunnel-door-1-entrance-s');
-        var timetunneldoor1exit = document.querySelector('#timetunnel-door-1-exit-s');
-        var timetunneldoor2 = sceneEl.querySelectorAll('.linkedtunnelout');
-        var timetunnel2 = sceneEl.querySelectorAll('.linkedtunnel');
-        var timetunneldoor2ent = document.querySelector('#timetunnel-door-2-entrance-s');
-        var timetunneldoor3exit = document.querySelector('#timetunnel-door-3-exit-s');
+        const timetunneldoor1 = document.querySelector('#timetunnel1-outside');
+        const timetunnel1 = document.querySelector('#timetunnel1-inside');
+        const timetunneldoor1ent = document.querySelector('#timetunnel-door-1-entrance-s');
+        const timetunneldoor1exit = document.querySelector('#timetunnel-door-1-exit-s');
+        const timetunneldoor2 = sceneEl.querySelectorAll('.linkedtunnelout');
+        const timetunnel2 = sceneEl.querySelectorAll('.linkedtunnel');
+        const timetunneldoor2ent = document.querySelector('#timetunnel-door-2-entrance-s');
+        const timetunneldoor3exit = document.querySelector('#timetunnel-door-3-exit-s');
 
         var visiswitch = function(zone, toggle) {
             for (let each of zone) {
@@ -175,8 +179,13 @@ AFRAME.registerComponent("tour-mechanics", {
         };
 
         var audiswitchdelay = function(entity, toggle, delay) {
+            console.log(toggle);
             setTimeout(() => {
-                entity.components.sound[toggle + 'Sound']();
+                if(toggle == "play") {
+                    entity.components.sound.playSound();
+                } else if (toggle == "stop") {
+                    entity.components.sound.stopSound();
+                };
             }, delay);
         };
 
@@ -239,24 +248,27 @@ AFRAME.registerComponent("tour-mechanics", {
                         aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
                         timetunneldoor1exit.components.sound.playSound();
                         console.log('time door open 2');
+                        crickets1.components.sound.playSound();
+                        console.log('play cricket sounds')
                         break;
-                    case "track_straight2_2":
+                    case "track_straight2_1":
                         aniswitch(light2, "position", {x: 49.65, y: 4.7, z: -22.5});
                         aniswitch(light2, "color", "#fedccb");
                         aniswitch(light2, "intensity", 2);
                         aniswitch(light2, "decay", 0.1);
                         aniswitch(light2, "distance", 5.5);
                         console.log('light2 move to sbc dawn')
-                        crickets1.components.sound.playSound();
-                        console.log('play cricket sounds')
                         break;
-                    case "track_turn2_2":
+                    case "track_turn2_1":
                         aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.close");
                         aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
                         aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
-                        console.log('time door close 2');
-                        audiswitchdelay(timetunnel1insidesound, stop, 1600)
+                        timetunneldoor1exit.components.sound.playSound();
+                        console.log('time door close 1-2');
+                        audiswitchdelay(timetunnel1insidesound, "stop", 2000)
                         console.log('time tunnel 1 inside sound off');
+                        break;
+                    case "track_turn2_2":
                         crickets2.components.sound.playSound();
                         console.log('play cricket sounds')
                         raccoonyelp.components.sound.playSound();
@@ -286,8 +298,8 @@ AFRAME.registerComponent("tour-mechanics", {
                             aniswitch(each, "animation-mixer.loop", "once");
                             aniswitch(each, "animation-mixer.clampWhenFinished", "true");
                         };
-                        audiswitchdelay(sbcplants1, play, 5200);
-                        audiswitchdelay(sbcplants2, play, 17740);
+                        audiswitchdelay(sbcplants1, "play", 5200);
+                        audiswitchdelay(sbcplants2, "play", 17740);
                         console.log('SBC sequence');
                     break;
                     case "track_turn4_2":
@@ -308,6 +320,9 @@ AFRAME.registerComponent("tour-mechanics", {
                         };
                         timetunneldoor2ent.components.sound.playSound();
                         console.log('time door entrance open 2');
+                        timetunnel2insidesound.components.sound.playSound();
+                        timetunnel3insidesound.components.sound.playSound();
+                        console.log('time tunnel 2 inside sound on');
                     break;
                     case "track_straight5_3":
                         visiswitch(scene0toggle, "true");
@@ -317,9 +332,13 @@ AFRAME.registerComponent("tour-mechanics", {
                             aniswitch(each, "animation-mixer.clampWhenFinished", "true");
                         };
                         timetunneldoor2ent.components.sound.playSound();
-                        console.log('time door entrance open 2');
+                        console.log('time door entrance 2 close');
                         aniswitch(light2, 'animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
                     break;
+                    case "track_straight_end_1_1":
+                    visiswitch(scene2toggle, "false");
+                    console.log('scene 2 hide');
+                        break;
                     case "track_straight_end_1_2":
                         aniswitch(light1, "position", {x: -0.123, y: 4.9, z: 5});
                         aniswitch(light1, "color", "white");
@@ -359,6 +378,9 @@ AFRAME.registerComponent("tour-mechanics", {
                         };
                         timetunneldoor3exit.components.sound.playSound();
                         console.log('time door exit close 2');
+                        audiswitchdelay(timetunnel2insidesound, "stop", 2000)
+                        audiswitchdelay(timetunnel3insidesound, "stop", 2000)
+                        console.log('time tunnel 2 inside sound off');
 
                     break;
                     case "track_straight_end_1_6":
@@ -378,13 +400,18 @@ AFRAME.registerComponent("tour-mechanics", {
 
 sceneEl.addEventListener("animation-loop", function(e) {
     console.log(e.target.id);
+    const raccoonscrounging = document.querySelector('#raccoon-scrounging-s');
+    const shastawaking = document.querySelector('#shasta-waking-s');
+    const shastaeating = document.querySelector('#shasta-eating-s');
+    let rand = 0
     switch(e.target.id) {
         case "sleepy-shasta":
-            var rand = Math.floor(Math.random() * 10);
+            rand = Math.floor(Math.random() * 10);
             console.log(rand);
             if (rand < 3) {
                 aniswitch(sleepyshasta, "animation-mixer.clip", "shasta.waking");
                 aniswitch(sleepyshasta, "animation-mixer.clampWhenFinished", "true");
+                shastawaking.components.sound.playSound();
             console.log('waking');
             } else {
                 aniswitch(sleepyshasta, "animation-mixer.clip", "shasta.sleeping");
@@ -393,7 +420,7 @@ sceneEl.addEventListener("animation-loop", function(e) {
             }
             break;
         case "eating-shasta":
-            var rand = Math.floor(Math.random() * 10);
+            rand = Math.floor(Math.random() * 10);
             console.log(rand);
             if (rand > 8) {
                 aniswitch(eatingshasta, "animation-mixer.clip", "shasta.looking");
@@ -404,12 +431,16 @@ sceneEl.addEventListener("animation-loop", function(e) {
                 aniswitch(eatingshasta, "animation-mixer.clip", "shasta.eating");
                 aniswitch(eatingshasta, "animation-mixer.clampWhenFinished", "true");
                 aniswitch(joshuatree, "animation-mixer.clip", "joshuatree.eaten");
+                shastaeating.components.sound.playSound();
                 console.log('eating');
             }
             break;
+        case "scrounging-raccoon":
+            raccoonscrounging.components.sound.playSound();
+            break;
     }
 
-   
+    
 
 
 })
@@ -421,13 +452,13 @@ rig.addEventListener("movingended__#track0", function(){
     
 })
 rig.addEventListener("movingended__#track1", function(){
-   aniswitch(rig, "alongpath.curve", "#track2");
+    aniswitch(rig, "alongpath.curve", "#track2");
     aniswitch(rig, "alongpath.dur", "151000");
     aniswitch(rig, "alongpath.triggerRadius", "0.1");
                     
         })
 rig.addEventListener("movingended__#track2", function(){
-     aniswitch(rig, "alongpath.curve", "#track3");
+    aniswitch(rig, "alongpath.curve", "#track3");
     aniswitch(rig, "alongpath.dur", "53000"); // 30000
     aniswitch(rig, "alongpath.triggerRadius", "0.1");
 })
@@ -439,12 +470,15 @@ rig.addEventListener("movingended__#track2", function(){
     AFRAME.registerComponent('buttonlogic', {
         init: function () {    
           const el = this.el;
+          let counter = 0;
+          const creditslist = document.querySelectorAll(".credits");
           const originalColor = el.getAttribute('material').color;
           const vignette = document.querySelector('#vignette');
           const vignettetext = document.querySelector('#vignettetext');
           const trackorbstext = document.querySelector('#trackorbstext');
           const track = document.querySelectorAll('.track');
           const track1 = document.querySelector('#track1');
+          const beepsound = document.querySelector('#beep-s');
 
           el.addEventListener('raycaster-intersected', function () {
             el.setAttribute('material', 'color', 'yellow');
@@ -462,7 +496,7 @@ rig.addEventListener("movingended__#track2", function(){
                     } else {
                             AFRAME.utils.entity.setComponentProperty(vignettetext, "value", "Vignette: Off");               
                     }
-                break;
+                    break;
                 case "trackorbsbutt":
                     for (let each of track) {
                         each.object3D.visible = !each.getAttribute("visible");
@@ -473,11 +507,22 @@ rig.addEventListener("movingended__#track2", function(){
                         } else {
                                 AFRAME.utils.entity.setComponentProperty(trackorbstext, "value", "Track Orbs: Off");
                         }
-                    
-                break;
+                    break;
+                case "creditsbutt":
+                    for (let each of creditslist) {
+                        each.setAttribute("visible", false);     
+                    }
+                    counter++;
+                    if (counter > 5) { // Value is total panels minus one
+                        counter = 0;
+                    }
+                    creditslist[counter].setAttribute("visible", true);
+                    break;
+                
             }
           });
           el.addEventListener('mouseup', function () {
+            beepsound.components.sound.playSound();
             el.setAttribute('material', 'color', 'orange');
           });
           el.addEventListener('raycaster-intersected-cleared', function () {
@@ -486,23 +531,5 @@ rig.addEventListener("movingended__#track2", function(){
         }
       });
 
-// Credits Flipper
-AFRAME.registerComponent("togg-cred", {
-    init: function() {
-        const el = this.el;
-      let counter = 0;  
-        const creditslist = document.querySelectorAll(".credits");
-        el.addEventListener("mouseup", function(evt) {
-        for (let each of creditslist) {
-                    each.setAttribute("visible", false);     
-            }
-            counter++;
-            if (counter > 4) { // Value is total panels minus one
-                counter = 0;
-             }
-            creditslist[counter].setAttribute("visible", true);
-        })
-    }}
-)
     
   
