@@ -41,8 +41,8 @@ AFRAME.registerComponent("tour-start", {
         const el = this.el;
         const rig = document.querySelector('#rig');
         const camera = document.querySelector('#camera');
-        const podplaceholder = document.querySelector('#podplaceholder');
-        const pod = document.querySelector('#pod');
+        var podplaceholder = document.querySelector('#podplaceholder');
+        var pod = document.querySelector('#pod');
         const transition = document.querySelector("#transition");
         let x = null;
         let y = null;
@@ -64,7 +64,11 @@ AFRAME.registerComponent("tour-start", {
             camera.object3D.position.set(0, 1.6, 0);
             camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
             podplaceholder.object3D.visible = false;
-            pod.object3D.visible = true;
+            if (podvisibility === true) {
+                pod.object3D.visible = true;
+            } else {
+                pod.object3D.visible = false;
+            };
             // if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC and mobile mode
             //     rig.components['movement-controls'].updateNavLocation();
             // }
@@ -313,6 +317,8 @@ AFRAME.registerComponent("tour-mechanics", {
                         audiswitchdelay(sbcplants1, "play", 5200);
                         audiswitchdelay(sbcplants2, "play", 17740);
                         console.log('SBC sequence');
+                        crickets1.components.sound.stopSound();
+                        console.log('stop crickets1 sound')
                     break;
                     case "track_turn4_2":
                         aniswitch(timelight2, "visible", "true");
@@ -481,15 +487,15 @@ rig.addEventListener("movingended__#track2", function(){
         
     }
     })
-
+    
     AFRAME.registerComponent('buttonlogic', {
+        
         init: function () {    
           const el = this.el;
-          let counter = 0;
+          let creditcounter = 0;
           const creditslist = document.querySelectorAll(".credits");
           const originalColor = el.getAttribute('material').color;
-          const vignette = document.querySelector('#vignette');
-          const vignettetext = document.querySelector('#vignettetext');
+          const podvisibletext = document.querySelector('#podvisibletext');
           const trackorbstext = document.querySelector('#trackorbstext');
           const track = document.querySelectorAll('.track');
           const track1 = document.querySelector('#track1');
@@ -505,13 +511,15 @@ rig.addEventListener("movingended__#track2", function(){
             el.setAttribute('material', 'color', 'white');
             console.log(el.id);
             switch(el.id) {
-                case "vignettebutt":
-                    vignette.object3D.visible = !vignette.getAttribute("visible");
-                    console.log('vignette toggle '+vignette.object3D.visible);
-                    if (vignette.object3D.visible === true) {
-                            AFRAME.utils.entity.setComponentProperty(vignettetext, "value", "Vignette: On");
+                case "podvisiblebutt":
+                    podplaceholder.object3D.visible = !podplaceholder.getAttribute("visible");
+                    podvisibility = !podvisibility;
+                    console.log(podvisibility);
+                    console.log(podplaceholder.object3D.visible)
+                    if (podvisibility === true) {
+                            AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
                     } else {
-                            AFRAME.utils.entity.setComponentProperty(vignettetext, "value", "Vignette: Off");               
+                            AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: Off");            
                     }
                     break;
                 case "trackorbsbutt":
@@ -529,11 +537,11 @@ rig.addEventListener("movingended__#track2", function(){
                     for (let each of creditslist) {
                         each.setAttribute("visible", false);     
                     }
-                    counter++;
-                    if (counter > 5) { // Value is total panels minus one
-                        counter = 0;
+                    creditcounter++;
+                    if (creditcounter > 5) { // Value is total panels minus one
+                        creditcounter = 0;
                     }
-                    creditslist[counter].setAttribute("visible", true);
+                    creditslist[creditcounter].setAttribute("visible", true);
                     break;
                 
             }
@@ -549,4 +557,4 @@ rig.addEventListener("movingended__#track2", function(){
       });
 
     
-  
+      var podvisibility = true;

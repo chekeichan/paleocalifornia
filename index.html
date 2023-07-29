@@ -13,7 +13,7 @@
 <meta name="description" content="VR tour of California 40,000 years ago">
 <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/deprecated/Geometry.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/zach-capalbo/aframe-extras/dist/aframe-extras.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
 <script src="js/aframe-physics-system.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/aframe-aabb-collider-component@3.1.0/dist/aframe-aabb-collider-component.min.js"></script>
@@ -169,10 +169,10 @@
 <a-entity id="settingspanel" position="-4.527 1.237 6.344" rotation="-62.62 -126.72 0"> 
   <a-text id="settingstitle" mixin="text-title" position="-0.032 0.356 0.052" rotation="0 0 0" value="Options"></a-text>
   <!-- <a-entity id="settingsbackground" mixin="panel-background" static-body="shape: box;" class="clickable static" position="0.518 0.025 0" visible="true"></a-entity> -->
-  <a-entity id="vignettebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
-  <a-text id="vignettetext" mixin="text-label" position="0.1 0.15 0.05" rotation="0 0 0" value="Vignette: Off"></a-text>
   <a-entity id="trackorbsbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0 0.05" visible="true"></a-entity>
-  <a-text id="trackorbstext" mixin="text-label" position="0.1 0.0 0.05" rotation="0 0 0" value="Track Orbs: Off"></a-text>
+  <a-text id="trackorbstext" mixin="text-label" position="0.1 0.15 0.05" rotation="0 0 0" value="Track Orbs: Off"></a-text>
+  <a-entity id="podvisiblebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
+  <a-text id="podvisibletext" mixin="text-label" position="0.1 0.0 0.05" rotation="0 0 0" value="TimePod: On"></a-text>
   <a-entity id="narrationbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
   <a-text id="narrationtext" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Narration: Educational"></a-text>
   <a-entity id="soundcheck" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
@@ -198,8 +198,6 @@
 <a-entity id="startpost" class="scene0" position="-4.34 1.01 5" geometry="primitive: cylinder; height: 0.85; segmentsHeight: 1; radius: 0.04; segmentsRadial: 4" material="color: #ffffff; blending: none">
   <a-entity id="startbutton" mixin="settingsbutton button" buttonlogic tour-start static-body="shape: box;" class="scene0 clickable static" position="0 0.454 0" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1.02" visible="true"></a-entity>
 </a-entity>
-
-
 
 <a-entity gltf-model="models/scene1.glb" class="scene1" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-outside" gltf-model="#timetunnel-outside" static-body position="0 0 0" rotation="0 0 0"></a-entity>
@@ -253,9 +251,9 @@
   <a-text position="-1 1 0" value="Welcome to PaleoCA!" color="black" width="2" text="wrapCount: 20"></a-text>
   <a-entity mixin="credit-text" class="" id="" position="-1 0 0" text="value: By Dr. Keith Chan
   
-  This program is presented with the CC-Attribution-NonCommercial-ShareAlike 3.0 license. You may display this app and modify its code for your non-commericial use.
+  PaleoCA is inspired by real 'dark rides' that creatively present exciting and fanciful worlds. This program is presented with the CC-Attribution-NonCommercial-ShareAlike 3.0 license. You may display this app and modify its code for your non-commericial use. 
     
-  The information on prehistoric life presented here is one common view of the scientific evidence, but not necessarily the only one.
+  The information on prehistoric life presented here is one common view of the scientific evidence, but not necessarily the only one. PaleoCA would not exist without the Creative Commons models of prehistoric animals commisioned by the Natural History Museum of Los Angeles County, but this site has no affiliation with that organization.
   
   Contact me: drkeithcchan@gmail.com
   Github: https://github.com/chekeichan/PaleoCA
@@ -290,13 +288,13 @@ https://www.thingiverse.com/thing:2383392
 -Scene 2: Pinyon-Juniper Woodland-
 Landscape and Plants
 Keith Chan (CC BY-NC-SA 3.0)
-
-Low poly raccoon (Procyon lotor)
-Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
-https://skfb.ly/otsOA
 "></a-entity>
 
-  <a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1.1 0 0" text="value: Low poly mountain lion (Puma concolor)
+  <a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1.1 0 0" text="value: Low poly raccoon (Procyon lotor)
+  Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+  https://skfb.ly/otsOA
+
+  Low poly mountain lion (Puma concolor)
 Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/otsBt
 
@@ -383,11 +381,7 @@ c-frame, Don McCurdy, n5ro
 https://github.com/c-frame/aframe-extras
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-6" position="-1.1 0 0" visible="false" text="value: A-Frame Super Hands
-c-frame and Will Murphy
-https://github.com/c-frame/aframe-super-hands-component
-
-A-Frame Surface Scatter
+<a-entity mixin="credit-text" class="credits" id="credits-6" position="-1.1 0 0" visible="false" text="value: A-Frame Surface Scatter
 Ada Rose Cannon
 https://github.com/AdaRoseCannon/aframe-surface-scatter
 
