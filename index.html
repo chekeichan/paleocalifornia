@@ -34,6 +34,7 @@
     <a-asset-item id="podstart" response-type="arraybuffer" src="models/pod-start.glb"></a-asset-item>
     <a-asset-item id="timetunnel-outside" response-type="arraybuffer" src="models/timetunnel-outside.glb"></a-asset-item>
 
+    <a-asset-item id="boop-sound" response-type="arraybuffer" src="sounds/boop.mp3"></a-asset-item>
     <a-asset-item id="beep-sound" response-type="arraybuffer" src="sounds/beep.mp3"></a-asset-item>
     <a-asset-item id="swinging-door-sound" response-type="arraybuffer" src="sounds/swinging-door.mp3"></a-asset-item>
     <a-asset-item id="cricket-sound" response-type="arraybuffer" src="sounds/crickets.mp3"></a-asset-item>
@@ -49,13 +50,6 @@
     <a-mixin id="obj" hoverable grabbable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, abuttondown, bbuttondown, xbuttondown, ybuttondown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, abuttonup, bbuttonup, xbuttonup, ybuttonup, thumbstickup, mouseup" scale="1 1 1" rotation="0 0 0" shadow></a-mixin>
     <a-mixin id="button" static-body hoverable clickable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, thumbstickup, mouseup" shadow></a-mixin>
     <a-mixin id="holoprojector" color="#ff6a00" position="0 0.3 0" rotation="180 0 0" height="0.05" geometry="primitive: cone; segmentsRadial: 3; openEnded: true; radiusBottom: 0.5; segmentsHeight: 1" material="emissive: #ff6a00; wireframe: true" animation="property: rotation; to: 180 360 0; loop: true; easing: linear; dur: 10000"></a-mixin>
-                <!-- <a-mixin id="hand" physics-collider static-body="shape: box" collision-filter="collisionForces: false;" 
-				 super-hands="colliderEvent: collisions; 
-                              colliderEventProperty: els;
-                              colliderEndEvent: collisions;
-                              colliderEndEventProperty: clearedEls;
-                              grabStartButtons: trackpaddown, triggerdown, gripclose, gripdown, thumbstickdown, mousedown; 
-                              grabEndButtons: trackpadup, triggerup, gripopen, gripup, thumbstickup, mouseup"></a-mixin>                  -->
     <a-mixin id="text-label" position="0 0 -1" rotation="0 -90 0" text="width: 1.5; color: black; lineHeight: 60; wrap-count: 35"></a-mixin>
     <a-mixin id="text-title" position="0 0 -1" rotation="0 -90 0" visible="true"  text="width: 1.33; color: black; lineHeight: 60; wrap-count: 20"></a-mixin>
     <a-mixin id="burial-label" position="0 0 -1" text="width: 2; color: black; lineHeight: 60; wrap-count: 35"></a-mixin>
@@ -73,17 +67,18 @@
  </a-assets>
 
 <!-- Player Character -->
-<a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
+<a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.5 5" rotation="0 -90 0">
 <!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
-  <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 0.5 0"></a-entity>
-        <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 5; objects: .clickable"  position="0 1.6 0">
-          <a-entity id="crosshair" visible="false" cursor="rayOrigin:mouse" position="0 0 -0.2" geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003" material="color: #0055ff; shader: flat" raycaster="far: 5; objects: .clickable"></a-entity>
-          <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity><!-- Transition animation -->
-          <a-entity id="vignette" position="0 0 -0.05" scale="1 0.73 1" visible="false" geometry="primitive: ring; radiusInner: 0.055; radiusOuter: 0.2" material="color: #0c0c0c; side: front; shader: flat"></a-entity>
-        </a-entity> 
+  <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 1.0 0"></a-entity> 
+  <a-entity id="camera" rotation="180 180 0" camera look-controls cursor="rayOrigin:mouse" raycaster="far: 4; objects: .clickable"  position="0 1.6 0">
+    <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity><!-- Transition animation -->
+    <a-entity id="vignette" position="0 0 -0.05" scale="1 0.73 1" visible="false" geometry="primitive: ring; radiusInner: 0.055; radiusOuter: 0.2" material="color: #0c0c0c; side: front; shader: flat"></a-entity>
+</a-entity>
+        <a-entity id="lefthand" mixin="hand" hand-controls="hand: left; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: left; model: false" raycaster="far: 4; objects: .clickable; showLine: true; lineColor: orange"></a-entity>
+        <a-entity id="righthand" mixin="hand" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: right; model: false" raycaster="far: 4; objects: .clickable; showLine: true; lineColor: orange"></a-entity>
 
-        <a-entity id="lefthand" mixin="hand" hand-controls="hand: left; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: left; model: false" raycaster="far: 2; objects: .clickable" fuse="true" fuse-timeout="500" color="yellow"></a-entity>
-        <a-entity id="righthand" mixin="hand" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: right; model: false" raycaster="far: 2; objects: .clickable" fuse="true" fuse-timeout="500" color="yellow"></a-entity>
+        <a-entity id="boop-s" mixin="sound" class="scene0sound" position="0 1.6 0" sound="src: #boop-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="beep-s" mixin="sound" class="scene0sound" position="0 1.6 0" sound="src: #beep-sound; loop: false; maxDistance: 4"></a-entity>
  </a-entity>
  
 <a-light id="ambientlight" type="ambient" color="white" intensity="0.1"></a-light> 
@@ -156,15 +151,18 @@
 </a-curve>
 
 <a-curve id="track-fake1" class="track" visible="true" closed="false" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
-  <a-curve-point id="track_straight_fake_1_1" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point id="track_straight_fake_1_2" position="49.96 0 -11.3" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point id="track_straight_fake_1_3" position="49.96 0 -7.6" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight_fake_1_1" position="49.96 0 -20.443" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight_fake_1_2" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight_fake_1_3" position="49.96 0 -11.3" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight_fake_1_4" position="49.96 0 -7.6" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight_fake_1_5" position="49.96 0 -3.7" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
 <a-curve id="track-fake2" class="track" visible="true" closed="false" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
   <a-curve-point id="track_straight_fake_2_1" position="0 0 33.548" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight_fake_2_2" position="0 0 28.548" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point id="track_straight_fake_2_1" position="0 0 23.548" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight_fake_2_3" position="0 0 23.548" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight_fake_2_4" position="0 0 19.828" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
 <!-- Settings Panel-->
@@ -195,12 +193,13 @@
 <a-text visible="true" class="scene0" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
 <a-entity gltf-model="models/track.glb" static-body position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
 <a-entity gltf-model="#start" class="scene0" static-body position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
-<a-entity id="podplaceholder" gltf-model="#podstart" static-body="shape: box" visible="true" position="0 0 0"></a-entity>
+<a-entity id="podplaceholder" gltf-model="#podstart" static-body="shape: box" visible="true" position="0 0.5 0"></a-entity>
 <a-entity id="start-doors" class="scene0" visible="true" gltf-model="#startdoors" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="startpost" class="scene0" position="-4.34 1.01 5" geometry="primitive: cylinder; height: 0.85; segmentsHeight: 1; radius: 0.04; segmentsRadial: 4" material="color: #ffffff; blending: none">
   <a-entity id="startbutton" mixin="settingsbutton button" buttonlogic tour-start static-body="shape: box;" class="scene0 clickable static" position="0 0.454 0" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1.02" visible="true"></a-entity>
 </a-entity>
-<a-entity id="beep-s" mixin="sound" class="scene0sound" position="0 1.6 0" sound="src: #beep-sound; loop: false; maxDistance: 4"></a-entity>
+
+
 
 <a-entity gltf-model="models/scene1.glb" class="scene1" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-outside" gltf-model="#timetunnel-outside" static-body position="0 0 0" rotation="0 0 0"></a-entity>
@@ -219,13 +218,13 @@
 <a-entity id="timetunnel-door-3-exit-s" mixin="sound" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 
 <a-entity gltf-model="models/scene2.glb" class="scene2" static-body position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
-<a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8"></a-entity>
-<a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10"></a-entity>
-<a-entity id="crickets3-s" mixin="sound" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; loop: true; maxDistance: 10"></a-entity>
-<a-entity id="raccoon-yelp-s" mixin="sound" class="scene2sound" position="28.1 3.22 -30" sound="src: #raccoon-yelp-sound; loop: true; maxDistance: 4; distanceModel: linear"></a-entity>
-<a-entity id="raccoon-scrounging-s" mixin="sound" class="scene2sound" position="26.6 0.84 -36.44" sound="src: #raccoon-scrounging-sound; maxDistance: 4; distanceModel: linear"></a-entity>
-<a-entity id="shasta-waking-s" mixin="sound" class="scene2sound" position="38.1 0.35 -43.44" sound="src: #shasta-waking-sound; maxDistance: 5; distanceModel: linear"></a-entity>
-<a-entity id="shasta-eating-s" mixin="sound" class="scene2sound" position="42.8 1.54 -42.55" sound="src: #shasta-eating-sound; maxDistance: 5; distanceModel: linear"></a-entity>
+<a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
+<a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="crickets3-s" mixin="sound" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="raccoon-yelp-s" mixin="sound" class="scene2sound" position="28.1 3.22 -30" sound="src: #raccoon-yelp-sound; loop: true; maxDistance: 5; distanceModel: linear"></a-entity>
+<a-entity id="raccoon-scrounging-s" mixin="sound" class="scene2sound" position="26.6 0.84 -36.44" sound="src: #raccoon-scrounging-sound; maxDistance: 5; distanceModel: linear"></a-entity>
+<a-entity id="shasta-waking-s" mixin="sound" class="scene2sound" position="38.1 0.35 -43.44" sound="src: #shasta-waking-sound; maxDistance: 6; distanceModel: linear"></a-entity>
+<a-entity id="shasta-eating-s" mixin="sound" class="scene2sound" position="42.8 1.54 -42.55" sound="src: #shasta-eating-sound; maxDistance: 6; distanceModel: linear"></a-entity>
 <a-entity id="sbcplants1-s" mixin="sound" class="scene2sound" position="51.8 2 -40.5" sound="src: #sbc-plants1; maxDistance: 10"></a-entity>
 <a-entity id="sbcplants2-s" mixin="sound" class="scene2sound" position="53.3 2.17 -34.3" sound="src: #sbc-plants2; maxDistance: 10"></a-entity>
 
@@ -246,7 +245,7 @@
 <a-entity id="sleepy-shasta" gltf-model="models/shastasloth.glb" class="scene2anim" static-body position="38.86 -0.03 -43.54" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleeping; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *; timeScale: 0"></a-entity>
-<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2sbc" static-body position="52.08 1.81 -40.55" rotation="0 0 0" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; timeScale: 0"></a-entity>
+<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2sbc" static-body position="52.08 1.86 -40.55" rotation="0 0 0" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2anim" static-body position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose; clampWhenFinished: false; timeScale: 0"></a-entity>
 
 <!-- Welcome Panel -->
@@ -274,11 +273,19 @@ Keith Chan (CC BY-NC-SA 3.0)
 
 -Scene 1: Los Angeles-
 Los Angeles (Downtown), USA. 
-jack.simmons (CC Attribution)
+jack.simmons (CC BY 4.0)
 https://skfb.ly/ooAUG
+
+Downtown Los Angeles
+3dideascraft (CC BY 4.0)
+https://skfb.ly/o8S66
 
 Room and Time Tunnel
 Keith Chan (CC BY-NC-SA 3.0)
+
+Wilshire Grand Center
+Turner Construction Company (CC BY 4.0)
+https://www.thingiverse.com/thing:2383392
 
 -Scene 2: Pinyon-Juniper Woodland-
 Landscape and Plants
@@ -319,16 +326,21 @@ Branch Crack
 Luka Bea (CC0 1.0)
 https://freesound.org/s/660471/
 
+bubble
+Ranner (CC0 1.0)
+https://freesound.org/s/487531/
+
 Crickets At Night - Clean sound
 Defelozedd94 (CC0 1.0)
 https://freesound.org/s/522298/
+"></a-entity>
 
+  <a-entity mixin="credit-text" class="credits" id="credits-4" visible="false" position="-1.1 0 0" text="value: 
 hegelmoney-clip.flac
 shimsewn (CC0 1.0)
 https://freesound.org/s/61299/
-"></a-entity>
 
-  <a-entity mixin="credit-text" class="credits" id="credits-4" visible="false" position="-1.1 0 0" text="value:long wispy woosh4.wav
+long wispy woosh4.wav
 newagesoup (CC0 1.0)
 https://freesound.org/s/377827/
 

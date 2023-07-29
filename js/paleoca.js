@@ -40,17 +40,28 @@ AFRAME.registerComponent("tour-start", {
     init: function() {
         const el = this.el;
         const rig = document.querySelector('#rig');
+        const camera = document.querySelector('#camera');
         const podplaceholder = document.querySelector('#podplaceholder');
         const pod = document.querySelector('#pod');
         const transition = document.querySelector("#transition");
-
+        let x = null;
+        let y = null;
         const transitionclose = function() {
+            const campos = camera.object3D.position
+            const rigpos = rig.object3D.position
+            console.log(campos.y);
+            console.log(rigpos.y);
+            x = 1.7 - campos.y;
+            y = campos.y - 0.55;
+            console.log(x+', '+y);
             transition.dispatchEvent(new CustomEvent("transitionclose"));
             setTimeout(function(){warpwarp();}, 700); // value has to match animation speed, I guess?!
         };
 
         const warpwarp = function() {
-            rig.object3D.position.set(0, 0, 5);
+            rig.object3D.position.set(0, x, 0);
+            pod.object3D.position.set(0, y, 0);
+            camera.object3D.position.set(0, 1.6, 0);
             camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
             podplaceholder.object3D.visible = false;
             pod.object3D.visible = true;
@@ -64,7 +75,7 @@ AFRAME.registerComponent("tour-start", {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track3', dur: 30000, triggerRadius: 0.1}) // Set to #track1 dur 80000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track1', dur: 80000, triggerRadius: 0.1}) // Set to #track1 dur 80000 for tour start
         };
 
         el.addEventListener("mouseup", function(evt) {
@@ -140,6 +151,7 @@ AFRAME.registerComponent("tour-mechanics", {
         const timetunnel3insidesound = document.querySelector('#timetunnel3-inside-s');
 
         const scene2toggle = sceneEl.querySelectorAll('.scene2');
+        const scene2sounds = sceneEl.querySelectorAll('.scene2sound');
         const scene2animations = sceneEl.querySelectorAll('.scene2anim');
         const sleepyshasta = document.querySelector('#sleepy-shasta');
         const crickets1 = document.querySelector('#crickets1-s');
@@ -356,7 +368,10 @@ AFRAME.registerComponent("tour-mechanics", {
                         for (let each of scene2animations) {
                             aniswitch(each, "animation-mixer.timeScale", "0");
                         };
-                        console.log('Scene 2 looping animations off');
+                        console.log('Scene 2 looping sounds off');
+                        for (let each of scene2sounds) {
+                            each.components.sound.stopSound();
+                        };
                     break;
                     case "track_straight_end_1_3":
                         aniswitch(ambilight, 'animation', {property: 'light.intensity', to: 0.1, dur: 4000});
@@ -478,9 +493,11 @@ rig.addEventListener("movingended__#track2", function(){
           const trackorbstext = document.querySelector('#trackorbstext');
           const track = document.querySelectorAll('.track');
           const track1 = document.querySelector('#track1');
+          const boopsound = document.querySelector('#boop-s');
           const beepsound = document.querySelector('#beep-s');
 
           el.addEventListener('raycaster-intersected', function () {
+            boopsound.components.sound.playSound();
             el.setAttribute('material', 'color', 'yellow');
           });
 
