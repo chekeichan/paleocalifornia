@@ -1,5 +1,8 @@
 // console.warn = console.error = () => {}; // Suppresses Three.js warnings. Remove to debug
 
+var podvisibility = true; // Used by button-logic and tour-start
+var narrationcoutner = 0; // Used by button-logic and tour-mechanics
+
 AFRAME.registerComponent('device-set', { // Device-specific settings
     init: function() {
         var sceneEl = document.querySelector('a-scene');
@@ -115,16 +118,11 @@ AFRAME.registerComponent("tour-end", {
             AFRAME.utils.entity.setComponentProperty(light1, "decay", 1);
             AFRAME.utils.entity.setComponentProperty(light1, "distance", 15);
             console.log('light1 move to end')
-            // if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC and mobile mode
-            //     rig.components['movement-controls'].updateNavLocation();
-            // }
             setTimeout(function(){transitionopen();}, 700)
         };
         
         const transitionopen = function() {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
-            // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
-            // rig.removeAttribute('movement-controls');
         };
 
         el.addEventListener("endtour", function(evt) {
@@ -417,7 +415,17 @@ AFRAME.registerComponent("tour-mechanics", {
                 }    
 
 
-})
+            })
+
+            sceneEl.addEventListener("alongpath-trigger-activated", function(e) { // Handlers for narration
+                switch(e.target.id) {
+                    case "track_straight0_0":
+                        let suffix = "01";
+                        narration[narrationcounter][suffix].components.sound.playSound();
+                        console.log('Scene0 narration');
+                        break;
+                }    
+            })
 
 sceneEl.addEventListener("animation-loop", function(e) {
     console.log(e.target.id);
@@ -484,11 +492,10 @@ rig.addEventListener("movingended__#track2", function(){
     aniswitch(rig, "alongpath.triggerRadius", "0.1");
 })
 
-        
     }
     })
     
-    AFRAME.registerComponent('buttonlogic', {
+AFRAME.registerComponent('buttonlogic', {
         
         init: function () {    
           const el = this.el;
@@ -501,6 +508,7 @@ rig.addEventListener("movingended__#track2", function(){
           const track1 = document.querySelector('#track1');
           const boopsound = document.querySelector('#boop-s');
           const beepsound = document.querySelector('#beep-s');
+          const testsound = document.querySelector('#test-s');
 
           el.addEventListener('raycaster-intersected', function () {
             boopsound.components.sound.playSound();
@@ -533,6 +541,10 @@ rig.addEventListener("movingended__#track2", function(){
                                 AFRAME.utils.entity.setComponentProperty(trackorbstext, "value", "Track Orbs: Off");
                         }
                     break;
+                case "soundtestbutt":
+                    testsound.components.sound.playSound();
+                    break;
+            
                 case "creditsbutt":
                     for (let each of creditslist) {
                         each.setAttribute("visible", false);     
@@ -555,6 +567,3 @@ rig.addEventListener("movingended__#track2", function(){
           });
         }
       });
-
-    
-      var podvisibility = true;
