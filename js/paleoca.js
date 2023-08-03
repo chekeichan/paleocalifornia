@@ -59,7 +59,7 @@ AFRAME.registerComponent("tour-start", {
             y = campos.y - 0.55;
             console.log(x+', '+y);
             transition.dispatchEvent(new CustomEvent("transitionclose"));
-            setTimeout(function(){warpwarp();}, 700); // value has to match animation speed, I guess?!
+            setTimeout(function(){warpwarp();}, 1000);
         };
 
         const warpwarp = function() {
@@ -108,7 +108,7 @@ AFRAME.registerComponent("tour-end", {
 
         const transitionclose = function() {
             transition.dispatchEvent(new CustomEvent("transitionclose"));
-            setTimeout(function(){warpwarp();}, 700); // value has to match animation speed, I guess?!
+            setTimeout(function(){warpwarp();}, 1000);
         };
 
         const warpwarp = function() {
@@ -174,6 +174,8 @@ AFRAME.registerComponent("tour-mechanics", {
         const eatingshasta = document.querySelector('#eating-shasta');
         const joshuatree = document.querySelector('#joshua-tree');
         const sbc1 = sceneEl.querySelectorAll('.scene2sbc');
+        const sbc1cat = document.querySelector('#sbc1a');
+        const sbc1plant = document.querySelector('#sbc1-plant');
 
         const timetunneldoor1 = document.querySelector('#timetunnel1-outside');
         const timetunnel1 = document.querySelector('#timetunnel1-inside');
@@ -189,14 +191,10 @@ AFRAME.registerComponent("tour-mechanics", {
                each.object3D.visible = toggle;
            }
         };
-
-        var aniswitch = function(entity, setting, detail) {
-            AFRAME.utils.entity.setComponentProperty(entity, setting, detail);
-        };
         
         var aniswitchdelay = function(entity, setting, detail, delay) {
             setTimeout(() => {
-                AFRAME.utils.entity.setComponentProperty(entity, setting, detail);
+                entity.setAttribute(setting, detail)
             }, delay);
         };
 
@@ -211,82 +209,69 @@ AFRAME.registerComponent("tour-mechanics", {
             }, delay);
         };
 
+        var setAttributes = function(entity, attrs) {
+            for (var key in attrs) {
+                entity.setAttribute(key, attrs[key]);
+            }
+            
+        };
+
         sceneEl.addEventListener("alongpath-trigger-activated", function(e) {
                 switch(e.target.id) {
                     case "track_straight1_1":
-                        aniswitch(startdoors, "animation-mixer.clip", "start.door.*.open");
-                        aniswitch(startdoors, "animation-mixer.loop", "once");
-                        aniswitch(startdoors, "animation-mixer.clampWhenFinished", "true");
+                        startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
                         swingingdoor.components.sound.playSound();
                         console.log('start door open');
                         break;
                     case "track_straight1_2":
-                        aniswitch(startdoors, "animation-mixer.clip", "start.door.*.close");
-                        aniswitch(startdoors, "animation-mixer.loop", "once");
-                        aniswitch(startdoors, "animation-mixer.clampWhenFinished", "true");
+                        startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.close', loop: 'once', clampWhenFinished: 'true'})
                         swingingdoor.components.sound.playSound();
                         console.log('start door close');
                         break;
                     case "track_straight1_3":
                         visiswitch(scene2toggle, "true");
-                        aniswitch(timetunnel1, "animation-mixer.timeScale", "1");
+                        timetunnel1.setAttribute('animation-mixer', {timeScale: '1'})
                         for (let each of scene2animations) {
-                            aniswitch(each, "animation-mixer.timeScale", "1");
+                            each.setAttribute('animation-mixer', {timeScale: '1'})
                         };
                         console.log('Time Tunnel undulate, scene 2 animations on');
-                        aniswitch(timelight1, "visible", "true");
+                        timelight1.setAttribute('visible', 'true')
                         console.log('Time Tunnel light 1 activate');
                         break;
                     case "track_turn1_1":
                         visiswitch(scene0toggle, "false");
-                        aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.open");
-                        aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
-                        aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
+                        timetunneldoor1.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.open', loop: 'once', clampWhenFinished: 'true'})
                         timetunneldoor1ent.components.sound.playSound();
                         console.log('time door open 1');
                         timetunnel1insidesound.components.sound.playSound();
                         console.log('time tunnel 1 inside sound on');
                         break;
                      case "track_turn1_3":
-                        aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.entrance.close");
-                        aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
-                        aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
+                        timetunneldoor1.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
                         timetunneldoor1ent.components.sound.playSound();
                         console.log('time door close 1');
-                        aniswitch(ambilight, 'animation', {property: 'light.intensity', to: 0.05, dur: 8000});
+                        ambilight.setAttribute('animation', {property: 'light.intensity', to: 0.05, dur: 8000});
                         console.log('ambient light dim');
                         break;
                     case "track_straight2_1a":
                         visiswitch(scene1toggle, "false");
                         console.log('scene 1 off');
-                        aniswitch(light1, "position", {x: 31, y: 9.1, z: -29});
-                        aniswitch(light1, "color", "#6458fa");
-                        aniswitch(light1, 'animation', {property: 'light.intensity', from: 1.5, to: 2, dur: 2000});
-                        aniswitch(light1, "decay", 0.01);
-                        aniswitch(light1, "distance", 11.9);
+                        setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 1.5, to: 2, dur: 2000}, "decay": 0.01, "distance": 11.9})
                         console.log('light1 move to raccoons')
                         break;
                     case "track_straight2_1b":
-                        aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.open");
-                        aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
-                        aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
+                        timetunneldoor1.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.open', loop: 'once', clampWhenFinished: 'true'})
                         timetunneldoor1exit.components.sound.playSound();
                         console.log('time door open 2');
                         crickets1.components.sound.playSound();
                         console.log('play cricket sounds')
                         break;
-                    case "track_straight2_1":
-                        aniswitch(light2, "position", {x: 49.65, y: 4.7, z: -22.5});
-                        aniswitch(light2, "color", "#fedccb");
-                        aniswitch(light2, "intensity", 2);
-                        aniswitch(light2, "decay", 0.1);
-                        aniswitch(light2, "distance", 5.5);
+                    case "track_straight2_2":
+                        setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "light.intensity": 2, "decay": 0.1, "distance": 5.5})
                         console.log('light2 move to sbc dawn')
                         break;
                     case "track_turn2_1":
-                        aniswitch(timetunneldoor1, "animation-mixer.clip", "TimeTunnel.door.exit.close");
-                        aniswitch(timetunneldoor1, "animation-mixer.loop", "once");
-                        aniswitch(timetunneldoor1, "animation-mixer.clampWhenFinished", "true");
+                        timetunneldoor1.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.close', loop: 'once', clampWhenFinished: 'true'})
                         timetunneldoor1exit.components.sound.playSound();
                         console.log('time door close 1-2');
                         audiswitchdelay(timetunnel1insidesound, "stop", 2000)
@@ -299,13 +284,13 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('play raccoon yelp')
                         break;
                     case "track_turn2_3":
-                        aniswitch(timetunnel1, "animation-mixer.timeScale", "0");
+                        timetunnel1.setAttribute('animation-mixer', {timeScale: '0'})
                         console.log('Time Tunnel undulate off');
                         crickets3.components.sound.playSound();
                         console.log('play cricket sounds')
                         break;
                     case "track_asympt1":
-                        aniswitch(ambilight, 'animation', {property: 'light.intensity', to: 0.01, dur: 4000});
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.01, dur: 4000}})
                         console.log('ambient light dim');
                         break;
                     case "track_turn3_1":
@@ -313,7 +298,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('stop raccoon yelp')
                         break;
                     case "track_turn3_3":
-                        aniswitch(timelight1, "position", {x: 50, y: 1.6, z: -15});
+                        timelight1.setAttribute('position', {x: 50, y: 1.6, z: -15})
                         console.log('Time Tunnel light move to position 2');
                         break;
                     case "track_turn4_1":
@@ -327,20 +312,18 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('stop crickets1 sound')
                     break;
                     case "track_turn4_2":
-                        aniswitch(timelight2, "visible", "true");
+                        timelight2.setAttribute('visible', 'true')
                         console.log('Time Tunnel light 2 activate');
                         break;
                     case "track_turn4_3":
                         for (let each of timetunnel2) {
-                            aniswitch(each, "animation-mixer.timeScale", "1");
+                            each.setAttribute('animation-mixer', {timeScale: '1'})
                         };
                         console.log('Time Tunnel 2 undulate on');
                         break;
                     case "track_straight5_1":
                         for (let each of timetunneldoor2) {
-                            aniswitchdelay(each, "animation-mixer.clip", "TimeTunnel.door.entrance.open", 2000);
-                            aniswitchdelay(each, "animation-mixer.loop", "once", 2000);
-                            aniswitchdelay(each, "animation-mixer.clampWhenFinished", "true", 2000);
+                            aniswitchdelay(each, "'animation-mixer', {clip: 'TimeTunnel.door.entrance.open', loop: 'once', clampWhenFinished: 'true'}", 2000);
                         };
                         audiswitchdelay(timetunneldoor2ent, "play", 2000);
                         console.log('time door entrance open 2');
@@ -351,38 +334,31 @@ AFRAME.registerComponent("tour-mechanics", {
                     case "track_straight5_3":
                         visiswitch(scene0toggle, "true");
                         for (let each of timetunneldoor2) {
-                            aniswitch(each, "animation-mixer.clip", "TimeTunnel.door.entrance.close");
-                            aniswitch(each, "animation-mixer.loop", "once");
-                            aniswitch(each, "animation-mixer.clampWhenFinished", "true");
+                            each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
                         };
                         timetunneldoor2ent.components.sound.playSound();
                         console.log('time door entrance 2 close');
-                        aniswitch(light2, 'animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
+                        light2.setAttribute('animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
                     break;
                     case "track_straight_end_1_1":
-                        for (let each of sbc1) {
-                            aniswitch(each, "animation-mixer.timeScale", "0");
-                        };
+                        sbc1cat.removeAttribute('animation-mixer')
+                        sbc1plant.removeAttribute('animation-mixer')
+                        sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', loop: 'once', timeScale: '0'})
+                        sbc1plant.setAttribute('animation-mixer', {clip: '*', loop: 'once', timeScale: '0'})
                         console.log('sbc animation reset');
                         visiswitch(scene2toggle, "false");
                         console.log('scene 2 hide');
                         break;
                     case "track_straight_end_1_2":
-                        aniswitch(light1, "position", {x: -0.123, y: 4.9, z: 5});
-                        aniswitch(light1, "color", "white");
-                        aniswitch(light1, 'animation', {property: 'light.intensity', from: 2, to: 1.5, dur: 2000});
-                        aniswitch(light1, "decay", 1);
-                        aniswitch(light1, "distance", 15);
+                        setAttributes(light1, {"position": {x: -0.123, y: 4.9, z: 5}, "color": "#white", "animation": {property: 'light.intensity', from: 2, to: 1.5, dur: 2000}, "decay": 1, "distance": 15})
                         console.log('light1 move to scene 0 for dismount')
                         for (let each of timetunneldoor2) {
-                            aniswitch(each, "animation-mixer.clip", "TimeTunnel.door.exit.open");
-                            aniswitch(each, "animation-mixer.loop", "once");
-                            aniswitch(each, "animation-mixer.clampWhenFinished", "true");
+                            each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.open', loop: 'once', clampWhenFinished: 'true'})
                         };
                         timetunneldoor3exit.components.sound.playSound();
                         console.log('time door exit open 2');
                         for (let each of scene2animations) {
-                            aniswitch(each, "animation-mixer.timeScale", "0");
+                            each.setAttribute('animation-mixer', {timeScale: '0'})
                         };
                         console.log('Scene 2 looping sounds off');
                         for (let each of scene2sounds) {
@@ -390,22 +366,16 @@ AFRAME.registerComponent("tour-mechanics", {
                         };
                     break;
                     case "track_straight_end_1_3":
-                        aniswitch(ambilight, 'animation', {property: 'light.intensity', to: 0.1, dur: 4000});
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
                         console.log('ambient light back to original');
                     break;
                     case "track_straight_end_1_4":
                         visiswitch(scene1toggle, "true");
                         visiswitch(scene2toggle, "false");
-                        aniswitch(light2, "position", {x: 0, y: 5.4, z: -17.4});
-                        aniswitch(light2, "color", "white");
-                        aniswitch(light2, 'intensity', "0.3");
-                        aniswitch(light2, "decay", 1);
-                        aniswitch(light2, "distance", 11);
+                        setAttributes(light2, {"position": {x: 0, y: 5.4, z: -17.4}, "color": "#white", "animation": {property: 'light.intensity', to: 0.3, dur: 2000}, "decay": 1, "distance": 11})
                         console.log('light2 move to scene1')
                         for (let each of timetunneldoor2) {
-                            aniswitch(each, "animation-mixer.clip", "TimeTunnel.door.exit.close");
-                            aniswitch(each, "animation-mixer.loop", "once");
-                            aniswitch(each, "animation-mixer.clampWhenFinished", "true");
+                            each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.close', loop: 'once', clampWhenFinished: 'true'})
                         };
                         timetunneldoor3exit.components.sound.playSound();
                         console.log('time door exit close 2');
@@ -415,15 +385,15 @@ AFRAME.registerComponent("tour-mechanics", {
 
                     break;
                     case "track_straight_end_1_6":
-                        aniswitch(timelight1, "position", {x: 14.4, y: 1.6, z: -20});
+                        timelight1.setAttribute('position', {x: 14.4, y: 1.6, z: -20})
                         console.log('time light 1 to original position');
-                        aniswitch(timelight1, "visible", "false");
+                        timelight1.setAttribute('visible', 'false')
                         console.log('Time Tunnel light 1 deactivate');
                         for (let each of timetunnel2) {
-                            aniswitch(each, "animation-mixer.timeScale", "0");
+                            each.setAttribute('animation-mixer', {timeScale: '0'})
                         };
                         console.log('Time Tunnel 2 undulate off');
-                        aniswitch(timelight2, "visible", "false");
+                        timelight2.setAttribute('visible', 'false')
                         console.log('Time Tunnel light 2 deactivate');
                         rig.dispatchEvent(new CustomEvent("endtour"));
                         console.log('dismount to starting platform');
@@ -454,13 +424,11 @@ sceneEl.addEventListener("animation-loop", function(e) {
             rand = Math.floor(Math.random() * 10);
             console.log(rand);
             if (rand < 3) {
-                aniswitch(sleepyshasta, "animation-mixer.clip", "shasta.waking");
-                aniswitch(sleepyshasta, "animation-mixer.clampWhenFinished", "true");
+                sleepyshasta.setAttribute('animation-mixer', {clip: 'shasta.waking', clampWhenFinished: 'true'})
                 shastawaking.components.sound.playSound();
             console.log('waking');
             } else {
-                aniswitch(sleepyshasta, "animation-mixer.clip", "shasta.sleeping");
-                aniswitch(sleepyshasta, "animation-mixer.clampWhenFinished", "true");
+                sleepyshasta.setAttribute('animation-mixer', {clip: 'shasta.sleeping', clampWhenFinished: 'true'})
                 console.log('sleeping');
             }
             break;
@@ -468,14 +436,12 @@ sceneEl.addEventListener("animation-loop", function(e) {
             rand = Math.floor(Math.random() * 10);
             console.log(rand);
             if (rand > 8) {
-                aniswitch(eatingshasta, "animation-mixer.clip", "shasta.looking");
-                aniswitch(eatingshasta, "animation-mixer.clampWhenFinished", "true");
-                aniswitch(joshuatree, "animation-mixer.clip", "joshuatree.swaying");
+                eatingshasta.setAttribute('animation-mixer', {clip: 'shasta.looking', clampWhenFinished: 'true'})
+                joshuatree.setAttribute('animation-mixer', {clip: 'joshuatree.swaying', clampWhenFinished: 'true'})
             console.log('looking');
             } else {
-                aniswitch(eatingshasta, "animation-mixer.clip", "shasta.eating");
-                aniswitch(eatingshasta, "animation-mixer.clampWhenFinished", "true");
-                aniswitch(joshuatree, "animation-mixer.clip", "joshuatree.eaten");
+                eatingshasta.setAttribute('animation-mixer', {clip: 'shasta.eating', clampWhenFinished: 'true'})
+                joshuatree.setAttribute('animation-mixer', {clip: 'joshuatree.eaten', clampWhenFinished: 'true'})
                 shastaeating.components.sound.playSound();
                 console.log('eating');
             }
@@ -488,23 +454,14 @@ sceneEl.addEventListener("animation-loop", function(e) {
 })
         
 rig.addEventListener("movingended__#track0", function(){
-    aniswitch(rig, "alongpath.curve", "#track1");
-    aniswitch(rig, "alongpath.dur", "80000");
-    aniswitch(rig, "alongpath.triggerRadius", "0.1");
-    
+    rig.setAttribute('alongpath', {curve: '#track1', dur: '80000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#track1", function(){
-    aniswitch(rig, "alongpath.curve", "#track2");
-    aniswitch(rig, "alongpath.dur", "151000");
-    aniswitch(rig, "alongpath.triggerRadius", "0.1");
-                    
-        })
-rig.addEventListener("movingended__#track2", function(){
-    aniswitch(rig, "alongpath.curve", "#track3");
-    aniswitch(rig, "alongpath.dur", "53000"); // 30000
-    aniswitch(rig, "alongpath.triggerRadius", "0.1");
+    rig.setAttribute('alongpath', {curve: '#track2', dur: '151000', triggerRadius: '0.1'})
 })
-
+rig.addEventListener("movingended__#track2", function(){
+    rig.setAttribute('alongpath', {curve: '#track3', dur: '53000', triggerRadius: '0.1'})
+})
     }
     })
     

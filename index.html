@@ -15,9 +15,7 @@
 <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/deprecated/Geometry.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
-<script src="js/aframe-physics-system.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/aframe-aabb-collider-component@3.1.0/dist/aframe-aabb-collider-component.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/aframe-aabb-collider-component@3.1.0/dist/aframe-aabb-collider-component.min.js"></script>-->
 <script src="js/aframe-alongpath-component.js"></script> <!-- Custom code to fix rig camera angle-->
 <script src="https://cdn.jsdelivr.net/npm/aframe-curves@1.0.0/build/curve.min.js"></script>
 <script src="js/aframe-surface-scatter.min.js"></script>
@@ -84,9 +82,9 @@
 <a-light id="ambientlight" type="ambient" color="white" intensity="0.1"></a-light> 
 <a-light id="light1" class="light" color="white" position="-4.2 3.6 5" light="type: point; intensity: 1.5; decay: 1; distance: 15"></a-light>
 <a-light id="light2" class="light" color="white" position="0 5.4 -17.4" light="type: point; intensity: 0.3; decay: 1; distance: 15"></a-light>
-<a-light id="timetunnellight" visible="false" color="#0bee8d" position="14.4 1.6 -20" light="type: point; intensity: 0.75; decay: 0.01; distance: 9"></a-light>
+<a-light id="timetunnellight" visible="true" color="#0bee8d" position="14.4 1.6 -20" light="type: point; intensity: 0.75; decay: 0.01; distance: 9"></a-light>
 <!-- <a-light id="timetunnellightb" color="#0bee8d" position="50 1.6 -15" light="type: point; intensity: 0.75; decay: 0.1; distance: 9"></a-light> -->
-<a-light id="timetunnellight2" visible="false" color="#0bee8d" position="0.2 1.6 23.6" light="type: point; intensity: 0.75; decay: 0.01; distance: 9"></a-light>
+<a-light id="timetunnellight2" visible="true" color="#0bee8d" position="0.2 1.6 23.6" light="type: point; intensity: 0.75; decay: 0.01; distance: 9"></a-light>
 <!-- <a-light id="scene2light1" color="#6458fa" position="31 9.1 -29" light="type: point; intensity: 3; decay: 0.01; distance: 11.9"></a-light> Raccoon light-->
 <a-light id="light3" color="#3657f3" position="40.92 4.54 -40.105" light="type: point; intensity: 0.5; decay: 0.01; distance: 14.5; castShadow: true"></a-light> <!-- SBC bush light-->
 <!-- <a-light id="scene2light4" color="#fedccb" position="47.8.2 4.7 -37.2" light="type: point; intensity: 2; decay: 0.1; distance: 7"></a-light> SBC dawn light-->
@@ -228,7 +226,7 @@
 <a-entity id="sbcplants2-s" mixin="sound" class="scene2sound" position="53.3 2.17 -34.3" sound="src: #sbc-plants2; maxDistance: 10"></a-entity>
 
 
-<a-entity gltf-model="models/plants-scene2-anim.glb" class="scene2 scene2sbc" static-body position="52.055 1.647 -40.55" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="scene2 scene2sbc" static-body position="52.055 1.647 -40.55" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; timeScale: 0" shadow="recieve: true"></a-entity>
 <!-- <a-entity gltf-model="models/mammoth.glb" static-body position="39 0 -44.6" rotation="0 -42 0" visible="true"></a-entity> -->
 <a-entity gltf-model="models/raccoon-adult.glb" class="scene2 scene2anim" static-body position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing; timeScale: 0"></a-entity>
 <a-entity id="scrounging-raccoon" gltf-model="models/raccoon-adult.glb" class="scene2 scene2anim" static-body position="26.892 1.134 -36.67" rotation="0 65 0" animation-mixer="clip: raccoon.adult.scrounging; timeScale: 0"></a-entity>
@@ -245,7 +243,7 @@
 <a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *; timeScale: 0"></a-entity>
 <a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2sbc" static-body position="52.08 1.86 -40.55" rotation="0 0 0" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; loop: once; timeScale: 0"></a-entity>
-<a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2anim" static-body position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose; loop: once; timeScale: 0"></a-entity>
+<a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2anim" static-body position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose; loop: once"></a-entity>
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
