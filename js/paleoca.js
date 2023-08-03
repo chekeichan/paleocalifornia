@@ -1,7 +1,7 @@
 // console.warn = console.error = () => {}; // Suppresses Three.js warnings. Remove to debug
 
 var podvisibility = true; // Used by button-logic and tour-start
-var narrationcoutner = 0; // Used by button-logic and tour-mechanics
+var narrationcounter = 1; // Used by button-logic and tour-mechanics
 
 AFRAME.registerComponent('device-set', { // Device-specific settings
     init: function() {
@@ -44,6 +44,7 @@ AFRAME.registerComponent("tour-start", {
         const el = this.el;
         const rig = document.querySelector('#rig');
         const camera = document.querySelector('#camera');
+        const hands = el.querySelectorAll('.hand');
         var podplaceholder = document.querySelector('#podplaceholder');
         var pod = document.querySelector('#pod');
         const transition = document.querySelector("#transition");
@@ -66,6 +67,9 @@ AFRAME.registerComponent("tour-start", {
             pod.object3D.position.set(0, y, 0);
             camera.object3D.position.set(0, 1.6, 0);
             camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
+            for (let each of hands) {
+                AFRAME.utils.entity.setComponentProperty(each, rayCaster.showLine, "false");
+            }
             podplaceholder.object3D.visible = false;
             if (podvisibility === true) {
                 pod.object3D.visible = true;
@@ -97,6 +101,7 @@ AFRAME.registerComponent("tour-end", {
         const el = this.el;
         const rig = document.querySelector('#rig');
         const camera = document.querySelector('#camera');
+        const hands = el.querySelectorAll('.hand');
         const podplaceholder = document.querySelector('#podplaceholder');
         const pod = document.querySelector('#pod');
         const transition = document.querySelector("#transition");
@@ -110,6 +115,9 @@ AFRAME.registerComponent("tour-end", {
             rig.object3D.position.set(-6.5, 0.6, 5);
             // rig.object3D.rotation.set(0, -1.5, 0);
             camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(-90),0);
+            for (let each of hands) {
+                AFRAME.utils.entity.setComponentProperty(each, "rayCaster.showLine", "true");
+            }
             podplaceholder.object3D.visible = true;
             pod.object3D.visible = false;
             AFRAME.utils.entity.setComponentProperty(light1, "position", {x: -4.2, y: 3.6, z: 5});
@@ -140,7 +148,7 @@ AFRAME.registerComponent("tour-mechanics", {
         const ambilight = document.querySelector('#ambientlight');
         const light1 = document.querySelector('#light1');
         const light2 = document.querySelector('#light2');
-        const timelight = document.querySelector('#timetunnellight');
+        const timelight1 = document.querySelector('#timetunnellight');
         const timelight2 = document.querySelector('#timetunnellight2');
         
         const scene0toggle = sceneEl.querySelectorAll('.scene0');
@@ -226,6 +234,8 @@ AFRAME.registerComponent("tour-mechanics", {
                             aniswitch(each, "animation-mixer.timeScale", "1");
                         };
                         console.log('Time Tunnel undulate, scene 2 animations on');
+                        aniswitch(timelight1, "visible", "true");
+                        console.log('Time Tunnel light 1 activate');
                         break;
                     case "track_turn1_1":
                         visiswitch(scene0toggle, "false");
@@ -303,14 +313,12 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('stop raccoon yelp')
                         break;
                     case "track_turn3_3":
-                        aniswitch(timelight, "position", {x: 50, y: 1.6, z: -15});
+                        aniswitch(timelight1, "position", {x: 50, y: 1.6, z: -15});
                         console.log('Time Tunnel light move to position 2');
                         break;
                     case "track_turn4_1":
                         for (let each of sbc1) {
                             aniswitchdelay(each, "animation-mixer.timeScale", "1", "5200");
-                            aniswitch(each, "animation-mixer.loop", "once");
-                            aniswitch(each, "animation-mixer.clampWhenFinished", "true");
                         };
                         audiswitchdelay(sbcplants1, "play", 5200);
                         audiswitchdelay(sbcplants2, "play", 17740);
@@ -330,14 +338,14 @@ AFRAME.registerComponent("tour-mechanics", {
                         break;
                     case "track_straight5_1":
                         for (let each of timetunneldoor2) {
-                            aniswitch(each, "animation-mixer.clip", "TimeTunnel.door.entrance.open");
-                            aniswitch(each, "animation-mixer.loop", "once");
-                            aniswitch(each, "animation-mixer.clampWhenFinished", "true");
+                            aniswitchdelay(each, "animation-mixer.clip", "TimeTunnel.door.entrance.open", 2000);
+                            aniswitchdelay(each, "animation-mixer.loop", "once", 2000);
+                            aniswitchdelay(each, "animation-mixer.clampWhenFinished", "true", 2000);
                         };
-                        timetunneldoor2ent.components.sound.playSound();
+                        audiswitchdelay(timetunneldoor2ent, "play", 2000);
                         console.log('time door entrance open 2');
-                        timetunnel2insidesound.components.sound.playSound();
-                        timetunnel3insidesound.components.sound.playSound();
+                        audiswitchdelay(timetunnel2insidesound, "play", 2000);
+                        audiswitchdelay(timetunnel3insidesound, "play", 2000);
                         console.log('time tunnel 2 inside sound on');
                     break;
                     case "track_straight5_3":
@@ -352,8 +360,12 @@ AFRAME.registerComponent("tour-mechanics", {
                         aniswitch(light2, 'animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
                     break;
                     case "track_straight_end_1_1":
-                    visiswitch(scene2toggle, "false");
-                    console.log('scene 2 hide');
+                        for (let each of sbc1) {
+                            aniswitch(each, "animation-mixer.timeScale", "0");
+                        };
+                        console.log('sbc animation reset');
+                        visiswitch(scene2toggle, "false");
+                        console.log('scene 2 hide');
                         break;
                     case "track_straight_end_1_2":
                         aniswitch(light1, "position", {x: -0.123, y: 4.9, z: 5});
@@ -403,12 +415,16 @@ AFRAME.registerComponent("tour-mechanics", {
 
                     break;
                     case "track_straight_end_1_6":
-                        aniswitch(timelight, "position", {x: 14.4, y: 1.6, z: -20});
+                        aniswitch(timelight1, "position", {x: 14.4, y: 1.6, z: -20});
                         console.log('time light 1 to original position');
+                        aniswitch(timelight1, "visible", "false");
+                        console.log('Time Tunnel light 1 deactivate');
                         for (let each of timetunnel2) {
                             aniswitch(each, "animation-mixer.timeScale", "0");
                         };
                         console.log('Time Tunnel 2 undulate off');
+                        aniswitch(timelight2, "visible", "false");
+                        console.log('Time Tunnel light 2 deactivate');
                         rig.dispatchEvent(new CustomEvent("endtour"));
                         console.log('dismount to starting platform');
                     break;
@@ -469,9 +485,6 @@ sceneEl.addEventListener("animation-loop", function(e) {
             break;
     }
 
-    
-
-
 })
         
 rig.addEventListener("movingended__#track0", function(){
@@ -496,14 +509,15 @@ rig.addEventListener("movingended__#track2", function(){
     })
     
 AFRAME.registerComponent('buttonlogic', {
-        
         init: function () {    
           const el = this.el;
           let creditcounter = 0;
           const creditslist = document.querySelectorAll(".credits");
           const originalColor = el.getAttribute('material').color;
           const podvisibletext = document.querySelector('#podvisibletext');
+          const podwarningtext = document.querySelector('#podwarningtext');
           const trackorbstext = document.querySelector('#trackorbstext');
+          const narrationtext = document.querySelector('#narrationtext');
           const track = document.querySelectorAll('.track');
           const track1 = document.querySelector('#track1');
           const boopsound = document.querySelector('#boop-s');
@@ -522,24 +536,42 @@ AFRAME.registerComponent('buttonlogic', {
                 case "podvisiblebutt":
                     podplaceholder.object3D.visible = !podplaceholder.getAttribute("visible");
                     podvisibility = !podvisibility;
-                    console.log(podvisibility);
-                    console.log(podplaceholder.object3D.visible)
                     if (podvisibility === true) {
                             AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
+                            if (AFRAME.utils.device.checkHeadsetConnected() === false) { // VR Headset Mode
+                                podwarningtext.setAttribute("visible", false); 
+                            };
                     } else {
-                            AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: Off");            
+                            AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: Off");        
+                            if (AFRAME.utils.device.checkHeadsetConnected() === false) { // VR Headset Mode
+                                podwarningtext.setAttribute("visible", true); 
+                            };
                     }
                     break;
                 case "trackorbsbutt":
                     for (let each of track) {
                         each.object3D.visible = !each.getAttribute("visible");
-                        console.log('track toggle '+each.object3D.visible);
                     };
                         if (track1.object3D.visible === true) {
                                 AFRAME.utils.entity.setComponentProperty(trackorbstext, "value", "Track Orbs: On");
                         } else {
                                 AFRAME.utils.entity.setComponentProperty(trackorbstext, "value", "Track Orbs: Off");
                         }
+                    break;
+                case "narrationbutt":
+                    narrationcounter++;
+                    if (narrationcounter > 3) { // Value is total narrtion tracks (plus none) minus one
+                        narrationcounter = 0;
+                    }
+                    if (narrationcounter === 0) {
+                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: None");
+                    } else if (narrationcounter === 1) {
+                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Adventure");            
+                    } else if (narrationcounter === 2) {
+                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Educational");            
+                    } else if (narrationcounter === 3) {
+                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Behind-the-Scenes");            
+                    }
                     break;
                 case "soundtestbutt":
                     testsound.components.sound.playSound();
