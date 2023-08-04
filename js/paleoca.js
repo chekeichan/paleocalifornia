@@ -27,7 +27,7 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
     }
 }});
 
-AFRAME.registerComponent('all-wait', { // Waits for models to load then makes them not visible
+AFRAME.registerComponent('all-wait', { // Waits for certain models to load then makes them not visible
     init: function () {
         const sceneEl = document.querySelector('a-scene');
         const hideatstart = sceneEl.querySelectorAll('.hide');
@@ -416,7 +416,7 @@ sceneEl.addEventListener("animation-loop", function(e) {
         case "sleepy-shasta":
             rand = Math.floor(Math.random() * 10);
             console.log(rand);
-            if (rand < 3) {
+            if (rand < 2) {
                 sleepyshasta.setAttribute('animation-mixer', {clip: 'shasta.waking', clampWhenFinished: 'true'})
                 shastawaking.components.sound.playSound();
             console.log('waking');
@@ -428,7 +428,7 @@ sceneEl.addEventListener("animation-loop", function(e) {
         case "eating-shasta":
             rand = Math.floor(Math.random() * 10);
             console.log(rand);
-            if (rand > 8) {
+            if (rand < 3) {
                 eatingshasta.setAttribute('animation-mixer', {clip: 'shasta.looking', clampWhenFinished: 'true'})
                 joshuatree.setAttribute('animation-mixer', {clip: 'joshuatree.swaying', clampWhenFinished: 'true'})
             console.log('looking');
@@ -457,7 +457,7 @@ rig.addEventListener("movingended__#track2", function(){
     rig.setAttribute('alongpath', {curve: '#track3', dur: '53000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#track3", function(){
-    rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '10000', triggerRadius: '0.1'})
+    rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '20000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#trackdismount", function(){
     rig.dispatchEvent(new CustomEvent("endtour"));
@@ -475,6 +475,7 @@ AFRAME.registerComponent('buttonlogic', {
           const originalColor = el.getAttribute('material').color;
           const podvisibletext = document.querySelector('#podvisibletext');
           const podwarningtext = document.querySelector('#podwarningtext');
+          const track = document.querySelectorAll(".track");
           const trackorbstext = document.querySelector('#trackorbstext');
           const narrationtext = document.querySelector('#narrationtext');
           const boopsound = document.querySelector('#boop-s');
@@ -553,7 +554,7 @@ AFRAME.registerComponent('buttonlogic', {
             }
           });
           el.addEventListener('mouseup', function () {
-            beepsound.components.sound.playSound();
+            beepsound.components.sound.playSound(); // Beep sound for all buttons
             el.setAttribute('material', 'color', 'orange');
           });
           el.addEventListener('raycaster-intersected-cleared', function () {
