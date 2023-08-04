@@ -12,7 +12,6 @@
   <meta http-equiv="pragma" content="no-cache" />
 <meta name="description" content="VR tour of California 40,000 years ago">
 <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/deprecated/Geometry.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/aframe-aabb-collider-component@3.1.0/dist/aframe-aabb-collider-component.min.js"></script>-->
@@ -23,7 +22,7 @@
 </head>
 
 <body>
-<a-scene grab-panels warp device-set device-orientation-permission-ui physics="iterations: 30;" inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
+<a-scene stats all-wait grab-panels warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
 
 <a-assets timeout="80000"> <!-- Loads models -->
     <a-asset-item id="navmesh" response-type="arraybuffer" src="models/nav.glb"></a-asset-item>
@@ -86,15 +85,15 @@
 <!-- <a-light id="timetunnellightb" color="#0bee8d" position="50 1.6 -15" light="type: point; intensity: 0.75; decay: 0.1; distance: 9"></a-light> -->
 <a-light id="timetunnellight2" visible="true" color="#0bee8d" position="0.2 1.6 23.6" light="type: point; intensity: 0.75; decay: 0.01; distance: 9"></a-light>
 <!-- <a-light id="scene2light1" color="#6458fa" position="31 9.1 -29" light="type: point; intensity: 3; decay: 0.01; distance: 11.9"></a-light> Raccoon light-->
-<a-light id="light3" color="#3657f3" position="40.92 4.54 -40.105" light="type: point; intensity: 0.5; decay: 0.01; distance: 14.5; castShadow: true"></a-light> <!-- SBC bush light-->
+<a-light id="light3" color="#3657f3" position="39.5 4.5 -42" light="type: point; intensity: 0.5; decay: 0.01; distance: 16.5; castShadow: false"></a-light> <!-- SBC bush light-->
 <!-- <a-light id="scene2light4" color="#fedccb" position="47.8.2 4.7 -37.2" light="type: point; intensity: 2; decay: 0.1; distance: 7"></a-light> SBC dawn light-->
 
-<a-curve id="track0" closed="false" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Pre-Start -->
+<a-curve id="track0" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Pre-Start -->
   <a-curve-point id="track_straight0_0" position="0 0 5.0001" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight1_0a" position="0 0 5" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track1" class="track" closed="false" visible="true" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Start and LA -->
+<a-curve id="track1" class="track" closed="false" visible="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Start and LA -->
   <a-curve-point id="track_straight1_0b" position="0 0 5" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight1_1" position="0 0 0" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight1_2" position="0.34 0 -5" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -106,7 +105,7 @@
   <a-curve-point id="track_straight2_1a" position="15 0 -20" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track2" class="track" closed="false" visible="true" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!--Raccoon City -->
+<a-curve id="track2" class="track" closed="false" visible="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!--Raccoon City -->
   <a-curve-point id="track_straight2_1b" position="15 0 -20" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight2_2" position="20 0 -20" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_turn2_1" position="25 0 -20.2" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -126,16 +125,16 @@
   <a-curve-point id="track_straight5_4" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track3" class="track" closed="false" visible="true" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Ending -->
+<a-curve id="track3" class="track" closed="false" visible="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Ending -->
   <a-curve-point id="track_straight_end_1_1" position="0 0 23.548" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight_end_1_2" position="0 0 19.828" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight_end_1_3" position="0 0 16.128" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight_end_1_4" position="0 0 12.428" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight_end_1_5" position="0 0 8.7" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point id="track_straight_end_1_6" position="0 0 5" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight_end_1_6" position="0 0 4.9999" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track3b" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
+<a-curve id="track3b" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
   <a-curve-point id="track_straight5_2b" position="49.96 0 -25" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight5_3" position="49.96 0 -20" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight5_4" position="49.96 0 -15.6" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -148,7 +147,12 @@
   <a-curve-point id="track_turn7_1" position="53 0 -5" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track-fake1" class="track" visible="true" closed="false" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
+<a-curve id="trackdismount" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Pre-Start -->
+  <a-curve-point id="track_straight_dismount_1" position="0 0 4.9999" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point id="track_straight_dismount_2" position="0 0 5" gltf-model="models/trackorb.glb"></a-curve-point>
+</a-curve>
+
+<a-curve id="track-fake1" class="track" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
   <a-curve-point id="track_straight_fake_1_1" position="49.96 0 -20.443" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight_fake_1_2" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight_fake_1_3" position="49.96 0 -11.3" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -156,7 +160,7 @@
   <a-curve-point id="track_straight_fake_1_5" position="49.96 0 -3.7" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track-fake2" class="track" visible="true" closed="false" tension="0" clone-along-curve="spacing: 0.5; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
+<a-curve id="track-fake2" class="track" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
   <a-curve-point id="track_straight_fake_2_1" position="0 0 33.548" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight_fake_2_2" position="0 0 28.548" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point id="track_straight_fake_2_3" position="0 0 23.548" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -193,7 +197,7 @@
 <a-entity gltf-model="models/track.glb" static-body position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
 <a-entity gltf-model="#start" class="scene0" static-body position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity id="podplaceholder" gltf-model="#podstart" static-body="shape: box" visible="true" position="0 0.5 0"></a-entity>
-<a-entity id="start-doors" class="scene0" visible="true" gltf-model="#startdoors" static-body position="0 0 0" rotation="0 0 0"></a-entity>
+<a-entity id="start-doors" class="scene1" visible="true" gltf-model="#startdoors" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="startpost" class="scene0" position="-4.34 1.01 5" geometry="primitive: cylinder; height: 0.85; segmentsHeight: 1; radius: 0.04; segmentsRadial: 4" material="color: #ffffff; blending: none">
   <a-entity id="startbutton" mixin="settingsbutton button" buttonlogic tour-start static-body="shape: box;" class="scene0 clickable static" position="0 0.454 0" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1.02" visible="true"></a-entity>
 </a-entity>
@@ -201,20 +205,20 @@
 <a-entity gltf-model="models/scene1.glb" class="scene1" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-outside" gltf-model="#timetunnel-outside" static-body position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-inside" gltf-model="models/timetunnel-inside.glb" static-body position="0 0 0" rotation="0 0 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
-<a-entity id="timetunnel2-outside" class="linkedtunnelout" gltf-model="#timetunnel-outside" static-body position="29.8 0 -29" rotation="0 -90 0"></a-entity>
-<a-entity id="timetunnel2-inside" class="linkedtunnel" gltf-model="models/timetunnel-inside.glb" static-body position="29.8 0 -29" rotation="0 -90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
-<a-entity id="timetunnel3-outside" class="linkedtunnelout" gltf-model="#timetunnel-outside" static-body position="20.16 0 37.60" rotation="0 90 0"></a-entity>
-<a-entity id="timetunnel3-inside" class="linkedtunnel" gltf-model="models/timetunnel-inside.glb" static-body position="20.16 0 37.60" rotation="0 90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
+<a-entity id="timetunnel2-outside" class="scene2 hide linkedtunnelout" visible="true" gltf-model="#timetunnel-outside" static-body position="29.8 0 -29" rotation="0 -90 0"></a-entity>
+<a-entity id="timetunnel2-inside" class="scene2 hide linkedtunnel" visible="true" gltf-model="models/timetunnel-inside.glb" static-body position="29.8 0 -29" rotation="0 -90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
+<a-entity id="timetunnel3-outside" class="scene0 linkedtunnelout" gltf-model="#timetunnel-outside" position="20.16 0 37.60" rotation="0 90 0"></a-entity>
+<a-entity id="timetunnel3-inside" class="scene0 linkedtunnel" gltf-model="models/timetunnel-inside.glb" position="20.16 0 37.60" rotation="0 90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
 <a-entity id="swinging-door-s" mixin="sound" class="scene1sound" position="0.07 1.7 -3.4" sound="src: #swinging-door-sound; loop: false; maxDistance: 10"></a-entity>
 <a-entity id="timetunnel1-inside-s" mixin="sound" class="scene1sound" position="13.9 1.7 -20" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel-door-1-entrance-s" mixin="sound" class="scene1sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 <a-entity id="timetunnel-door-1-exit-s" mixin="sound" class="scene1sound" position="22.22 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 <a-entity id="timetunnel-door-2-entrance-s" mixin="sound" class="scene2sound" position="49.89 1.6 -23.2" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel2-inside-s" mixin="sound" class="scene1sound" position="50 1.7 -15" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
-<a-entity id="timetunnel3-inside-s" mixin="sound" class="scene1sound" position="0.1 1.7 23.5" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
+<a-entity id="timetunnel2-inside-s" mixin="sound" class="scene2sound" position="50 1.7 -15" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
+<a-entity id="timetunnel3-inside-s" mixin="sound" class="scene2sound" position="0.1 1.7 23.5" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel-door-3-exit-s" mixin="sound" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 
-<a-entity gltf-model="models/scene2.glb" class="scene2" static-body position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
+<a-entity gltf-model="models/scene2.glb" class="hide scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
 <a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
 <a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
 <a-entity id="crickets3-s" mixin="sound" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
@@ -226,27 +230,27 @@
 <a-entity id="sbcplants2-s" mixin="sound" class="scene2sound" position="53.3 2.17 -34.3" sound="src: #sbc-plants2; maxDistance: 10"></a-entity>
 
 
-<a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="scene2 scene2sbc" static-body position="52.055 1.647 -40.55" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="hide scene2 scene2sbc" visible="true" static-body position="52.055 1.647 -40.55" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; timeScale: 0" shadow="recieve: true"></a-entity>
 <!-- <a-entity gltf-model="models/mammoth.glb" static-body position="39 0 -44.6" rotation="0 -42 0" visible="true"></a-entity> -->
-<a-entity gltf-model="models/raccoon-adult.glb" class="scene2 scene2anim" static-body position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing; timeScale: 0"></a-entity>
-<a-entity id="scrounging-raccoon" gltf-model="models/raccoon-adult.glb" class="scene2 scene2anim" static-body position="26.892 1.134 -36.67" rotation="0 65 0" animation-mixer="clip: raccoon.adult.scrounging; timeScale: 0"></a-entity>
-<a-entity gltf-model="models/raccoon-adult.glb" class="scene2anim" static-body position="29.5 3.49 -30.15" rotation="0 75 0" animation-mixer="clip: raccoon.adult.log; timeScale: 0"></a-entity>
-<a-entity gltf-model="models/raccoon-baby.glb" class="scene2anim" static-body position="28.75 3.18 -30.52" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Hanging; timeScale: 0"></a-entity>
-<a-entity gltf-model="models/raccoon-baby.glb" class="scene2anim" static-body position="27.2 2.39 -30.05" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing1; timeScale: 0"></a-entity>
-<a-entity gltf-model="models/raccoon-baby.glb" class="scene2anim" static-body position="27.16 1.65 -30.07" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing2; timeScale: 0"></a-entity>
-<a-entity gltf-model="models/westernwheatgrass-night.glb" id="wheatgrassnight" static-body visible="false"></a-entity>
-<a-entity gltf-model="models/scene2rock-night.glb" id="scene2rocknight" static-body visible="false"></a-entity>
-<a-entity gltf-model="models/grassspawn.glb" static-body position="0 -0.04 0" surface-scatter="object:#wheatgrassnight; count:100; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
-<a-entity gltf-model="models/rockspawn.glb" static-body position="0 -0.04 0" surface-scatter="object:#scene2rocknight; count:30; scaleJitter: 1 1 1; rotationJitter: 360 360 360; uniformJitter: false" shadow="cast: false; receive: false"></a-entity>
-<a-entity id="mountainlion1" gltf-model="models/mountainlion.glb" class="scene2anim" static-body position="28.75 1.32 -44.67." rotation="0 140.7 0" animation-mixer="clip: *resting; timeScale: 0" shadow="recieve: true"></a-entity>
-<a-entity id="sleepy-shasta" gltf-model="models/shastasloth.glb" class="scene2anim" static-body position="38.86 -0.03 -43.54" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleeping; clampWhenFinished: true; timeScale: 0"></a-entity>
-<a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
-<a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" class="scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *; timeScale: 0"></a-entity>
-<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2sbc" static-body position="52.08 1.86 -40.55" rotation="0 0 0" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; loop: once; timeScale: 0"></a-entity>
-<a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="scene2anim" static-body position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose; loop: once"></a-entity>
+<a-entity gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" static-body position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing; timeScale: 0"></a-entity>
+<a-entity id="scrounging-raccoon" gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" static-body position="26.892 1.134 -36.67" rotation="0 65 0" animation-mixer="clip: raccoon.adult.scrounging; timeScale: 0"></a-entity>
+<a-entity gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" static-body position="29.5 3.49 -30.15" rotation="0 75 0" animation-mixer="clip: raccoon.adult.log; timeScale: 0"></a-entity>
+<a-entity gltf-model="models/raccoon-baby.glb" class="hide scene2 scene2anim" static-body position="28.75 3.18 -30.52" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Hanging; timeScale: 0"></a-entity>
+<a-entity gltf-model="models/raccoon-baby.glb" class="hide scene2 scene2anim" static-body position="27.2 2.39 -30.05" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing1; timeScale: 0"></a-entity>
+<a-entity gltf-model="models/raccoon-baby.glb" class="hide scene2 scene2anim" static-body position="27.16 1.65 -30.07" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing2; timeScale: 0"></a-entity>
+<a-entity id="wheatgrassnight" gltf-model="models/westernwheatgrass-night.glb" visible="false"></a-entity>
+<a-entity id="scene2rocknight" gltf-model="models/scene2rock-night.glb" visible="false"></a-entity>
+<a-entity gltf-model="models/grassspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter="object:#wheatgrassnight; count:100; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
+<a-entity gltf-model="models/rockspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter="object:#scene2rocknight; count:30; scaleJitter: 1 1 1; rotationJitter: 360 360 360; uniformJitter: false" shadow="cast: false; receive: false"></a-entity>
+<a-entity id="mountainlion1" gltf-model="models/mountainlion.glb" class="hide scene2 scene2anim" static-body position="29.8 1.47 -45.5." rotation="0 123.7 0" animation-mixer="clip: *resting; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="sleepy-shasta" gltf-model="models/shastasloth.glb" class="hide scene2 scene2anim" static-body position="38.86 -0.03 -43.54" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleeping; clampWhenFinished: true; timeScale: 0"></a-entity>
+<a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="hide scene2 scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
+<a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" class="hide scene2 scene2anim" static-body position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *; timeScale: 0"></a-entity>
+<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2sbc" static-body position="52.08 1.86 -40.55" rotation="0 0 0" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; loop: once; timeScale: 0"></a-entity>
+<a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2anim" static-body position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose;  timeScale: 0"></a-entity>
 
 <!-- Welcome Panel -->
-<a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
+<a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
   <a-text position="-1 1 0" value="Welcome to PaleoCA!" color="black" width="2" text="wrapCount: 20"></a-text>
   <a-entity mixin="credit-text" class="" id="" position="-1 0 0" text="value: By Dr. Keith Chan
   
