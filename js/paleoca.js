@@ -45,31 +45,29 @@ AFRAME.registerComponent("tour-start", {
         const el = this.el;
         const rig = document.querySelector('#rig');
         const camera = document.querySelector('#camera');
-        const hands = el.querySelectorAll('.hand');
-        var podplaceholder = document.querySelector('#podplaceholder');
-        var pod = document.querySelector('#pod');
+        const hands = document.querySelectorAll('.hand');
+        const curvePoints = document.querySelectorAll('.curve');        
+        const podplaceholder = document.querySelector('#podplaceholder');
+        const pod = document.querySelector('#pod');
         const transition = document.querySelector("#transition");
-        let x = null;
+        let headadjust = null;
         let y = null;
         const transitionclose = function() {
             const campos = camera.object3D.position
-            const rigpos = rig.object3D.position
-            console.log(campos.y);
-            console.log(rigpos.y);
-            x = 1.7 - campos.y;
+            headadjust = 1.6 - campos.y;
             y = campos.y - 0.55;
-            console.log(x+', '+y);
             transition.dispatchEvent(new CustomEvent("transitionclose"));
             setTimeout(function(){warpwarp();}, 1000);
         };
-
         const warpwarp = function() {
-            rig.object3D.position.set(0, x, 0);
-            pod.object3D.position.set(0, y, 0);
+            for (let each of curvePoints) { // Sets height for ride, using VR headset height
+                each.object3D.position.y = headadjust;
+            }
+            pod.object3D.position.set(0, y, -0.1);
             camera.object3D.position.set(0, 1.6, 0);
             camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
             for (let each of hands) {
-                AFRAME.utils.entity.setComponentProperty(each, rayCaster.showLine, "false");
+                each.setAttribute('raycaster', 'far', 0); // Makes VR raycaster lines invisible during ride
             }
             podplaceholder.object3D.visible = false;
             if (podvisibility === true) {
@@ -87,7 +85,7 @@ AFRAME.registerComponent("tour-start", {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track0', dur: 10000, triggerRadius: 0.1}) // Set to #track0 dur 10000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track0', dur: 10000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
         };
 
         el.addEventListener("mouseup", function(evt) {
@@ -152,6 +150,7 @@ AFRAME.registerComponent("tour-mechanics", {
         const track3 = document.querySelector('#track3');
         
         const scene0toggle = sceneEl.querySelectorAll('.scene0'); // Scene 0 Assets
+        const countdown = document.querySelector('#countdown-s');
         const startdoors = document.querySelector('#start-doors');
         const swingingdoor = document.querySelector('#swinging-door-s');
 
@@ -213,6 +212,10 @@ AFRAME.registerComponent("tour-mechanics", {
 
         sceneEl.addEventListener("alongpath-trigger-activated", function(e) {
                 switch(e.target.id) {
+                    case "track_straight0_0":
+                        audiswitchdelay(countdown, "play", 6500)
+                        console.log('countdown sound');
+                        break;
                     case "track_straight1_1":
                         startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
                         swingingdoor.components.sound.playSound();
@@ -297,10 +300,10 @@ AFRAME.registerComponent("tour-mechanics", {
                         break;
                     case "track_turn4_1":
                         for (let each of sbc1) {
-                            aniswitchdelay(each, "animation-mixer", {timeScale: "1"}, "7200");
+                            aniswitchdelay(each, "animation-mixer", {timeScale: "1"}, "8200");
                         };
-                        audiswitchdelay(sbcplants1, "play", 7200);
-                        audiswitchdelay(sbcplants2, "play", 19740);
+                        audiswitchdelay(sbcplants1, "play", 8200);
+                        audiswitchdelay(sbcplants2, "play", 20240);
                         console.log('SBC sequence');
                         crickets1.components.sound.stopSound();
                         console.log('stop crickets1 sound')
@@ -336,15 +339,15 @@ AFRAME.registerComponent("tour-mechanics", {
                     case "track_straight_end_1_1":
                         sbc1cat.removeAttribute('animation-mixer')
                         sbc1plant.removeAttribute('animation-mixer')
-                        sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', loop: 'once', timeScale: '0'})
-                        sbc1plant.setAttribute('animation-mixer', {clip: '*', loop: 'once', timeScale: '0'})
+                        sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
+                        sbc1plant.setAttribute('animation-mixer', {clip: '*', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
                         console.log('sbc animation reset');
                         visiswitch(scene2toggle, false);
                         console.log('scene 2 hide');
                         break;
                     case "track_straight_end_1_2":
                         visiswitch(scene1toggle, true);
-                        setAttributes(light1, {"position": {x: -0.123, y: 4.9, z: 5}, "color": "white", "animation": {property: 'light.intensity', from: 2, to: 1.5, dur: 2000}, "decay": 1, "distance": 15})
+                        setAttributes(light1, {"position": {x: -0.123, y: 4.9, z: 5}, "color": "white", "animation": {property: 'light.intensity', from: 2, to: 1.5, dur: 4000}, "decay": 1, "distance": 15})
                         console.log('light1 move to scene 0 for dismount')
                         for (let each of timetunneldoor2) {
                             each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.open', loop: 'once', clampWhenFinished: 'true'})
@@ -365,7 +368,7 @@ AFRAME.registerComponent("tour-mechanics", {
                     break;
                     case "track_straight_end_1_4":
                         visiswitch(scene2toggle, false);
-                        setAttributes(light2, {"position": {x: 0, y: 5.4, z: -17.4}, "color": "white", "animation": {property: 'light.intensity', to: 0.3, dur: 2000}, "decay": 1, "distance": 11})
+                        setAttributes(light2, {"position": {x: 0, y: 5.4, z: -17.4}, "color": "white", "animation": {property: 'light.intensity', to: 0.3, dur: 4000}, "decay": 1, "distance": 11})
                         console.log('light2 move to scene1')
                         for (let each of timetunneldoor2) {
                             each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.close', loop: 'once', clampWhenFinished: 'true'})
@@ -375,7 +378,6 @@ AFRAME.registerComponent("tour-mechanics", {
                         audiswitchdelay(timetunnel2insidesound, "stop", 2000)
                         audiswitchdelay(timetunnel3insidesound, "stop", 2000)
                         console.log('time tunnel 2 inside sound off');
-
                     break;
                     case "track_straight_end_1_5":
                         timelight1.setAttribute('position', {x: 14.4, y: 1.6, z: -20})
@@ -386,12 +388,8 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('Time Tunnel 2 undulate off');
                     break;
                     case "track_straight_end_1_6":
-                        timelight1.setAttribute('visible', 'false')
-                        console.log('Time Tunnel light 1 deactivate');
                     break;
                     case "track_straight_dismount_1":
-                        timelight2.setAttribute('visible', 'false')
-                        console.log('Time Tunnel light 2 deactivate');
                     break;
                 }    
             })
@@ -457,7 +455,7 @@ rig.addEventListener("movingended__#track2", function(){
     rig.setAttribute('alongpath', {curve: '#track3', dur: '53000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#track3", function(){
-    rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '20000', triggerRadius: '0.1'})
+    rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '20000', triggerRadius: '0.001'})
 })
 rig.addEventListener("movingended__#trackdismount", function(){
     rig.dispatchEvent(new CustomEvent("endtour"));
