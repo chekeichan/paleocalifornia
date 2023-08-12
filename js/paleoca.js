@@ -3,7 +3,7 @@
 var podvisibility = true; // Used by button-logic and tour-start
 var narrationcounter = 1; // Used by button-logic and tour-mechanics
 
-var setAttributes = function(entity, attrs) {
+var setAttributes = function(entity, attrs) { // Efficient way to set complex attributes (taken from StackOverflow)
     for (var key in attrs) {
         entity.setAttribute(key, attrs[key]);
     }
@@ -20,14 +20,14 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
         } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
             document.querySelector('#GL-VR').object3D.visible = true;
             console.log('VR detected');
-            rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just for head turning with thumbstick
+            rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
             console.log('PC detected');
             document.querySelector('#GL-PC').object3D.visible = true;
     }
 }});
 
-AFRAME.registerComponent('all-wait', { // Waits for certain models to load then makes them not visible
+AFRAME.registerComponent('all-wait', { // Waits for certain models to load then makes them not visible. If models start out not visible, they will cause a pause then they are loaded
     init: function () {
         const sceneEl = document.querySelector('a-scene');
         const hideatstart = sceneEl.querySelectorAll('.hide');
@@ -60,7 +60,7 @@ AFRAME.registerComponent("tour-start", {
             setTimeout(function(){warpwarp();}, 1000);
         };
         const warpwarp = function() {
-            for (let each of curvePoints) { // Sets height for ride, using VR headset height
+            for (let each of curvePoints) { // Sets height for ride my manipulating the curve height, using VR headset height
                 each.object3D.position.y = headadjust;
             }
             pod.object3D.position.set(0, y, -0.1);
@@ -114,7 +114,7 @@ AFRAME.registerComponent("tour-end", {
             rig.object3D.position.set(-6.5, 0.6, 5);
             camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(-90),0);
             for (let each of hands) {
-                AFRAME.utils.entity.setComponentProperty(each, "rayCaster.showLine", "true");
+                each.setAttribute('raycaster', 'far', 4); // Makes VR raycaster lines visible again after ride
             }
             podplaceholder.object3D.visible = true;
             pod.object3D.visible = false;
@@ -129,7 +129,7 @@ AFRAME.registerComponent("tour-end", {
 
         el.addEventListener("endtour", function(evt) {
             transitionclose();
-            rig.removeAttribute('alongpath');
+            rig.removeAttribute('alongpath'); // alongpath crashes if it is left with no instructions
 
         })
     }}
@@ -150,6 +150,7 @@ AFRAME.registerComponent("tour-mechanics", {
         const track3 = document.querySelector('#track3');
         
         const scene0toggle = sceneEl.querySelectorAll('.scene0'); // Scene 0 Assets
+        const narration = document.querySelector('#narration');
         const countdown = document.querySelector('#countdown-s');
         const startdoors = document.querySelector('#start-doors');
         const swingingdoor = document.querySelector('#swinging-door-s');
@@ -191,13 +192,13 @@ AFRAME.registerComponent("tour-mechanics", {
            }
         };
         
-        var aniswitchdelay = function(entity, setting, detail, delay) {
+        var aniswitchdelay = function(entity, setting, detail, delay) { // Triggers animations on a timer in cases where it is not in sync with track waypoints
             setTimeout(() => {
                 entity.setAttribute(setting, detail)
             }, delay);
         };
 
-        var audiswitchdelay = function(entity, toggle, delay) {
+        var audiswitchdelay = function(entity, toggle, delay) { 
             console.log(toggle);
             setTimeout(() => {
                 if(toggle == "play") {
@@ -210,7 +211,7 @@ AFRAME.registerComponent("tour-mechanics", {
 
         
 
-        sceneEl.addEventListener("alongpath-trigger-activated", function(e) {
+        sceneEl.addEventListener("alongpath-trigger-activated", function(e) { // Ride instructions to set off sounds, animations, show or hide scenes, etc. Instructions are spread out to prevent pauses, like with multiple light movements going at once
                 switch(e.target.id) {
                     case "track_straight0_0":
                         audiswitchdelay(countdown, "play", 6500)
@@ -397,9 +398,8 @@ AFRAME.registerComponent("tour-mechanics", {
             sceneEl.addEventListener("alongpath-trigger-activated", function(e) { // Handlers for narration
                 switch(e.target.id) {
                     case "track_straight0_0":
-                        let suffix = "01";
-                        "narration"[narrationcounter][suffix].components.sound.playSound();
-                        console.log('Scene0 narration');
+                        narration.components.sound.playSound();
+                        console.log('Narration start');
                         break;
                 }    
             })
@@ -411,7 +411,7 @@ sceneEl.addEventListener("animation-loop", function(e) {
     const shastaeating = document.querySelector('#shasta-eating-s');
     let rand = 0
     switch(e.target.id) {
-        case "sleepy-shasta":
+        case "sleepy-shasta": // The sloths have randomized behavior. Each have one more common animation and one rarer one
             rand = Math.floor(Math.random() * 10);
             console.log(rand);
             if (rand < 2) {
@@ -455,7 +455,7 @@ rig.addEventListener("movingended__#track2", function(){
     rig.setAttribute('alongpath', {curve: '#track3', dur: '53000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#track3", function(){
-    rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '20000', triggerRadius: '0.001'})
+    rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '5000', triggerRadius: '0.001'}) // This adds a delay to the stop at the exit ramp with imperceptible movement 
 })
 rig.addEventListener("movingended__#trackdismount", function(){
     rig.dispatchEvent(new CustomEvent("endtour"));
@@ -471,6 +471,7 @@ AFRAME.registerComponent('buttonlogic', {
           let trackvisibility = false;
           const creditslist = document.querySelectorAll(".credits");
           const originalColor = el.getAttribute('material').color;
+          const narration = document.querySelector('#narration');
           const podvisibletext = document.querySelector('#podvisibletext');
           const podwarningtext = document.querySelector('#podwarningtext');
           const track = document.querySelectorAll(".track");
@@ -494,12 +495,12 @@ AFRAME.registerComponent('buttonlogic', {
                     podvisibility = !podvisibility;
                     if (podvisibility === true) {
                             AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
-                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Headset Mode
+                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { 
                                 podwarningtext.setAttribute("visible", false); 
                             };
                     } else {
                             AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: Off");        
-                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Headset Mode
+                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { // Shows VR specific warning
                                 podwarningtext.setAttribute("visible", true); 
                             };
                     }
@@ -526,19 +527,20 @@ AFRAME.registerComponent('buttonlogic', {
                     }
                     if (narrationcounter === 0) {
                         AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: None");
+                        narration.setAttribute('sound', {src: '#narration-silence'})
                     } else if (narrationcounter === 1) {
                         AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Adventure");            
                     } else if (narrationcounter === 2) {
-                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Educational");            
+                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Educational");
+                        narration.setAttribute('sound', {src: '#narration-education'})
+                        console.log("education track set")            
                     } else if (narrationcounter === 3) {
-                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Behind-the-Scenes");            
+                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Behind-the-Scenes");
+                        narration.setAttribute('sound', {src: '#narration-commentary'})
+                        console.log("commentary track set")               
                     }
                     break;
-                case "soundtestbutt":
-                    testsound.components.sound.playSound();
-                    break;
-            
-                case "creditsbutt":
+                case "creditsbutt": // Flips credit panels
                     for (let each of creditslist) {
                         each.setAttribute("visible", false);     
                     }
