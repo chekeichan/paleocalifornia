@@ -479,7 +479,6 @@ AFRAME.registerComponent('buttonlogic', {
           const narrationtext = document.querySelector('#narrationtext');
           const boopsound = document.querySelector('#boop-s');
           const beepsound = document.querySelector('#beep-s');
-          const testsound = document.querySelector('#test-s');
 
           el.addEventListener('raycaster-intersected', function () {
             boopsound.components.sound.playSound();
@@ -529,6 +528,7 @@ AFRAME.registerComponent('buttonlogic', {
                         AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: None");
                         narration.setAttribute('sound', {src: '#narration-silence'})
                     } else if (narrationcounter === 1) {
+                        narration.setAttribute('sound', {src: '#narration-adventure'})
                         AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Adventure");            
                     } else if (narrationcounter === 2) {
                         AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Educational");
