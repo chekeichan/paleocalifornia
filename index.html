@@ -2,7 +2,6 @@
 <html>
 <head>
 
-
 <meta charset="utf-8">
 <title>PaleoCalifornia • A-Frame</title>
 <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0" />
@@ -13,7 +12,6 @@
 <meta name="description" content="VR tour of California 40,000 years ago">
 <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/aframe-aabb-collider-component@3.1.0/dist/aframe-aabb-collider-component.min.js"></script>-->
 <script src="js/aframe-alongpath-component.js"></script> <!-- Custom code to fix rig camera angle-->
 <script src="https://cdn.jsdelivr.net/npm/aframe-curves@1.0.0/build/curve.min.js"></script>
@@ -192,14 +190,14 @@
 <!-- Instructions Panel-->
 <a-entity id="instructionspanel" position="-5.342 1.237 2.811" rotation="-62.62 -52.71 0">
   <a-text id="instructionsstitle" mixin="text-title" position="0.063 0.525 0" rotation="0 0 0" value="Instructions"></a-text>
-  <a-text id="GL-VR" mixin="text-label" position="0.068 0.07 0" rotation="0 0 0" visible="false" value="Turn: right stick or with headset\nSelect: point and use controller\nbuttons\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select center button to start ride!"></a-text>
-  <a-text id="GL-PC" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select ramp button to start ride!"></a-text>
-  <a-text id="GL-SP" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag across screen or turn device\nSelect: tap screen\n\n1. Check options on right panel\n2. Select ramp button to start ride!"></a-text>
+  <a-text id="GL-VR" mixin="text-label" position="0.068 0.07 0" rotation="0 0 0" visible="false" value="Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!"></a-text>
+  <a-text id="GL-PC" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
+  <a-text id="GL-SP" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag across screen or turn device\nSelect: tap screen\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
 </a-entity>
 
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="true" class="scene0" position="2.42 3.5 -2" rotation="0 -90 0" value="By Keith Chan" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="true" class="scene0" position="2.35 3.3 3.24" rotation="0 -90 0" value="Experience in development" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="true" class="scene0" position="2.35 3.5 3.24" rotation="0 -90 0" value="Part One" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="false" class="scene0" position="-6 1.4 14.4" rotation="0 90 0" value="Thank you for visiting PaleoCA!\nMore scenes and features are planned" color="black" width="8" line-height="50" text="wrapCount: 40"></a-text>
 <a-text visible="true" class="scene0" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
 <a-entity gltf-model="models/track.glb" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
