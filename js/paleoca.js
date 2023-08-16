@@ -1,7 +1,6 @@
 // console.warn = console.error = () => {}; // Suppresses Three.js warnings. Remove to debug
 
 var podvisibility = true; // Used by button-logic and tour-start
-var narrationcounter = 1; // Used by button-logic and tour-mechanics
 
 var setAttributes = function(entity, attrs) { // Efficient way to set complex attributes (taken from StackOverflow)
     for (var key in attrs) {
@@ -398,6 +397,8 @@ AFRAME.registerComponent("tour-mechanics", {
             sceneEl.addEventListener("alongpath-trigger-activated", function(e) { // Handlers for narration
                 switch(e.target.id) {
                     case "track_straight0_0":
+                        narration.flushToDOM();
+                        console.log('2 '+ narration.getAttribute('sound').src)  
                         narration.components.sound.playSound();
                         console.log('Narration start');
                         break;
@@ -472,6 +473,7 @@ AFRAME.registerComponent('buttonlogic', {
           const creditslist = document.querySelectorAll(".credits");
           const originalColor = el.getAttribute('material').color;
           const narration = document.querySelector('#narration');
+          let narrationcounter = 1; 
           const podvisibletext = document.querySelector('#podvisibletext');
           const podwarningtext = document.querySelector('#podwarningtext');
           const track = document.querySelectorAll(".track");
@@ -521,22 +523,35 @@ AFRAME.registerComponent('buttonlogic', {
                     break;
                 case "narrationbutt":
                     narrationcounter++;
+                    console.log(narrationcounter);
                     if (narrationcounter > 3) { // Value is total narration tracks (plus none) minus one
                         narrationcounter = 0;
-                    }
-                    if (narrationcounter === 0) {
                         AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: None");
-                        narration.setAttribute('sound', {src: '#narration-silence'})
+                        narration.setAttribute('sound', {src: '#beep-sound'});
+                        narration.setAttribute('sound', {volume: '0'});
+                        narration.flushToDOM();
+                        console.log("silent track set")     
+                        console.log(narration.getAttribute('sound').src)
+                    
+                    
+                    
                     } else if (narrationcounter === 1) {
                         narration.setAttribute('sound', {src: '#narration-adventure'})
-                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Adventure");            
+                        narration.setAttribute('sound', {volume: '1'});
+                        AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Adventure");   
+                        narration.flushToDOM();
+                        console.log("adventure track set");              
                     } else if (narrationcounter === 2) {
                         AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Educational");
                         narration.setAttribute('sound', {src: '#narration-education'})
-                        console.log("education track set")            
+                        narration.setAttribute('sound', {volume: '1'});
+                        narration.flushToDOM();
+                        console.log("education track set");            
                     } else if (narrationcounter === 3) {
                         AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Behind-the-Scenes");
                         narration.setAttribute('sound', {src: '#narration-commentary'})
+                        narration.setAttribute('sound', {volume: '1'});
+                        narration.flushToDOM();
                         console.log("commentary track set")               
                     }
                     break;
