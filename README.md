@@ -1,5 +1,5 @@
 # PaleoCalifornia
-## See the site at [www.paleoca.com](www.paleoca.com)!
+## See the site at [www.paleoca.com](https://www.paleoca.com)!
 A fun and educational WebXR dark ride into the Ice Age of Southern California!
 
 ## Highlights:
