@@ -485,6 +485,7 @@ AFRAME.registerComponent('buttonlogic', {
           const narrationtext = document.querySelector('#narrationtext');
           const boopsound = document.querySelector('#boop-s');
           const beepsound = document.querySelector('#beep-s');
+          const startdoors = document.querySelector('#start-doors');
           const swingingdoor = document.querySelector('#swinging-door-s');
           const transition = document.querySelector("#transition");
           
@@ -526,7 +527,10 @@ AFRAME.registerComponent('buttonlogic', {
                         movemode = 0;
                     }
                     if (movemode === 0) { // Ride Mode
-                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { 
+                            startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.close', loop: 'once', clampWhenFinished: 'true'})
+                            swingingdoor.components.sound.playSound();
+                        
+                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
                                 const transitioncloseride = function() {
                                     transition.dispatchEvent(new CustomEvent("transitionclose"));
                                     setTimeout(function(){warpwarpride();}, 1000);
@@ -534,13 +538,14 @@ AFRAME.registerComponent('buttonlogic', {
                         
                                 const warpwarpride = function() {
                                     rig.object3D.position.set(-6.5, 0.6, 5);
-                                    camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(-90),0);
+                                    camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
                                     rig.setAttribute("movement-controls", 'enabled', true); 
                                     for (let each of hands) {
                                         each.setAttribute('raycaster', 'far', 4); // Makes VR raycaster lines long
                                         each.removeAttribute("mixin"); 
                                     }
-                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Ride Mode"); 
+                                    
+                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode"); 
                                     console.log('setting Ride Mode')
                                     setTimeout(function(){transitionopenride();}, 700)
                                 };
@@ -551,17 +556,79 @@ AFRAME.registerComponent('buttonlogic', {
 
                                 transitioncloseride();
                                 
-                            };
+                            } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
+                                const transitioncloseride = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                    setTimeout(function(){warpwarpride();}, 1000);
+                                };
+                        
+                                const warpwarpride = function() {
+                                    rig.object3D.position.set(-6.5, 0.6, 5);
+                                    camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
+                                    rig.setAttribute("movement-controls", 'enabled', false); 
+                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode"); 
+                                    console.log('setting Ride Mode')
+                                    setTimeout(function(){transitionopenride();}, 700)
+                                };
+                                
+                                const transitionopenride = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                };
+
+                                transitioncloseride();
+                                
+                        };
+
                     } else if (movemode === 1) { // Teleport Mode   
-                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { 
-                                rig.setAttribute("movement-controls", 'enabled', false); 
-                                for (let each of hands) {
-                                    each.setAttribute('raycaster', 'far', 1); // Makes VR raycaster lines short
-                                    each.setAttribute("mixin", "blink"); 
-                                }
-                            AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Teleport Mode"); 
-                            };
-                    }
+                            startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
+                            swingingdoor.components.sound.playSound();
+                            
+                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
+                                const transitionclosetele = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                    setTimeout(function(){warpwarptele();}, 1000);
+                                };
+                    
+                                const warpwarptele = function() {
+                                    rig.setAttribute("movement-controls", 'enabled', false); 
+                                    for (let each of hands) {
+                                        each.setAttribute('raycaster', 'far', 1); // Makes VR raycaster lines short
+                                        each.setAttribute("mixin", "blink"); 
+                                    }
+                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode");
+                                        console.log('setting Teleport Mode')
+                                        setTimeout(function(){transitionopentele();}, 700)
+                                    };
+                                
+                                const transitionopentele = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                };
+
+                                transitionclosetele();
+                                
+                                 
+                            } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
+                                
+                                const transitionclosewalk = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                    setTimeout(function(){warpwarpwalk();}, 1000);
+                                };
+                    
+                                const warpwarpwalk = function() {
+                                    rig.setAttribute("movement-controls", "speed", 0.15);
+                                    rig.setAttribute("movement-controls", "constrainToNavMesh", true);
+                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode"); 
+                                    console.log('setting Walk Mode')
+                                    setTimeout(function(){transitionopenwalk();}, 700)
+                                    };
+                                
+                                const transitionopenwalk = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                };
+
+                                transitionclosewalk();
+                                
+                    }}
                     break;
                 case "podvisiblebutt":
                     podplaceholder.object3D.visible = !podplaceholder.getAttribute("visible");
