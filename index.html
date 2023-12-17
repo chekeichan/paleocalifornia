@@ -29,7 +29,7 @@
 </head>
  
 <body>
-<a-scene all-wait grab-panels warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
+<a-scene all-wait info-panels warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
 
 <a-assets timeout="80000"> <!-- Loads models -->
     <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navstart.glb"></a-asset-item>
@@ -64,7 +64,7 @@
     <a-mixin id="text-title" position="0 0 -1" rotation="0 -90 0" visible="true"  text="width: 1.33; color: black; lineHeight: 60; wrap-count: 20"></a-mixin>
     <a-mixin id="burial-label" position="0 0 -1" text="width: 2; color: black; lineHeight: 60; wrap-count: 35"></a-mixin>
     <a-mixin id="table-caption" text="align: right; color: black; lineHeight: 55; wrap-count: 50"></a-mixin>
-    <a-mixin id="scale-box" visible="false"></a-mixin>
+    <a-mixin id="scale-label" visible="false" aterial="msdf" geometry="primitive: plane; height: 1; width: 1; buffer: false" material="color: #dadada; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 30; width: 0.9"></a-mixin>
     <a-mixin id="panel-background" geometry="primitive: box; height: 1; width: 1.25; depth: 0.1; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
     <a-mixin id="index-background" geometry="primitive: plane; height: 3; width: 2.25; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
     <a-mixin id="scale-text" text="color: black; width: 2; wrapCount: 45"></a-mixin>
@@ -76,8 +76,7 @@
 
  </a-assets>
  <a-entity gltf-model="#navmesh" nav-mesh position="0 0.05 0" rotation="0 0 0" visible="true"></a-entity>
- <a-entity gltf-model="models/navstart.glb" class="navstart" position="0 0.05 0" rotation="0 0 0" visible="true"></a-entity>
- <a-entity gltf-model="models/nav2.glb" class="nav2" position="0 0.05 0" rotation="0 0 0" visible="true"></a-entity>
+ <a-entity gltf-model="models/infopoles.glb" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 
 <!-- Player Character -->
 <a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.5 5" rotation="0 -90 0">
@@ -221,9 +220,12 @@
 <a-entity id="podplaceholder" gltf-model="#podstart" static-body="shape: box" visible="true" position="0 0.5 0"></a-entity>
 <a-entity id="start-doors" class="scene1" visible="true" gltf-model="#startdoors" position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="startpost" class="scene0" position="-4.34 1.01 5" geometry="primitive: cylinder; height: 0.85; segmentsHeight: 1; radius: 0.04; segmentsRadial: 4" material="color: #ffffff; blending: none">
-  <a-entity id="startbutton" mixin="settingsbutton button" buttonlogic tour-start static-body="shape: box;" class="scene0 clickable static" position="0 0.454 0" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1.02" visible="true"></a-entity>
+  <a-entity id="startbutton" mixin="settingsbutton button" buttonlogic tour-start static-body="shape: box;" class="scene0 clickable static" position="0 0.454 0" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="true"></a-entity>
+  <a-entity id="scene0-butt-1" mixin="settingsbutton button" static-body="shape: box;" class="scene0 clickable static" position="2.95 0.605 0.868" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="true"></a-entity>
+  <a-entity id="scene0-butt-2" mixin="settingsbutton button" static-body="shape: box;" class="scene0 clickable static" position="3.3 -0.125 8.64" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="true"></a-entity>
 </a-entity>
 <a-entity id="countdown-s" mixin="sound" class="scene0sound" position="0 1 4" sound="src: #countdown-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="scene0-text-1" visible="false" mixin="scale-label" position="-0.6 1.8 6.5" rotation="0 230 0" text="value: Time Pod\nDetails: The Mark 2 Time Pod is the leader in safe personal time travel. Key features include remote control across time, hover-based locomotion, transparent protective shield to limit cross-time disruptions, and an advanced sound system.; "></a-entity><!-- Info Box -->
 
 <a-entity id="scene1-room" gltf-model="models/scene1.glb" class="scene1" position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-outside" gltf-model="#timetunnel-outside" position="0 0 0" rotation="0 0 0"></a-entity>

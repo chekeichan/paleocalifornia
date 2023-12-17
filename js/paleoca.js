@@ -60,7 +60,7 @@ AFRAME.registerComponent("tour-start", {
             setTimeout(function(){warpwarp();}, 1000);
         };
         const warpwarp = function() {
-            for (let each of curvePoints) { // Sets height for ride my manipulating the curve height, using VR headset height
+            for (let each of curvePoints) { // Sets height for ride by manipulating the curve height, using VR headset height
                 each.object3D.position.y = headadjust;
             }
             pod.object3D.position.set(0, y, -0.1);
@@ -716,3 +716,32 @@ AFRAME.registerComponent('buttonlogic', {
           });
         }
       });
+
+// Orb Toggle Buttons
+AFRAME.registerComponent("info-panels", {
+    init: function() {
+        const boopsound = document.querySelector('#boop-s');
+        const beepsound = document.querySelector('#beep-s');
+        var grabpanel = function(grabbutt, grabset) {
+        const originalColor = document.getElementById(grabbutt).getAttribute('material').color;
+
+        document.getElementById(grabbutt).addEventListener('raycaster-intersected', function () {
+            boopsound.components.sound.playSound();
+            document.getElementById(grabbutt).setAttribute('material', 'color', 'yellow');
+          });
+
+        document.getElementById(grabbutt).addEventListener("mouseup", function(evt) {
+            var cent = document.querySelector(grabset);
+            cent.object3D.visible = !cent.getAttribute("visible");
+            beepsound.components.sound.playSound(); // Beep sound for all buttons
+            document.getElementById(grabbutt).setAttribute('material', 'color', 'orange');
+            console.log("info button hit")
+        });
+
+        document.getElementById(grabbutt).addEventListener("raycaster-intersected-cleared", function(evt) {
+            document.getElementById(grabbutt).setAttribute('material', 'color', originalColor);
+    })};
+
+    grabpanel("scene0-butt-1","#scene0-text-1");
+    }
+    })
