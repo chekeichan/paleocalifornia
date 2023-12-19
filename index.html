@@ -24,12 +24,13 @@
 <script src="js/aframe-alongpath-component.js"></script> <!-- Custom code to fix rig camera angle-->
 <script src="https://cdn.jsdelivr.net/npm/aframe-curves@1.0.0/build/curve.min.js"></script>
 <script src="js/aframe-surface-scatter.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/diarmidmackenzie/instanced-mesh@v0.7.0/src/instanced-mesh.min.js"></script>
 <script src="js/paleoca.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/gh/kylebakerio/a-console@1.0.2/a-console.js"></script> -->
 </head>
  
 <body>
-<a-scene all-wait info-panels warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
+<a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
 
 <a-assets timeout="80000"> <!-- Loads models -->
     <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navstart.glb"></a-asset-item>
@@ -61,10 +62,11 @@
     <a-mixin id="button" hoverable clickable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, thumbstickup, mouseup" shadow></a-mixin>
     <a-mixin id="holoprojector" color="#ff6a00" position="0 0.3 0" rotation="180 0 0" height="0.05" geometry="primitive: cone; segmentsRadial: 3; openEnded: true; radiusBottom: 0.5; segmentsHeight: 1" material="emissive: #ff6a00; wireframe: true" animation="property: rotation; to: 180 360 0; loop: true; easing: linear; dur: 10000"></a-mixin>
     <a-mixin id="text-label" position="0 0 -1" rotation="0 -90 0" text="width: 1.5; color: black; lineHeight: 55; wrap-count: 40"></a-mixin>
-    <a-mixin id="text-title" position="0 0 -1" rotation="0 -90 0" visible="true"  text="width: 1.33; color: black; lineHeight: 60; wrap-count: 20"></a-mixin>
+    <a-mixin id="text-title" position="0 0 -1" rotation="0 -90 0" visible="true"  text="width: 1.25; color: black; lineHeight: 60; wrap-count: 20"></a-mixin>
     <a-mixin id="burial-label" position="0 0 -1" text="width: 2; color: black; lineHeight: 60; wrap-count: 35"></a-mixin>
     <a-mixin id="table-caption" text="align: right; color: black; lineHeight: 55; wrap-count: 50"></a-mixin>
-    <a-mixin id="scale-label" visible="false" aterial="msdf" geometry="primitive: plane; height: 1; width: 1; buffer: false" material="color: #dadada; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 30; width: 0.9"></a-mixin>
+    <a-mixin id="scale-label" visible="false" geometry="primitive: plane; height: 1; width: 1; buffer: false" material="color: #dadada; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 30; width: 0.9"></a-mixin>
+    <a-mixin id="scale-label-la" instanced-mesh-member="mesh:#scene1-text-1" rotation="0 90 0" geometry="primitive: plane; height: 0.6; width: 1.25; buffer: false" material="color: #A9A9A9; shader: flat;" text="color: #dadada; lineHeight: 60; wrap-count: 20; width: 1.2"></a-mixin>
     <a-mixin id="panel-background" geometry="primitive: box; height: 1; width: 1.25; depth: 0.1; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
     <a-mixin id="index-background" geometry="primitive: plane; height: 3; width: 2.25; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
     <a-mixin id="scale-text" text="color: black; width: 2; wrapCount: 45"></a-mixin>
@@ -75,8 +77,8 @@
     <a-mixin id="sound" ></a-mixin>
 
  </a-assets>
- <a-entity gltf-model="#navmesh" nav-mesh position="0 0.05 0" rotation="0 0 0" visible="true"></a-entity>
- <a-entity gltf-model="models/infopoles.glb" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+ <a-entity gltf-model="#navmesh" nav-mesh position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity>
+ <a-entity gltf-model="models/infopoles.glb" class="walk" position="0 0 0" rotation="0 0 0" visible="false"></a-entity>
 
 <!-- Player Character -->
 <a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.5 5" rotation="0 -90 0">
@@ -186,7 +188,7 @@
 </a-curve>
 
 <!-- Settings Panel-->
-<a-entity id="settingspanel" position="-4.527 1.237 6.344" rotation="-62.62 -126.72 0"> 
+<a-entity id="settingspanel" class="ride" position="-4.527 1.237 6.344" rotation="-62.62 -126.72 0"> 
   <a-text id="settingstitle" mixin="text-title" position="-0.032 0.356 0.052" rotation="0 0 0" value="Options"></a-text>
   <!-- <a-entity id="settingsbackground" mixin="panel-background" static-body="shape: box;" class="clickable static" position="0.518 0.025 0" visible="true"></a-entity> -->
   <a-entity id="trackorbsbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
@@ -196,18 +198,19 @@
   <a-text id="podwarningtext" mixin="text-label" visible="false" position="0.62 0 0.054" rotation="0 0 0" value="For VR pros!"></a-text>
   <a-entity id="narrationbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
   <a-text id="narrationtext" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Narration: Adventure"></a-text>
-  <a-entity id="movemodebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.30 0.05" visible="true"></a-entity>
-  <a-text id="movemodetext" mixin="text-label" position="0.1 -0.30 0.05" rotation="0 0 0" value="Ride Mode"></a-text>
+  
   <!-- <a-entity id="soundcheck" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
   <a-text id="soundchecktext" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Sound Check"></a-text> -->
 </a-entity>
 
 <!-- Instructions Panel-->
 <a-entity id="instructionspanel" position="-5.342 1.237 2.811" rotation="-62.62 -52.71 0">
-  <a-text id="instructionsstitle" mixin="text-title" position="0.063 0.525 0" rotation="0 0 0" value="Instructions"></a-text>
+  <a-text id="instructionsstitle" mixin="text-title" position="0.063 0.525 0" rotation="0 0 0" value="Instructions: Ride Mode"></a-text>
   <a-text id="GL-VR" mixin="text-label" position="0.068 0.07 0" rotation="0 0 0" visible="false" value="Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!"></a-text>
   <a-text id="GL-PC" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
   <a-text id="GL-SP" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag across screen or turn device\nSelect: tap screen\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
+  <a-entity id="movemodebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.14 -0.30 0.04" visible="true"></a-entity>
+  <a-text id="movemodetext" mixin="text-label" position="0.225 -0.29 0.04" rotation="0 0 0" value="Switch to Walk Mode"></a-text>
 </a-entity>
 
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
@@ -217,15 +220,19 @@
 <a-text visible="true" class="scene0" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
 <a-entity gltf-model="models/track.glb" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
 <a-entity gltf-model="#start" class="scene0" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
-<a-entity id="podplaceholder" gltf-model="#podstart" static-body="shape: box" visible="true" position="0 0.5 0"></a-entity>
+<a-entity id= "podplaceholder" gltf-model="#podstart" static-body="shape: box" visible="true" position="0 0.5 0"></a-entity>
 <a-entity id="start-doors" class="scene1" visible="true" gltf-model="#startdoors" position="0 0 0" rotation="0 0 0"></a-entity>
-<a-entity id="startpost" class="scene0" position="-4.34 1.01 5" geometry="primitive: cylinder; height: 0.85; segmentsHeight: 1; radius: 0.04; segmentsRadial: 4" material="color: #ffffff; blending: none">
-  <a-entity id="startbutton" mixin="settingsbutton button" buttonlogic tour-start static-body="shape: box;" class="scene0 clickable static" position="0 0.454 0" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="true"></a-entity>
-  <a-entity id="scene0-butt-1" mixin="settingsbutton button" static-body="shape: box;" class="scene0 clickable static" position="2.95 0.605 0.868" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="true"></a-entity>
-  <a-entity id="scene0-butt-2" mixin="settingsbutton button" static-body="shape: box;" class="scene0 clickable static" position="3.3 -0.125 8.64" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="true"></a-entity>
+<a-entity id="startpost" class="scene0 ride" position="-4.34 1.01 5" geometry="primitive: cylinder; height: 0.85; segmentsHeight: 1; radius: 0.04; segmentsRadial: 4" material="color: #ffffff; blending: none">
+  <a-entity id="startbutton" mixin="settingsbutton button" buttonlogic tour-start static-body="shape: box;" class="scene0 clickable static ride" position="0 0.454 0" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="true"></a-entity>
+  <a-entity id="scene0-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="2.95 0.605 0.868" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+  <a-entity id="countdown-s" mixin="sound" class="scene0sound" position="0 1 4" sound="src: #countdown-sound; loop: false; maxDistance: 4"></a-entity>
 </a-entity>
-<a-entity id="countdown-s" mixin="sound" class="scene0sound" position="0 1 4" sound="src: #countdown-sound; loop: false; maxDistance: 4"></a-entity>
+<!-- Scene 0 Info Boxes -->
+<a-entity id="scene0-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.04 0.82 13.63" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+
 <a-entity id="scene0-text-1" visible="false" mixin="scale-label" position="-0.6 1.8 6.5" rotation="0 230 0" text="value: Time Pod\nDetails: The Mark 2 Time Pod is the leader in safe personal time travel. Key features include remote control across time, hover-based locomotion, transparent protective shield to limit cross-time disruptions, and an advanced sound system.; "></a-entity><!-- Info Box -->
+<a-entity id="scene0-text-2" visible="false" mixin="scale-label" position="-2 1.3 14.6" rotation="0 150 0" text="value: Time Tunnel\nDetails: Our lab has harnessed waves of chronal energy into these tunnels that allow transport to other places and times by accounting for the position of the Earth in space.\n\nNote: A Time Pod is necessary to withstand the trip.; "></a-entity><!-- Info Box -->
+
 
 <a-entity id="scene1-room" gltf-model="models/scene1.glb" class="scene1" position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-outside" gltf-model="#timetunnel-outside" position="0 0 0" rotation="0 0 0"></a-entity>
@@ -242,6 +249,33 @@
 <a-entity id="timetunnel2-inside-s" mixin="sound" class="scene2sound" position="50 1.7 -15" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel3-inside-s" mixin="sound" class="scene2sound" position="0.1 1.7 23.5" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel-door-3-exit-s" mixin="sound" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="scene1-butt-1" mixin="settingsbutton button" static-body="shape: box;" class="walk clickable static" position="1.815 0.843 -7.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene1-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="2.95 0.605 0.868" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene1-butt-3" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.4 1 -3.73" visible="false"></a-entity>
+
+<!-- Scene 1 Info Boxes -->
+<a-entity id="scene1-text-1" instanced-mesh visible="true">
+  <a-entity mixin="scale-label-la"  position="-1.931 3.961 -17.042" text="value: Wilshire Grand Center\nCompleted: 2017\nHeight: 1,102 feet (335.9m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-5.853 3.5 -8.795" text="value: U.S. Bank Tower\nCompleted: 1990\nHeight: 1,018 feet (310.3m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-5.471 3.095 -15.813" text="value: AON Center\nCompleted: 1974\nHeight: 858 feet (261.5m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-8.109 2.972 -6.007" text="value: Two California Plaza\nCompleted: 1992\nHeight: 750 feet (228.6m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-7.544 3.020 -11.612" text="value: Gas Company Tower\nCompleted: 1991\nHeight: 749 feet (228.3m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
+  <a-entity mixin="scale-label-la"  position="3.960 1.403 -10.652" rotation="0 2.221 0" text="value: Los Angeles Center Studios\n\nFilming location for many media; width: 1.5; wrapCount: 25" visible="true" geometry="height: 0.7; width: 1.75"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-2.987 2.267 -9.4" text="value: Westin Bonaventure Hotel &amp; Suites" visible="true" geometry=""></a-entity>
+  <a-entity mixin="scale-label-la"  position="-9.743 1.739 -6.383" rotation="0 180 0" text="value: Angel's Flight Railway\n\nFilming location for &quot;La La Land&quot;" visible="true" geometry="height: 0.8"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-10.171 1.295 -12.243" text="value: Pershing Square; align: center" visible="true" geometry="height: 0.4"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-11.722 1.408 -7.016" text="value: Grand Central Market\n\nCity's oldest public market; lineHeight: 55" visible="true" geometry="height: 0.8"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-13.317 1.861 -7.642" text="value: Bradbury Building\n\nSeen in &quot;Blade Runner&quot;; lineHeight: 55" visible="true" geometry="height: 0.7"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-12.437 1.991 -13.091" text="value: Historic Broadway Theater District; align: center; width: 1.5; wrapCount: 30" visible="true" geometry="height: 0.4; width: 1.75"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-13.621 1.933 -20.599" text="value: Orpheum Theater\n\nFeatures prominently in music videos and reality television" visible="true" geometry="height: 0.8"></a-entity>
+  <a-entity mixin="scale-label-la"  position="-5.725 1.500 -11.353" text="value: Los Angeles Central Library" visible="true" geometry=""></a-entity>
+  <a-entity mixin="scale-label-la"  position="-8.034 1.6 -22.736" text="value: Fashion Institute of Design &amp; Merchandising\n\nFilming location for &quot;Project Runway&quot;; lineHeight: 55; width: 2; wrapCount: 30" visible="true" geometry="height: 0.75; width: 2.2"></a-entity>
+  <!-- Info Box -->
+</a-entity>
+
+</a-entity>
+<a-entity id="scene1-text-2" visible="true" mixin="scale-label" position="5 1.2 -18" rotation="0 230 0" text="value: Time Tunnel\nDetails: Our lab has harnessed waves of chronal energy into these tunnels that allow transport to other places and times by accounting for the position of the Earth in space. A Time Pod is necessary to withstand the trip.; "></a-entity><!-- Info Box -->
+
 
 <a-entity id="scene2-room" gltf-model="models/scene2.glb" class="hide scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
 <a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
@@ -273,12 +307,15 @@
 <a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2sbc" position="52 1.88 -40.63" rotation="0 0 3" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2anim" position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose;  timeScale: 0"></a-entity>
 
+<!-- Scene 2 Info Boxes -->
+<a-entity id="scene2-text-1" visible="false" mixin="scale-label" position="-0.6 1.8 6.5" rotation="0 230 0" text="value: Raccoon\nScientific name: \n\nRaccoons of the Pleistocene were similar to the ones in the present. Their traits are suitable for nocturnal foraging.; "></a-entity><!-- Info Box -->
+
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
   <a-text position="-1 1 0" value="Welcome to PaleoCA!" color="black" width="2" text="wrapCount: 20"></a-text>
   <a-entity mixin="credit-text" class="" id="" position="-1 0 0" text="value: By Dr. Keith Chan
   
-  PaleoCA is inspired by real 'dark rides' that creatively present exciting and fanciful worlds. This program is presented with the CC-Attribution-NonCommercial-ShareAlike 3.0 license. You may display this app and modify its code for your non-commericial use. 
+  PaleoCA is inspired by real theme park 'dark rides' that creatively present exciting and fanciful worlds. This program is presented with the CC-Attribution-NonCommercial-ShareAlike 3.0 license. You may display this app and modify its code for your non-commericial use. 
     
   The information on prehistoric life presented here is one common view of the scientific evidence, but not necessarily the only one. PaleoCA would not exist without the Creative Commons models of prehistoric animals commisioned by the La Brea Tar Pits of the Natural History Museum of Los Angeles County, but this site was made independently without consulting that organization.
   
