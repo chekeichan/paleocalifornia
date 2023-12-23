@@ -33,7 +33,7 @@
 <a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
 
 <a-assets timeout="80000"> <!-- Loads models -->
-    <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navstart.glb"></a-asset-item>
+    <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navmesh.glb"></a-asset-item>
     <a-asset-item id="start" response-type="arraybuffer" src="models/start.glb"></a-asset-item>
     <a-asset-item id="startdoors" response-type="arraybuffer" src="models/start-doors.glb"></a-asset-item>
     <a-asset-item id="podstart" response-type="arraybuffer" src="models/pod-start.glb"></a-asset-item>
@@ -78,10 +78,11 @@
 
  </a-assets>
  <a-entity gltf-model="#navmesh" nav-mesh position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity>
- <a-entity gltf-model="models/infopoles.glb" class="walk" position="0 0 0" rotation="0 0 0" visible="false"></a-entity>
+ <a-entity gltf-model="models/infopoles.glb" class="walk" position="0 -3 0" rotation="0 0 0" visible="false"></a-entity>
+ <a-entity gltf-model="models/maps-temp.glb" class="walk" position="0 -3 0" rotation="0 0 0" visible="false"></a-entity>
 
 <!-- Player Character -->
-<a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.5 5" rotation="0 -90 0">
+<a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
 <!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
   <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 1.0 -0.1"></a-entity> 
   <a-entity id="camera" rotation="180 180 0" camera look-controls cursor="rayOrigin:mouse" raycaster="far: 4; objects: .clickable"  position="0 1.6 0">
@@ -188,7 +189,7 @@
 </a-curve>
 
 <!-- Settings Panel-->
-<a-entity id="settingspanel" class="ride" position="-4.527 1.237 6.344" rotation="-62.62 -126.72 0"> 
+<a-entity id="settingspanel" class="ride" position="-4.527 1.237 6.344" rotation="-62.62 -126.72 0" visible="true"> 
   <a-text id="settingstitle" mixin="text-title" position="-0.032 0.356 0.052" rotation="0 0 0" value="Options"></a-text>
   <!-- <a-entity id="settingsbackground" mixin="panel-background" static-body="shape: box;" class="clickable static" position="0.518 0.025 0" visible="true"></a-entity> -->
   <a-entity id="trackorbsbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
@@ -207,10 +208,23 @@
 <a-entity id="instructionspanel" position="-5.342 1.237 2.811" rotation="-62.62 -52.71 0">
   <a-text id="instructionsstitle" mixin="text-title" position="0.063 0.525 0" rotation="0 0 0" value="Instructions: Ride Mode"></a-text>
   <a-text id="GL-VR" mixin="text-label" position="0.068 0.07 0" rotation="0 0 0" visible="false" value="Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!"></a-text>
-  <a-text id="GL-PC" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
+  <a-text id="GL-PC" mixin="text-label" position="0.08 0.19 0" rotation="0 0 0" visible="false" value="Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
   <a-text id="GL-SP" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag across screen or turn device\nSelect: tap screen\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
   <a-entity id="movemodebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.14 -0.30 0.04" visible="true"></a-entity>
   <a-text id="movemodetext" mixin="text-label" position="0.225 -0.29 0.04" rotation="0 0 0" value="Switch to Walk Mode"></a-text>
+</a-entity>
+
+<!-- Map Panel 1-->
+<a-entity id="warp-map1" class="walk" position="-4.527 -1.763 6.344" rotation="-62.62 -126.72 0" visible="false"> <!-- Movable map 1-->
+  <a-text id="warpmaptitle1" mixin="text-title" position="-0.032 0.356 0.052" rotation="0 0 0" value="Visit A Scene"></a-text>
+  <a-entity id="scene0warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
+  <a-text id="scene0warpstext1" mixin="text-label" position="0.1 0.15 0.05" rotation="0 0 0" value="Loading Bay"></a-text>
+  <a-entity id="scene1warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0 0.05" visible="true"></a-entity>
+  <a-text id="scene1warpstext1" mixin="text-label" position="0.1 0 0.05" rotation="0 0 0" value="Los Angeles"></a-text>
+  <a-entity id="scene2awarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
+  <a-text id="scene2awarpstext1" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
+  <a-entity id="scene2bawarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
+  <a-text id="scene2bwarpstext1" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
 </a-entity>
 
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
@@ -224,11 +238,12 @@
 <a-entity id="start-doors" class="scene1" visible="true" gltf-model="#startdoors" position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="startpost" class="scene0 ride" position="-4.34 1.01 5" geometry="primitive: cylinder; height: 0.85; segmentsHeight: 1; radius: 0.04; segmentsRadial: 4" material="color: #ffffff; blending: none">
   <a-entity id="startbutton" mixin="settingsbutton button" buttonlogic tour-start static-body="shape: box;" class="scene0 clickable static ride" position="0 0.454 0" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="true"></a-entity>
-  <a-entity id="scene0-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="2.95 0.605 0.868" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
   <a-entity id="countdown-s" mixin="sound" class="scene0sound" position="0 1 4" sound="src: #countdown-sound; loop: false; maxDistance: 4"></a-entity>
 </a-entity>
+
 <!-- Scene 0 Info Boxes -->
-<a-entity id="scene0-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.04 0.82 13.63" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene0-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.4 -1.45 5.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene0-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.04 -2.18 13.63" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 
 <a-entity id="scene0-text-1" visible="false" mixin="scale-label" position="-0.6 1.8 6.5" rotation="0 230 0" text="value: Time Pod\nDetails: The Mark 2 Time Pod is the leader in safe personal time travel. Key features include remote control across time, hover-based locomotion, transparent protective shield to limit cross-time disruptions, and an advanced sound system.; "></a-entity><!-- Info Box -->
 <a-entity id="scene0-text-2" visible="false" mixin="scale-label" position="-2 1.3 14.6" rotation="0 150 0" text="value: Time Tunnel\nDetails: Our lab has harnessed waves of chronal energy into these tunnels that allow transport to other places and times by accounting for the position of the Earth in space.\n\nNote: A Time Pod is necessary to withstand the trip.; "></a-entity><!-- Info Box -->
@@ -249,12 +264,12 @@
 <a-entity id="timetunnel2-inside-s" mixin="sound" class="scene2sound" position="50 1.7 -15" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel3-inside-s" mixin="sound" class="scene2sound" position="0.1 1.7 23.5" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel-door-3-exit-s" mixin="sound" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="scene1-butt-1" mixin="settingsbutton button" static-body="shape: box;" class="walk clickable static" position="1.815 0.843 -7.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
-<a-entity id="scene1-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="2.95 0.605 0.868" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
-<a-entity id="scene1-butt-3" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.4 1 -3.73" visible="false"></a-entity>
+<a-entity id="scene1-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="1.815 -2.157 -7.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene1-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="2.95 -2.395 0.868" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene1-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.4 -2 -3.73" visible="false"></a-entity>
 
 <!-- Scene 1 Info Boxes -->
-<a-entity id="scene1-text-1" instanced-mesh visible="true">
+<a-entity id="scene1-text-1" instanced-mesh visible="false">
   <a-entity mixin="scale-label-la"  position="-1.931 3.961 -17.042" text="value: Wilshire Grand Center\nCompleted: 2017\nHeight: 1,102 feet (335.9m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
   <a-entity mixin="scale-label-la"  position="-5.853 3.5 -8.795" text="value: U.S. Bank Tower\nCompleted: 1990\nHeight: 1,018 feet (310.3m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
   <a-entity mixin="scale-label-la"  position="-5.471 3.095 -15.813" text="value: AON Center\nCompleted: 1974\nHeight: 858 feet (261.5m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
@@ -272,9 +287,8 @@
   <a-entity mixin="scale-label-la"  position="-8.034 1.6 -22.736" text="value: Fashion Institute of Design &amp; Merchandising\n\nFilming location for &quot;Project Runway&quot;; lineHeight: 55; width: 2; wrapCount: 30" visible="true" geometry="height: 0.75; width: 2.2"></a-entity>
   <!-- Info Box -->
 </a-entity>
-
 </a-entity>
-<a-entity id="scene1-text-2" visible="true" mixin="scale-label" position="5 1.2 -18" rotation="0 230 0" text="value: Time Tunnel\nDetails: Our lab has harnessed waves of chronal energy into these tunnels that allow transport to other places and times by accounting for the position of the Earth in space. A Time Pod is necessary to withstand the trip.; "></a-entity><!-- Info Box -->
+
 
 
 <a-entity id="scene2-room" gltf-model="models/scene2.glb" class="hide scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>

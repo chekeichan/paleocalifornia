@@ -210,8 +210,6 @@ AFRAME.registerComponent("tour-mechanics", {
             }, delay);
         };
 
-        
-
         sceneEl.addEventListener("alongpath-trigger-activated", function(e) { // Ride instructions to set off sounds, animations, show or hide scenes, etc. Instructions are spread out to prevent pauses, like with multiple light movements going at once
                 switch(e.target.id) {
                     case "track_straight0_0":
@@ -342,7 +340,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         sbc1cat.removeAttribute('animation-mixer')
                         sbc1plant.removeAttribute('animation-mixer')
                         sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
-                        sbc1plant.setAttribute('animation-mixer', {clip: '*', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
+                        sbc1plant.setAttribute('animation-mixer', {clip: '*open', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
                         console.log('sbc animation reset');
                         visiswitch(scene2toggle, false);
                         console.log('scene 2 hide');
@@ -494,16 +492,58 @@ AFRAME.registerComponent('buttonlogic', {
             const swingingdoor = document.querySelector('#swinging-door-s');
             const transition = document.querySelector("#transition");
 
-            const timetunnel1insidesound = document.querySelector('#timetunnel1-inside-s');
-            const timetunnel2insidesound = document.querySelector('#timetunnel2-inside-s');
+            const crickets1 = document.querySelector('#crickets1-s');
+            const crickets2 = document.querySelector('#crickets2-s');
+            const crickets3 = document.querySelector('#crickets3-s');
+            const raccoonyelp = document.querySelector('#raccoon-yelp-s');
+            const scene2animations = sceneEl.querySelectorAll('.scene2anim');
+            const scene2toggle = sceneEl.querySelectorAll('.scene2');
+            const light1 = document.querySelector('#light1');
+            const light2 = document.querySelector('#light2');
+            const ambilight = document.querySelector('#ambientlight');
+            const sbc1cat = document.querySelector('#sbc1a');
+            const sbc1plant = document.querySelector('#sbc1-plant');
+
             const timetunnel3insidesound = document.querySelector('#timetunnel3-inside-s');
-            const timetunneldoor1 = document.querySelector('#timetunnel1-outside'); // Time Tunnels
-            const timetunnel1 = document.querySelector('#timetunnel1-inside');
-            const timetunneldoor1ent = document.querySelector('#timetunnel-door-1-entrance-s');
             const timetunneldoor2 = sceneEl.querySelectorAll('.linkedtunnelout');
             const timetunnel2 = sceneEl.querySelectorAll('.linkedtunnel');
             const timetunneldoor3exit = document.querySelector('#timetunnel-door-3-exit-s');
+
+            let transitionclosewarp = function(warplocx, warplocy, warplocz, sceneswitch) {
+                transition.dispatchEvent(new CustomEvent("transitionclose"));
+                setTimeout(function(){warpwarp(warplocx, warplocy, warplocz, sceneswitch);}, 1000); // value has to match animation speed, I guess?!
+            };
+        
+            let warpwarp = function(warplocx, warplocy, warplocz, sceneswitch) {
+                console.log(sceneswitch);
+                sceneswitch();
+                rig.object3D.position.set(warplocx, warplocy, warplocz);
+                if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC and mobile mode
+                    rig.components['movement-controls'].updateNavLocation();
+                }
+                setTimeout(function(){transitionopenwarp();}, 1000)
+            };
+            
+            let transitionopenwarp = function() {
+                transition.dispatchEvent(new CustomEvent("transitionopen"));
+            };
           
+            let scene1switches = function() {
+                visiswitch(scene2toggle, true);
+                crickets1.components.sound.playSound();
+                setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 1.5, to: 2, dur: 500}, "decay": 0.01, "distance": 11.9})
+                setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "light.intensity": 2, "decay": 0.1, "distance": 5.5})
+                setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.01, dur: 1000}})
+                crickets2.components.sound.playSound();
+                raccoonyelp.components.sound.playSound();
+                crickets3.components.sound.playSound();
+                for (let each of scene2animations) {
+                    each.setAttribute('animation-mixer', {timeScale: '1'})
+                };
+                sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'false', loop: 'repeat', timeScale: '1'})
+                sbc1plant.setAttribute('animation-mixer', {clip: '*flat', clampWhenFinished: 'false', loop: 'once', timeScale: '1'})
+            };
+
           var visiswitch = function(zone, toggle) {
             for (let each of zone) {
                each.object3D.visible = toggle;
@@ -537,11 +577,7 @@ AFRAME.registerComponent('buttonlogic', {
             console.log(el.id);
             switch(el.id) {
                 case "movemodebutt": // This button toggles between Ride Mode and Teleport Mode
-                const movementgeneral = function() {
-                    for (let each of walk) {
-                    each.object3D.visible = !each.object3D.visible;
-                    }
-                }
+
                     movemode++;
                     if (movemode > 1) { 
                         movemode = 0;
@@ -550,7 +586,16 @@ AFRAME.registerComponent('buttonlogic', {
                             startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.close', loop: 'once', clampWhenFinished: 'true'})
                             swingingdoor.components.sound.playSound();
                             startdoorstate = 0; 
-                        
+                            const movementgeneralride = function() {
+                                for (let each of walk) {
+                                    each.object3D.visible = false;
+                                    each.object3D.position.y -= 3;
+                                }
+                                for (let each of ride) {
+                                    each.object3D.visible = true;
+                                    each.object3D.position.y += 3;
+                                }
+                            }
                         
                             if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
                                 const transitioncloseride = function() {
@@ -559,7 +604,7 @@ AFRAME.registerComponent('buttonlogic', {
                                 };
                         
                                 const warpwarpride = function() {
-                                    movementgeneral();
+                                    movementgeneralride();
                                     rig.object3D.position.set(-6.5, 0.6, 5);
                                     camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
                                     rig.setAttribute("movement-controls", 'enabled', true); 
@@ -587,7 +632,7 @@ AFRAME.registerComponent('buttonlogic', {
                                 };
                         
                                 const warpwarpride = function() {
-                                    movementgeneral();
+                                    movementgeneralride()
                                     rig.object3D.position.set(-6.5, 0.6, 5);
                                     camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
                                     rig.setAttribute("movement-controls", 'enabled', false); 
@@ -607,7 +652,16 @@ AFRAME.registerComponent('buttonlogic', {
 
                     } else if (movemode === 1) { // Walk Mode   
                             startdoorstate = 1;
-
+                            const movementgeneralwalk = function() {
+                                for (let each of walk) {
+                                    each.object3D.visible = true;
+                                    each.object3D.position.y += 3;
+                                }
+                                for (let each of ride) {
+                                    each.object3D.visible = false;
+                                    each.object3D.position.y -= 3;
+                                }
+                            }
                             if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
                                 const transitionclosetele = function() {
                                     transition.dispatchEvent(new CustomEvent("transitionclose"));
@@ -616,7 +670,7 @@ AFRAME.registerComponent('buttonlogic', {
                     
                                 const warpwarptele = function() {
                                     rig.setAttribute("movement-controls", 'enabled', false); 
-                                    movementgeneral();
+                                    movementgeneralwalk();
                                     if (podvisibility === false) { // Makes pod visible again for telport mode
                                         podplaceholder.object3D.visible = true;
                                         AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
@@ -650,7 +704,7 @@ AFRAME.registerComponent('buttonlogic', {
                                 };
                     
                                 const warpwarpwalk = function() {
-                                    movementgeneral();
+                                    movementgeneralwalk();
                                     rig.setAttribute("movement-controls", "enabled", true);
                                     rig.setAttribute("movement-controls", "speed", 0.15);
                                     rig.setAttribute("movement-controls", "constrainToNavMesh", true);
@@ -742,37 +796,12 @@ AFRAME.registerComponent('buttonlogic', {
                         console.log('Time Tunnel 2 undulate off');
                         timetunneldoor1state = 0
                     }
-                    
-
                     break;
                 case "scene1-butt-1":
                     var cent = document.getElementById("scene1-text-1");
                     cent.object3D.visible = !cent.getAttribute("visible");
                     break;
-                case "scene2-butt-2":
-                    var cent = document.getElementById("scene2-text-2");
-                    cent.object3D.visible = !cent.getAttribute("visible");
-                    if (timetunneldoor1state === 0) {
-                        timetunneldoor1.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.open', loop: 'once', clampWhenFinished: 'true'})
-                        timetunneldoor1ent.components.sound.playSound();
-                        console.log('time door open 1');
-                        timetunnel1insidesound.components.sound.playSound();
-                        console.log('time tunnel 1 inside sound on');
-                        timetunnel1.setAttribute('animation-mixer', {timeScale: '1'})
-                        console.log('Time Tunnel undulate');
-                        timetunneldoor1state =1
-                    } else if (timetunneldoor1state === 1) {
-                        timetunneldoor1.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
-                        timetunneldoor1ent.components.sound.playSound();
-                        console.log('time door close 1');
-                        timetunnel1insidesound.components.sound.stopSound();
-                        console.log('time tunnel 1 inside sound off');
-                        timetunnel1.setAttribute('animation-mixer', {timeScale: '0'})
-                        console.log('Time Tunnel undulate');
-                        timetunneldoor1state =0
-                    }
-                    break;
-                    case "scene1-butt-3":
+                case "scene1-butt-2":
                     console.log(startdoorstate);
                     if (startdoorstate === 0) {
                         startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
@@ -786,6 +815,20 @@ AFRAME.registerComponent('buttonlogic', {
                             console.log(startdoorstate)
                     }
                     break;
+
+                case "scene0warpbutt1":
+                    transitionclosewarp(-6.5, 0.6, 5, undefined);
+                    break;
+                case "scene1warpbutt1":
+                    transitionclosewarp(3, 0.05, -6.85, undefined);
+                    break;   
+                case "scene2awarpbutt1":
+                    transitionclosewarp(26.5, 0.05, -20, scene1switches);
+                    break;           
+                case "scene2bwarpbutt1":
+                    transitionclosewarp(-6.5, 0.5, 5, undefined);
+                    break; 
+                    
                 case "narrationbutt":
                     narrationcounter++;
                     console.log(narrationcounter);
