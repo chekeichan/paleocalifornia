@@ -528,7 +528,26 @@ AFRAME.registerComponent('buttonlogic', {
                 transition.dispatchEvent(new CustomEvent("transitionopen"));
             };
           
-            let scene1switches = function() {
+            
+            let rideresetswitches = function() {
+                visiswitch(scene2toggle, false);
+                setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 1.5, to: 2, dur: 500}, "decay": 0.01, "distance": 11.9})
+                setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "light.intensity": 2, "decay": 0.1, "distance": 5.5})
+                setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.01, dur: 1000}})
+                for (let each of scene2sounds) {
+                    each.components.sound.stopSound();
+                };
+                for (let each of scene2animations) {
+                    each.setAttribute('animation-mixer', {timeScale: '0'})
+                };
+                sbc1cat.removeAttribute('animation-mixer')
+                sbc1plant.removeAttribute('animation-mixer')
+                sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
+                sbc1cat.setAttribute('sound', {src: '#sbc-steps', autoplay: 'false', loop: 'true', distanceModel: 'linear', maxDistance: '5'})
+                sbc1plant.setAttribute('animation-mixer', {clip: '*open', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
+            };
+
+            let scene2switches = function() {
                 visiswitch(scene2toggle, true);
                 crickets1.components.sound.playSound();
                 setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 1.5, to: 2, dur: 500}, "decay": 0.01, "distance": 11.9})
@@ -541,6 +560,7 @@ AFRAME.registerComponent('buttonlogic', {
                     each.setAttribute('animation-mixer', {timeScale: '1'})
                 };
                 sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'false', loop: 'repeat', timeScale: '1'})
+                sbc1cat.setAttribute('sound', {src: '#sbc-steps', autoplay: 'true', loop: 'true', distanceModel: 'linear', maxDistance: '5'})
                 sbc1plant.setAttribute('animation-mixer', {clip: '*flat', clampWhenFinished: 'false', loop: 'once', timeScale: '1'})
             };
 
@@ -815,18 +835,34 @@ AFRAME.registerComponent('buttonlogic', {
                             console.log(startdoorstate)
                     }
                     break;
+                case "scene2-butt-1":
+                    var cent = document.getElementById("scene2-text-1");
+                    cent.object3D.visible = !cent.getAttribute("visible");
+                    break;
+                case "scene2-butt-2":
+                    var cent = document.getElementById("scene2-text-2");
+                    cent.object3D.visible = !cent.getAttribute("visible");
+                    break;
+                case "scene2-butt-3":
+                    var cent = document.getElementById("scene2-text-2");
+                    cent.object3D.visible = !cent.getAttribute("visible");
+                    break;
+                case "scene2-butt-4":
+                    var cent = document.getElementById("scene2-text-2");
+                    cent.object3D.visible = !cent.getAttribute("visible");
+                    break;
 
                 case "scene0warpbutt1":
-                    transitionclosewarp(-6.5, 0.6, 5, undefined);
+                    transitionclosewarp(-6.5, 0.6, 5, rideresetswitches);
                     break;
                 case "scene1warpbutt1":
                     transitionclosewarp(3, 0.05, -6.85, undefined);
                     break;   
                 case "scene2awarpbutt1":
-                    transitionclosewarp(26.5, 0.05, -20, scene1switches);
+                    transitionclosewarp(26.5, 0.05, -20, scene2switches);
                     break;           
                 case "scene2bwarpbutt1":
-                    transitionclosewarp(-6.5, 0.5, 5, undefined);
+                    transitionclosewarp(50, 0.05, -26.2, scene2switches);
                     break; 
                     
                 case "narrationbutt":
@@ -866,7 +902,7 @@ AFRAME.registerComponent('buttonlogic', {
                         each.setAttribute("visible", false);     
                     }
                     creditcounter++;
-                    if (creditcounter > 5) { // Value is total panels minus one
+                    if (creditcounter > 6) { // Value is total panels minus one
                         creditcounter = 0;
                     }
                     creditslist[creditcounter].setAttribute("visible", true);

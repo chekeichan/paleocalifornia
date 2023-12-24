@@ -56,6 +56,7 @@
     <a-asset-item id="shasta-waking-sound" response-type="arraybuffer" src="sounds/shasta-waking.mp3"></a-asset-item>
     <a-asset-item id="sbc-plants1" response-type="arraybuffer" src="sounds/sbcplants1.mp3"></a-asset-item>
     <a-asset-item id="sbc-plants2" response-type="arraybuffer" src="sounds/sbcplants2.mp3"></a-asset-item>
+    <a-asset-item id="sbc-steps" response-type="arraybuffer" src="sounds/sbc1lightsteps.mp3"></a-asset-item>
 
     <a-mixin id="obj" hoverable grabbable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, abuttondown, bbuttondown, xbuttondown, ybuttondown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, abuttonup, bbuttonup, xbuttonup, ybuttonup, thumbstickup, mouseup" scale="1 1 1" rotation="0 0 0" shadow></a-mixin>
     <a-mixin id="blink" blink-controls="cameraRig: #rig; teleportOrigin: #camera; collisionEntities:.navstart;"></a-mixin>
@@ -223,7 +224,7 @@
   <a-text id="scene1warpstext1" mixin="text-label" position="0.1 0 0.05" rotation="0 0 0" value="Los Angeles"></a-text>
   <a-entity id="scene2awarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
   <a-text id="scene2awarpstext1" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
-  <a-entity id="scene2bawarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
+  <a-entity id="scene2bwarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
   <a-text id="scene2bwarpstext1" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
 </a-entity>
 
@@ -264,9 +265,8 @@
 <a-entity id="timetunnel2-inside-s" mixin="sound" class="scene2sound" position="50 1.7 -15" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel3-inside-s" mixin="sound" class="scene2sound" position="0.1 1.7 23.5" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel-door-3-exit-s" mixin="sound" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="scene1-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="1.815 -2.157 -7.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
-<a-entity id="scene1-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="2.95 -2.395 0.868" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
-<a-entity id="scene1-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.4 -2 -3.73" visible="false"></a-entity>
+<a-entity id="scene1-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="1.815 -2.1 -7.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+
 
 <!-- Scene 1 Info Boxes -->
 <a-entity id="scene1-text-1" instanced-mesh visible="false">
@@ -318,11 +318,19 @@
 <a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="hide scene2 scene2anim" position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" class="hide scene2 scene2anim" position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *; timeScale: 0"></a-entity>
 <a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="hide scene2 scene2sbc" visible="true" position="52.07 1.76 -40.62" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; loop: once; timeScale: 0" shadow="recieve: true"></a-entity>
-<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2sbc" position="52 1.88 -40.63" rotation="0 0 3" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
+<a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2sbc" position="52 1.88 -40.63" rotation="0 0 3" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; loop: once; timeScale: 0" sound="src: #sbc-steps; autoplay: false; loop: true; maxDistance: 5; distanceModel: linear"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2anim" position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose;  timeScale: 0"></a-entity>
 
+<a-entity id="scene2-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="30.332 -2.1 -27" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene2-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="32.65 -2.1 -40.9" visible="false"></a-entity>
+<a-entity id="scene2-butt-3" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="39.77 -2.1 -41.44" visible="false"></a-entity>
+<a-entity id="scene2-butt-4" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="50.48 -2.1 -39.4" visible="false"></a-entity>
+
 <!-- Scene 2 Info Boxes -->
-<a-entity id="scene2-text-1" visible="false" mixin="scale-label" position="-0.6 1.8 6.5" rotation="0 230 0" text="value: Raccoon\nScientific name: \n\nRaccoons of the Pleistocene were similar to the ones in the present. Their traits are suitable for nocturnal foraging.; "></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-1" visible="false" mixin="scale-label" position="1 1.8 6.5" rotation="0 230 0" text="value: Raccoon\nScientific name: Procyon lotor\Pleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-2" visible="false" mixin="scale-label" position="3 1.8 6.5" rotation="0 230 0" text="value: Shasta Ground Sloth\nScientific name: Nothrotheriops shastensis\nPast Range: Mainly from the American Southwest to Central Mexico\nModern Range: None\n\nThis species was named for its initial discovery in Shasta County, California. They are among the smallest of the extinct ground sloths. Well-preserved remains including stomach contents show a diet of Joshua trees.; "></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-3" visible="false" mixin="scale-label" position="5 1.8 6.5" rotation="0 230 0" text="value: Mountain Lion\nScientific name: Puma concolor\nPast Range: Across South and North America\nPresent Range: Fragmented population across South and North\n\nWhile the past and present ranges are similar, mountain lions experienced extinction in North America 12,000 years ago. The North American cats are from a South American population that repopulated North America. The ability to consume a more varied diet than larger Pleistocene cats may have allowed the species to rebound.";></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-4" visible="false" mixin="scale-label" position="7 1.8 6.5" rotation="0 230 0" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nSmilodon are a side lineage of cats not directly related to modern cats. The muscular bodies and long canine teeth would have assisted a hunting strategy of pouncing on large prey from cover.;"></a-entity><!-- Info Box -->
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
@@ -368,11 +376,11 @@ Landscape and Plants
 Keith Chan (CC BY-NC-SA 3.0)
 "></a-entity>
 
-  <a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1.1 0 0" text="value: Low poly raccoon (Procyon lotor)
-  Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
-  https://skfb.ly/otsOA
+<a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1.1 0 0" text="value: Low poly raccoon (Procyon lotor)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/otsOA
 
-  Low poly mountain lion (Puma concolor)
+Low poly mountain lion (Puma concolor)
 Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/otsBt
 
@@ -385,7 +393,7 @@ Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/ospTG
 "></a-entity>
 
-  <a-entity mixin="credit-text" class="credits" id="credits-3" visible="false" position="-1.1 -0.1 0" text="value: -Sound Sources-
+<a-entity mixin="credit-text" class="credits" id="credits-3" visible="false" position="-1.1 -0.1 0" text="value: -Sound Sources-
 02-Lija.wav
 ZeritFreeman (CC0 1.0)
 https://freesound.org/s/472334/
@@ -411,10 +419,14 @@ Defelozedd94 (CC0 1.0)
 https://freesound.org/s/522298/
 "></a-entity>
 
-  <a-entity mixin="credit-text" class="credits" id="credits-4" visible="false" position="-1.1 -0.1 0" text="value: 
+<a-entity mixin="credit-text" class="credits" id="credits-4" visible="false" position="-1.1 -0.1 0" text="value: 
 hegelmoney-clip.flac
 shimsewn (CC0 1.0)
 https://freesound.org/s/61299/
+
+Human_Steps_Sand_Dry.wav
+LamaMakesMusic (CC0 1.0)
+https://freesound.org/s/403606/
 
 long wispy woosh4.wav
 newagesoup (CC0 1.0)
@@ -423,7 +435,9 @@ https://freesound.org/s/377827/
 moving plant
 Eelke (CC0 1.0)
 https://freesound.org/s/185368/
+"></a-entity>
 
+<a-entity mixin="credit-text" class="credits" id="credits-5" visible="false" position="-1.1 -0.1 0" text="value: 
 Pig - Grunt 5 (deep) - 96kHz.wav
 Jarred Gibb (CC0 1.0)
 https://freesound.org/s/233173/
@@ -441,7 +455,7 @@ pan14 (CC0 1.0)
 https://freesound.org/s/263133/
 "></a-entity>
 
-  <a-entity mixin="credit-text" class="credits" id="credits-5" position="-1.1 0 0" visible="false" text="value: VR Sources
+<a-entity mixin="credit-text" class="credits" id="credits-6" position="-1.1 0 0" visible="false" text="value: VR Sources
 A-Frame
 Diego Marcos, Don McCurdy, and Kevin Ngo
 https://github.com/aframevr/aframe
@@ -463,7 +477,7 @@ c-frame, Don McCurdy, n5ro
 https://github.com/c-frame/aframe-extras
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-6" position="-1.1 0 0" visible="false" text="value: A-Frame Surface Scatter
+<a-entity mixin="credit-text" class="credits" id="credits-7" position="-1.1 0 0" visible="false" text="value: A-Frame Surface Scatter
 Ada Rose Cannon
 https://github.com/AdaRoseCannon/aframe-surface-scatter
 
