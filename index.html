@@ -59,15 +59,16 @@
     <a-asset-item id="sbc-steps" response-type="arraybuffer" src="sounds/sbc1lightsteps.mp3"></a-asset-item>
 
     <a-mixin id="obj" hoverable grabbable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, abuttondown, bbuttondown, xbuttondown, ybuttondown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, abuttonup, bbuttonup, xbuttonup, ybuttonup, thumbstickup, mouseup" scale="1 1 1" rotation="0 0 0" shadow></a-mixin>
-    <a-mixin id="blink" blink-controls="cameraRig: #rig; teleportOrigin: #camera; collisionEntities:.navstart;"></a-mixin>
+    <a-mixin id="blink" blink-controls="cameraRig: #rig; teleportOrigin: #camera; collisionEntities:.nav;"></a-mixin>
     <a-mixin id="button" hoverable clickable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, thumbstickup, mouseup" shadow></a-mixin>
     <a-mixin id="holoprojector" color="#ff6a00" position="0 0.3 0" rotation="180 0 0" height="0.05" geometry="primitive: cone; segmentsRadial: 3; openEnded: true; radiusBottom: 0.5; segmentsHeight: 1" material="emissive: #ff6a00; wireframe: true" animation="property: rotation; to: 180 360 0; loop: true; easing: linear; dur: 10000"></a-mixin>
     <a-mixin id="text-label" position="0 0 -1" rotation="0 -90 0" text="width: 1.5; color: black; lineHeight: 55; wrap-count: 40"></a-mixin>
     <a-mixin id="text-title" position="0 0 -1" rotation="0 -90 0" visible="true"  text="width: 1.25; color: black; lineHeight: 60; wrap-count: 20"></a-mixin>
     <a-mixin id="burial-label" position="0 0 -1" text="width: 2; color: black; lineHeight: 60; wrap-count: 35"></a-mixin>
     <a-mixin id="table-caption" text="align: right; color: black; lineHeight: 55; wrap-count: 50"></a-mixin>
-    <a-mixin id="scale-label" visible="false" geometry="primitive: plane; height: 1; width: 1; buffer: false" material="color: #dadada; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 30; width: 0.9"></a-mixin>
-    <a-mixin id="scale-label-la" instanced-mesh-member="mesh:#scene1-text-1" rotation="0 90 0" geometry="primitive: plane; height: 0.6; width: 1.25; buffer: false" material="color: #A9A9A9; shader: flat;" text="color: #dadada; lineHeight: 60; wrap-count: 20; width: 1.2"></a-mixin>
+    <a-mixin id="scale-label" visible="false" geometry="primitive: plane; height: 1; width: 1; buffer: false" material="color: #c5c5c5; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 30; width: 0.9"></a-mixin>
+    <a-mixin id="scale-label-tall-dark" visible="false" geometry="primitive: plane; height: 1.5; width: 1; buffer: false" material="color: #696893; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 30; width: 0.9"></a-mixin>
+    <a-mixin id="scale-label-la" instanced-mesh-member="mesh:#scene1-text-1" rotation="0 90 0" geometry="primitive: plane; height: 0.6; width: 1.25; buffer: false" material="color: black; shader: flat;" text="color: #dadada; lineHeight: 60; wrap-count: 20; width: 1.2"></a-mixin>
     <a-mixin id="panel-background" geometry="primitive: box; height: 1; width: 1.25; depth: 0.1; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
     <a-mixin id="index-background" geometry="primitive: plane; height: 3; width: 2.25; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
     <a-mixin id="scale-text" text="color: black; width: 2; wrapCount: 45"></a-mixin>
@@ -78,9 +79,8 @@
     <a-mixin id="sound" ></a-mixin>
 
  </a-assets>
- <a-entity gltf-model="#navmesh" nav-mesh position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity>
+ <a-entity gltf-model="#navmesh" nav-mesh class="nav" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity>
  <a-entity gltf-model="models/infopoles.glb" class="walk" position="0 -3 0" rotation="0 0 0" visible="false"></a-entity>
- <a-entity gltf-model="models/maps-temp.glb" class="walk" position="0 -3 0" rotation="0 0 0" visible="false"></a-entity>
 
 <!-- Player Character -->
 <a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
@@ -208,15 +208,15 @@
 <!-- Instructions Panel-->
 <a-entity id="instructionspanel" position="-5.342 1.237 2.811" rotation="-62.62 -52.71 0">
   <a-text id="instructionsstitle" mixin="text-title" position="0.063 0.525 0" rotation="0 0 0" value="Instructions: Ride Mode"></a-text>
-  <a-text id="GL-VR" mixin="text-label" position="0.068 0.07 0" rotation="0 0 0" visible="false" value="Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!"></a-text>
+  <a-text id="GL-VR" mixin="text-label" position="0.068 0.123 -0.006" rotation="0 0 0" visible="false" value="Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!"></a-text>
   <a-text id="GL-PC" mixin="text-label" position="0.08 0.19 0" rotation="0 0 0" visible="false" value="Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
   <a-text id="GL-SP" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag across screen or turn device\nSelect: tap screen\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
-  <a-entity id="movemodebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.14 -0.30 0.04" visible="true"></a-entity>
-  <a-text id="movemodetext" mixin="text-label" position="0.225 -0.29 0.04" rotation="0 0 0" value="Switch to Walk Mode"></a-text>
+  <a-entity id="movemodebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.12 -0.30 0" visible="true"></a-entity>
+  <a-text id="movemodetext" mixin="text-label" position="0.194 -0.3 0" rotation="0 0 0" value="Switch to Walk Mode"></a-text>
 </a-entity>
 
 <!-- Map Panel 1-->
-<a-entity id="warp-map1" class="walk" position="-4.527 -1.763 6.344" rotation="-62.62 -126.72 0" visible="false"> <!-- Movable map 1-->
+<a-entity id="warp-map1" class="walk" position="-4.527 -1.763 6.344" rotation="-62.1 -126.72 0" visible="false"> <!-- Movable map 1-->
   <a-text id="warpmaptitle1" mixin="text-title" position="-0.032 0.356 0.052" rotation="0 0 0" value="Visit A Scene"></a-text>
   <a-entity id="scene0warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
   <a-text id="scene0warpstext1" mixin="text-label" position="0.1 0.15 0.05" rotation="0 0 0" value="Loading Bay"></a-text>
@@ -226,6 +226,19 @@
   <a-text id="scene2awarpstext1" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
   <a-entity id="scene2bwarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
   <a-text id="scene2bwarpstext1" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
+</a-entity>
+
+<!-- Map Panel 2-->
+<a-entity id="warp-map2" class="walk" position="4.83 -2.157 -20.6" rotation="-62.1 -91.9 0" visible="false"> <!-- Movable map 2-->
+  <a-text id="warpmaptitle2" mixin="text-title" position="-0.032 0.356 0.052" rotation="0 0 0" value="Visit A Scene"></a-text>
+  <a-entity id="scene0warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
+  <a-text id="scene0warpstext2" mixin="text-label" position="0.1 0.15 0.05" rotation="0 0 0" value="Loading Bay"></a-text>
+  <a-entity id="scene1warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0 0.05" visible="true"></a-entity>
+  <a-text id="scene1warpstext2" mixin="text-label" position="0.1 0 0.05" rotation="0 0 0" value="Los Angeles"></a-text>
+  <a-entity id="scene2awarpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
+  <a-text id="scene2awarpstext2" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
+  <a-entity id="scene2bwarpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
+  <a-text id="scene2bwarpstext2" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
 </a-entity>
 
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
@@ -246,8 +259,8 @@
 <a-entity id="scene0-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.4 -1.45 5.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 <a-entity id="scene0-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.04 -2.18 13.63" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 
-<a-entity id="scene0-text-1" visible="false" mixin="scale-label" position="-0.6 1.8 6.5" rotation="0 230 0" text="value: Time Pod\nDetails: The Mark 2 Time Pod is the leader in safe personal time travel. Key features include remote control across time, hover-based locomotion, transparent protective shield to limit cross-time disruptions, and an advanced sound system.; "></a-entity><!-- Info Box -->
-<a-entity id="scene0-text-2" visible="false" mixin="scale-label" position="-2 1.3 14.6" rotation="0 150 0" text="value: Time Tunnel\nDetails: Our lab has harnessed waves of chronal energy into these tunnels that allow transport to other places and times by accounting for the position of the Earth in space.\n\nNote: A Time Pod is necessary to withstand the trip.; "></a-entity><!-- Info Box -->
+<a-entity id="scene0-text-1" visible="false" mixin="scale-label" class="walk-label" position="-0.6 1.8 6.5" rotation="0 230 0" text="value: Time Pod\nDetails: The Mark 2 Time Pod is the leader in safe personal time travel. Key features include remote control across time, hover-based locomotion, transparent protective shield to limit cross-time disruptions, and an advanced sound system.; "></a-entity><!-- Info Box -->
+<a-entity id="scene0-text-2" visible="false" mixin="scale-label" class="walk-label" position="-2 1.3 14.6" rotation="0 150 0" text="value: Time Tunnel\nDetails: Our lab has harnessed waves of chronal energy into these tunnels that allow transport to other places and times by accounting for the position of the Earth in space.\n\nNote: A Time Pod is necessary to withstand the trip.; "></a-entity><!-- Info Box -->
 
 
 <a-entity id="scene1-room" gltf-model="models/scene1.glb" class="scene1" position="0 0 0" rotation="0 0 0"></a-entity>
@@ -262,14 +275,14 @@
 <a-entity id="timetunnel-door-1-entrance-s" mixin="sound" class="scene1sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 <a-entity id="timetunnel-door-1-exit-s" mixin="sound" class="scene1sound" position="22.22 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 <a-entity id="timetunnel-door-2-entrance-s" mixin="sound" class="scene2sound" position="49.89 1.6 -23.2" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel2-inside-s" mixin="sound" class="scene2sound" position="50 1.7 -15" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
-<a-entity id="timetunnel3-inside-s" mixin="sound" class="scene2sound" position="0.1 1.7 23.5" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
+<a-entity id="timetunnel2-inside-s" mixin="sound" class="" position="50 1.7 -15" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
+<a-entity id="timetunnel3-inside-s" mixin="sound" class="" position="0.1 1.7 23.5" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel-door-3-exit-s" mixin="sound" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 <a-entity id="scene1-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="1.815 -2.1 -7.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 
 
 <!-- Scene 1 Info Boxes -->
-<a-entity id="scene1-text-1" instanced-mesh visible="false">
+<a-entity id="scene1-text-1" instanced-mesh class="walk-label" position="0 -3 0" visible="false">
   <a-entity mixin="scale-label-la"  position="-1.931 3.961 -17.042" text="value: Wilshire Grand Center\nCompleted: 2017\nHeight: 1,102 feet (335.9m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
   <a-entity mixin="scale-label-la"  position="-5.853 3.5 -8.795" text="value: U.S. Bank Tower\nCompleted: 1990\nHeight: 1,018 feet (310.3m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
   <a-entity mixin="scale-label-la"  position="-5.471 3.095 -15.813" text="value: AON Center\nCompleted: 1974\nHeight: 858 feet (261.5m); width: 1.5; wrapCount: 25" visible="true" geometry="width: 1.75"></a-entity>
@@ -321,16 +334,18 @@
 <a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2sbc" position="52 1.88 -40.63" rotation="0 0 3" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; loop: once; timeScale: 0" sound="src: #sbc-steps; autoplay: false; loop: true; maxDistance: 5; distanceModel: linear"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2anim" position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose;  timeScale: 0"></a-entity>
 
-<a-entity id="scene2-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="30.332 -2.1 -27" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
-<a-entity id="scene2-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="32.65 -2.1 -40.9" visible="false"></a-entity>
-<a-entity id="scene2-butt-3" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="39.77 -2.1 -41.44" visible="false"></a-entity>
-<a-entity id="scene2-butt-4" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="50.48 -2.1 -39.4" visible="false"></a-entity>
+<a-entity id="scene2-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="29.64 -2.1 -22.23" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene2-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="32.65 -2.1 -40.9" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene2-butt-3" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="39.77 -2.1 -41.44" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene2-butt-4" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="50.48 -2.1 -39.4" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 
 <!-- Scene 2 Info Boxes -->
-<a-entity id="scene2-text-1" visible="false" mixin="scale-label" position="1 1.8 6.5" rotation="0 230 0" text="value: Raccoon\nScientific name: Procyon lotor\Pleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
-<a-entity id="scene2-text-2" visible="false" mixin="scale-label" position="3 1.8 6.5" rotation="0 230 0" text="value: Shasta Ground Sloth\nScientific name: Nothrotheriops shastensis\nPast Range: Mainly from the American Southwest to Central Mexico\nModern Range: None\n\nThis species was named for its initial discovery in Shasta County, California. They are among the smallest of the extinct ground sloths. Well-preserved remains including stomach contents show a diet of Joshua trees.; "></a-entity><!-- Info Box -->
-<a-entity id="scene2-text-3" visible="false" mixin="scale-label" position="5 1.8 6.5" rotation="0 230 0" text="value: Mountain Lion\nScientific name: Puma concolor\nPast Range: Across South and North America\nPresent Range: Fragmented population across South and North\n\nWhile the past and present ranges are similar, mountain lions experienced extinction in North America 12,000 years ago. The North American cats are from a South American population that repopulated North America. The ability to consume a more varied diet than larger Pleistocene cats may have allowed the species to rebound.";></a-entity><!-- Info Box -->
-<a-entity id="scene2-text-4" visible="false" mixin="scale-label" position="7 1.8 6.5" rotation="0 230 0" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nSmilodon are a side lineage of cats not directly related to modern cats. The muscular bodies and long canine teeth would have assisted a hunting strategy of pouncing on large prey from cover.;"></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-1a" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2raccoontext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Raccoon\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-1b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2raccoontext" position="26.7 -1.1 -28.5" rotation="0 70 0" text="value: Raccoon\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons mate between winter and spring. Litters are born in April or May with an average of four cubs per litter.; "></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-2" visible="false" mixin="scale-label-tall-dark" class="walk-label" position="33.6 -1.4 -42" rotation="0 20 0" text="value: Mountain Lion\nScientific name: Puma concolor\nPast Range: Across South and North America\nPresent Range: Fragmented population across South and North\n\nWhile the past and present ranges are similar, mountain lions experienced extinction in North America 12,000 years ago. The North American cats are from a South American population that repopulated North America. The ability to consume a more varied diet than larger Pleistocene cats may have allowed the species to rebound."></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-3" visible="false" mixin="scale-label-tall-dark" class="walk-label" position="40.5 -1.84 -44.5" rotation="0 0 0" text="value: Shasta Ground Sloth\nScientific name: Nothrotheriops shastensis\nPast Range: Mainly from the American Southwest to Central Mexico\nModern Range: None\n\nThis species was named for its initial discovery in Shasta County, California. They are among the smallest of the extinct ground sloths. Well-preserved remains including stomach contents show a diet of Joshua trees.";></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-4a" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2sbctext" position="50.2 -1.6 -42" rotation="0 -20 0" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nSmilodon are a side lineage of cats not directly related to modern cats. They are California's state fossil, and the second most common mammal found at the La Brea Tar Pits.;"></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-4b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2sbctext" position="51.404 -1.45 -26.06" rotation="0 -90 0" material="color: #8f856b" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nThe muscular bodies and long canine teeth would have assisted a hunting strategy of pouncing on large prey from cover. The lighter jaw muscle structure produced less biting force than other cats, but allowed the jaw to open 120 degrees;"></a-entity><!-- Info Box -->
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
