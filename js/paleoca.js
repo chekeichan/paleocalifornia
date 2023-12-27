@@ -13,7 +13,6 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
         const sceneEl = document.querySelector('a-scene');
         const rig = document.querySelector('#rig');
         if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
-            sceneEl.setAttribute("vr-mode-ui", "enabled", "false");
             // rig.setAttribute("movement-controls", "speed", 0.15);
             document.querySelector('#GL-SP').object3D.visible = true;
         } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
@@ -727,7 +726,30 @@ AFRAME.registerComponent('buttonlogic', {
 
                                 transitioncloseride();
                                 
-                        };
+                            } else if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
+                                const transitioncloseride = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                    setTimeout(function(){warpwarpride();}, 1000);
+                                };
+                        
+                                const warpwarpride = function() {
+                                    movementgeneralride()
+                                    rig.object3D.position.set(-6.5, 0.6, 5);
+                                    camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
+                                    rig.setAttribute("movement-controls", 'enabled', false); 
+                                    AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Ride Mode");
+                                    AFRAME.utils.entity.setComponentProperty(glsptext, "value", "Turn: turn device\nSelect: tap\n\n1. Check options on right panel\n2. Select button on ramp to start ride!");
+                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode"); 
+                                    console.log('setting Ride Mode')
+                                    setTimeout(function(){transitionopenride();}, 700)
+                                };
+                                
+                                const transitionopenride = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                };
+
+                                transitioncloseride();
+                            };
 
                     } else if (movemode === 1) { // Walk Mode   
                             startdoorstate = 1;
@@ -812,7 +834,41 @@ AFRAME.registerComponent('buttonlogic', {
 
                                 transitionclosewalk();
                                 
-                    }}
+                            } else if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
+                                        
+                                const transitionclosewalk = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                    setTimeout(function(){warpwarpwalk();}, 1000);
+                                };
+                    
+                                const warpwarpwalk = function() {
+                                    movementgeneralwalk();
+                                    rig.setAttribute("movement-controls", "enabled", true);
+                                    rig.setAttribute("movement-controls", "speed", 0.15);
+                                    rig.setAttribute("movement-controls", "constrainToNavMesh", true);
+                                    
+                                    if (podvisibility === false) { // Makes pod visible again for walk mode
+                                        podplaceholder.object3D.visible = true;
+                                        AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
+                                        podvisibility = true;
+                                    }
+                                    startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
+                                    swingingdoor.components.sound.playSound();
+                                    AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Walk Mode");
+                                    AFRAME.utils.entity.setComponentProperty(glsptext, "value", "Turn: turn device\nMove: press screen\nSelect: tap\n\nMove around and see the scenes at your\nown pace!");
+                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode"); 
+                                    console.log('setting Walk Mode')
+                                    setTimeout(function(){transitionopenwalk();}, 700)
+                                    };
+                                
+                                const transitionopenwalk = function() {
+                                    transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                };
+
+                                transitionclosewalk();
+                                
+                    }
+                }
                     break;
                 case "podvisiblebutt":
                     podplaceholder.object3D.visible = !podplaceholder.getAttribute("visible");

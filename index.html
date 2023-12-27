@@ -30,7 +30,7 @@
 </head>
  
 <body>
-<a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/">
+<a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false">
 
 <a-assets timeout="80000"> <!-- Loads models -->
     <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navmesh.glb"></a-asset-item>
@@ -259,8 +259,8 @@
 <a-entity id="scene0-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.4 -1.45 5.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 <a-entity id="scene0-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="-1.04 -2.18 13.63" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 
-<a-entity id="scene0-text-1" visible="false" mixin="scale-label" class="walk-label" position="-0.6 1.8 6.5" rotation="0 230 0" text="value: Time Pod\nDetails: The Mark 2 Time Pod is the leader in safe personal time travel. Key features include remote control across time, hover-based locomotion, transparent protective shield to limit cross-time disruptions, and an advanced sound system.; "></a-entity><!-- Info Box -->
-<a-entity id="scene0-text-2" visible="false" mixin="scale-label" class="walk-label" position="-2 1.3 14.6" rotation="0 150 0" text="value: Time Tunnel\nDetails: Our lab has harnessed waves of chronal energy into these tunnels that allow transport to other places and times by accounting for the position of the Earth in space.\n\nNote: A Time Pod is necessary to withstand the trip.; "></a-entity><!-- Info Box -->
+<a-entity id="scene0-text-1" visible="false" mixin="scale-label" class="walk-label" position="-0.6 -1.2 6.5" rotation="0 230 0" text="value: Time Pod\nDetails: The Mark 2 Time Pod is the leader in safe personal time travel. Key features include remote control across time, hover-based locomotion, transparent protective shield to limit cross-time disruptions, and an advanced sound system.; "></a-entity><!-- Info Box -->
+<a-entity id="scene0-text-2" visible="false" mixin="scale-label" class="walk-label" position="-2 -1.7 14.6" rotation="0 150 0" text="value: Time Tunnel\nDetails: Our lab has harnessed waves of chronal energy into these tunnels that allow transport to other places and times by accounting for the position of the Earth in space.\n\nNote: A Time Pod is necessary to withstand the trip.; "></a-entity><!-- Info Box -->
 
 
 <a-entity id="scene1-room" gltf-model="models/scene1.glb" class="scene1" position="0 0 0" rotation="0 0 0"></a-entity>
