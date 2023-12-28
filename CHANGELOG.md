@@ -1,6 +1,6 @@
 # PaleoCalifornia Changelog
 
-## 1.0.1 (12/29/23)
+## 1.1 (12/29/23)
 
 Added walk mode to allow free movement around the scenes. Want to spend more than 6 seconds with the shasta sloths? Perhaps actually see how their animations are randomized? Now you can comune with the sloths and everything else in the ride!
 
