@@ -21,7 +21,6 @@ Also
 
 -   Sound/animation desync in the last Time Tunnel fixed
 -   There was a typo in the materials setting that actually kept a bug from occurring. Fixing the typo caused some text display weirdness. It's all been resolved.
--   Added version number under big name text.
 
 1.0.0 (8/15/23)
 
