@@ -691,7 +691,7 @@ AFRAME.registerComponent('buttonlogic', {
                                     
                                     AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Ride Mode");
                                     AFRAME.utils.entity.setComponentProperty(glvrtext, "value", "Turn: use headset or right thumbstick\nMove: press forward on thumbsticks to\nteleport\nSelect: point and use trigger\n\nMove around and see the scenes at your\nown pace!");
-                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode"); 
+                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Warp Mode"); 
                                     console.log('setting Ride Mode')
                                     setTimeout(function(){transitionopenride();}, 700)
                                 };
@@ -787,10 +787,10 @@ AFRAME.registerComponent('buttonlogic', {
                                         each.setAttribute('raycaster', 'far', 1.0); // Makes VR raycaster lines short
                                         each.setAttribute("mixin", "blink"); 
                                     }
-                                    AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Teleport Mode");
+                                    AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Warp Mode");
                                     AFRAME.utils.entity.setComponentProperty(glvrtext, "value", "Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!");
                                     AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode");
-                                        console.log('setting Teleport Mode')
+                                        console.log('setting Warp Mode')
                                         setTimeout(function(){transitionopentele();}, 700)
                                     };
                                 
