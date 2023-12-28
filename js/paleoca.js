@@ -1,7 +1,7 @@
 // console.warn = console.error = () => {}; // Suppresses Three.js warnings. Remove to debug
 
-var podvisibility = true; // Used by button-logic and tour-start
-var setAttributes = function(entity, attrs) { // Efficient way to set complex attributes (taken from StackOverflow)
+let podvisibility = true; // Used by button-logic and tour-start
+let setAttributes = function(entity, attrs) { // Efficient way to set complex attributes (taken from StackOverflow)
     for (var key in attrs) {
         entity.setAttribute(key, attrs[key]);
     }
@@ -784,7 +784,7 @@ AFRAME.registerComponent('buttonlogic', {
                                     startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
                                     swingingdoor.components.sound.playSound();
                                     for (let each of hands) {
-                                        each.setAttribute('raycaster', 'far', 0.5); // Makes VR raycaster lines short
+                                        each.setAttribute('raycaster', 'far', 1.0); // Makes VR raycaster lines short
                                         each.setAttribute("mixin", "blink"); 
                                     }
                                     AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Teleport Mode");
