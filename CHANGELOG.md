@@ -15,12 +15,11 @@ Added walk mode to allow free movement around the scenes. Want to spend more tha
     - Togglable info panels (like AnVRopomotron but with different button logic) to learn about various objects in each scene. Learn about prominent LA buildings, animals of the past, and even the Time Pod itself!
     - Map panels (also like AnVRopomotron) strategically placed to warp from scene to scene.
     - Saber-toothed cat now has more animation so it is not forever pouncing while you are in walk mode. The plant around it has a new 'animation' which just holds the plant open to see the cat better.
-    - There is so much Javascript behind the scenes to switch between modes without affecting each other. Some attempt was made to consolidate duplicate code into functions but I admit it looks like a mess that I get lost in sometimes.
 
-Also
+-   Also
 
--   Sound/animation desync in the last Time Tunnel fixed
--   There was a typo in the materials setting that actually kept a bug from occurring. Fixing the typo caused some text display weirdness. It's all been resolved.
+    -   Sound/animation desync in the last Time Tunnel fixed
+    -   There was a typo in the materials setting that actually kept a bug from occurring. Fixing the typo caused some text display weirdness. It's all been resolved.
 
 ## 1.0.0 (8/15/23)
 
