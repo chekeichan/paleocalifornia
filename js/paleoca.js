@@ -739,7 +739,7 @@ AFRAME.registerComponent('buttonlogic', {
                                     rig.setAttribute("movement-controls", 'enabled', false); 
                                     AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Ride Mode");
                                     AFRAME.utils.entity.setComponentProperty(glsptext, "value", "Turn: turn device\nSelect: tap\n\n1. Check options on right panel\n2. Select button on ramp to start ride!");
-                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode"); 
+                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode"); 
                                     console.log('setting Ride Mode')
                                     setTimeout(function(){transitionopenride();}, 700)
                                 };
