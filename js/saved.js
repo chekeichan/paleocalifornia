@@ -85,7 +85,7 @@ AFRAME.registerComponent("tour-start", {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track3', dur: 40000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track0', dur: 10000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
         };
 
         el.addEventListener("mouseup", function(evt) {
@@ -452,9 +452,9 @@ rig.addEventListener("movingended__#track1", function(){
     rig.setAttribute('alongpath', {curve: '#track2', dur: '200000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#track2", function(){
-    rig.setAttribute('alongpath', {curve: '#trackend', dur: '53000', triggerRadius: '0.1'})
+    rig.setAttribute('alongpath', {curve: '#track3', dur: '53000', triggerRadius: '0.1'})
 })
-rig.addEventListener("movingended__#trackend", function(){
+rig.addEventListener("movingended__#track3", function(){
     rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '5000', triggerRadius: '0.001'}) // This adds a delay to the stop at the exit ramp with imperceptible movement 
 })
 rig.addEventListener("movingended__#trackdismount", function(){
