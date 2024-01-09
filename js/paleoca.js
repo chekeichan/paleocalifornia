@@ -1,5 +1,14 @@
 // console.warn = console.error = () => {}; // Suppresses Three.js warnings. Remove to debug
 
+AFRAME.registerComponent('no-cull', { // solution to disappearing animated models found on Sketchfab
+    init() {
+      this.el.addEventListener('model-loaded', () => {
+        this.el.object3D.traverse(obj => obj.frustumCulled = false)
+      })
+    },
+  })
+
+
 let podvisibility = true; // Used by button-logic and tour-start
 let setAttributes = function(entity, attrs) { // Efficient way to set complex attributes (taken from StackOverflow)
     for (var key in attrs) {
@@ -408,7 +417,7 @@ sceneEl.addEventListener("animation-loop", function(e) {
     console.log(e.target.id);
     const raccoonscrounging = document.querySelector('#raccoon-scrounging-s');
     const shastawaking = document.querySelector('#shasta-waking-s');
-    const shastaeating = document.querySelector('#shasta-eating-s');
+    const shastaeating = document.querySelector('#shasta-eating-s'); 
     let rand = 0
     switch(e.target.id) {
         case "sleepy-shasta": // The sloths have randomized behavior. Each have one more common animation and one rarer one
@@ -417,10 +426,10 @@ sceneEl.addEventListener("animation-loop", function(e) {
             if (rand < 2) {
                 sleepyshasta.setAttribute('animation-mixer', {clip: 'shasta.waking', clampWhenFinished: 'true'})
                 shastawaking.components.sound.playSound();
-            console.log('waking');
+            console.log('shasta waking');
             } else {
                 sleepyshasta.setAttribute('animation-mixer', {clip: 'shasta.sleeping', clampWhenFinished: 'true'})
-                console.log('sleeping');
+                console.log('shasta sleeping');
             }
             break;
         case "eating-shasta":
@@ -429,12 +438,12 @@ sceneEl.addEventListener("animation-loop", function(e) {
             if (rand < 3) {
                 eatingshasta.setAttribute('animation-mixer', {clip: 'shasta.looking', clampWhenFinished: 'true'})
                 joshuatree.setAttribute('animation-mixer', {clip: 'joshuatree.swaying', clampWhenFinished: 'true'})
-            console.log('looking');
+            console.log('shasta looking');
             } else {
                 eatingshasta.setAttribute('animation-mixer', {clip: 'shasta.eating', clampWhenFinished: 'true'})
                 joshuatree.setAttribute('animation-mixer', {clip: 'joshuatree.eaten', clampWhenFinished: 'true'})
                 shastaeating.components.sound.playSound();
-                console.log('eating');
+                console.log('shasta eating');
             }
             break;
         case "scrounging-raccoon":
@@ -464,14 +473,15 @@ rig.addEventListener("movingended__#trackdismount", function(){
     }
     })
 
-let timetunneldoor1state = 0; // This variable has to be here I guess? It's used below.
+let timetunneldoor1state = 0;
+let movemode = 0; // This variable has to be here I guess? It's used below.
 
 AFRAME.registerComponent('buttonlogic', {
     init: function () {    
             const el = this.el;
             const sceneEl = document.querySelector('a-scene');
             let creditcounter = 0;
-            let movemode = 0;
+    
             
             let trackvisibility = false;
             const rig = document.querySelector('#rig');
@@ -580,9 +590,9 @@ AFRAME.registerComponent('buttonlogic', {
 
             let tunneldoorswitch = function() {
                 var cent = document.getElementById("scene0-text-2");
-                cent.object3D.visible = !cent.getAttribute("visible");
-
-                if (timetunneldoor1state == 0) {
+                
+                if (timetunneldoor1state == 0 && movemode === 1) {
+                    cent.object3D.visible = !cent.getAttribute("visible");
                     for (let each of timetunneldoor2) {
                         each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.open', loop: 'once', clampWhenFinished: 'true'})
                     };
@@ -596,6 +606,7 @@ AFRAME.registerComponent('buttonlogic', {
                     console.log('Time Tunnel 2 undulate on');
                     timetunneldoor1state = 1;
                 } else if (timetunneldoor1state == 1) {
+                    cent.object3D.visible = !cent.getAttribute("visible");
                     for (let each of timetunneldoor2) {
                         each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.close', loop: 'once', clampWhenFinished: 'true'})
                     };
@@ -775,7 +786,7 @@ AFRAME.registerComponent('buttonlogic', {
                                 const warpwarptele = function() {
                                     rig.setAttribute("movement-controls", 'enabled', false); 
                                     movementgeneralwalk();
-                                    if (podvisibility === false) { // Makes pod visible again for telport mode
+                                    if (podvisibility === false) { // Makes pod visible again for walk mode
                                         podplaceholder.object3D.visible = true;
                                         AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
                                         podvisibility = true;
