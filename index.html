@@ -307,8 +307,6 @@
 </a-entity>
 </a-entity>
 
-
-
 <a-entity id="scene2-room" gltf-model="models/scene2.glb" class="hide scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
 <a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
 <a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
@@ -351,6 +349,14 @@
 <a-entity id="scene2-text-3" visible="false" mixin="scale-label-tall-dark" class="walk-label" position="40.5 -1.84 -44.5" rotation="0 0 0" text="value: Shasta Ground Sloth\nScientific name: Nothrotheriops shastensis\nPast Range: Mainly from the American Southwest to Central Mexico\nModern Range: None\n\nThis species was named for its initial discovery in Shasta County, California. They are among the smallest of the extinct ground sloths. Well-preserved remains including stomach contents show a diet of Joshua trees.";></a-entity><!-- Info Box -->
 <a-entity id="scene2-text-4a" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2sbctext" position="50.2 -1.6 -42" rotation="0 -20 0" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nSmilodon are a side lineage of cats not directly related to modern cats. They are California's state fossil, and the second most common mammal found at the La Brea Tar Pits.;"></a-entity><!-- Info Box -->
 <a-entity id="scene2-text-4b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2sbctext" position="51.404 -1.45 -26.06" rotation="0 -90 0" material="color: #8f856b" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nThe muscular bodies and long canine teeth would have assisted a hunting strategy of pouncing on large prey from cover. The lighter jaw muscle structure produced less biting force than other cats, but allowed the jaw to open 120 degrees;"></a-entity><!-- Info Box -->
+
+<!-- Scene 3 -->
+<a-entity gltf-model="models/scene3.glb" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity no-cull id="camelsit1" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camelsit2" gltf-model="models/westerncamel-sit2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camelchew1" gltf-model="models/westerncamel-chew1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew; timeScale: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camelchew2" gltf-model="models/westerncamel-chew2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew; timeScale: 1" shadow="recieve: true"></a-entity>
+<a-light id="lightscene3" class="light" color="white" position="46.93116 10.12055 -6.32583" light="type: point; intensity: 1.5; decay: 0; distance: 15"></a-light>
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
