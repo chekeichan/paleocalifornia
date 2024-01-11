@@ -170,6 +170,7 @@ AFRAME.registerComponent("tour-mechanics", {
         const timetunnel3insidesound = document.querySelector('#timetunnel3-inside-s');
 
         const scene2toggle = sceneEl.querySelectorAll('.scene2'); // Scene 2 Models
+        const sleepyshasta = document.querySelector('#sleepy-shasta');
         const eatingshasta = document.querySelector('#eating-shasta');
         const joshuatree = document.querySelector('#joshua-tree');
         const sbc1 = sceneEl.querySelectorAll('.scene2sbc');
@@ -178,13 +179,19 @@ AFRAME.registerComponent("tour-mechanics", {
         
         const scene2sounds = sceneEl.querySelectorAll('.scene2sound'); // Scene 2 Sounds
         const scene2animations = sceneEl.querySelectorAll('.scene2anim');
-        const sleepyshasta = document.querySelector('#sleepy-shasta');
         const crickets1 = document.querySelector('#crickets1-s');
         const crickets2 = document.querySelector('#crickets2-s');
         const crickets3 = document.querySelector('#crickets3-s');
         const raccoonyelp = document.querySelector('#raccoon-yelp-s');
         const sbcplants1 = document.querySelector('#sbcplants1-s');
         const sbcplants2 = document.querySelector('#sbcplants2-s');
+
+        const camelsit1 = document.querySelector('#camel-sit-1');
+        const camelsit2 = document.querySelector('#camel-sit-2');
+        const camelstand1 = document.querySelector('#camel-stand-1');
+        const camelstand2 = document.querySelector('#camel-stand-2');
+        const camelstand3 = document.querySelector('#camel-stand-3');
+        const camelstand4 = document.querySelector('#camel-stand-4');
 
         const timetunneldoor1 = document.querySelector('#timetunnel1-outside'); // Time Tunnels
         const timetunnel1 = document.querySelector('#timetunnel1-inside');
@@ -418,17 +425,50 @@ sceneEl.addEventListener("animation-loop", function(e) {
     const raccoonscrounging = document.querySelector('#raccoon-scrounging-s');
     const shastawaking = document.querySelector('#shasta-waking-s');
     const shastaeating = document.querySelector('#shasta-eating-s'); 
-    let rand = 0
+
+
+    var camelsitrandom = function(camelmodel) { 
+        rand = Math.floor(Math.random() * 10);
+        console.log(rand);
+        if (rand < 2) {
+            camelmodel.setAttribute('animation-mixer', {clip: '*scratch', clampWhenFinished: 'true', startAt: '0'})
+            shastawaking.components.sound.playSound();
+        console.log(camelmodel + ' scratching');
+        } else if (rand > 1 && rand < 4) {
+            camelmodel.setAttribute('animation-mixer', {clip: '*rest', clampWhenFinished: 'true', startAt: '0'})
+            console.log(camelmodel + ' resting');
+        } else if (rand > 3 && rand < 8) {
+            camelmodel.setAttribute('animation-mixer', {clip: '*look', clampWhenFinished: 'true', startAt: '0'})
+            console.log(camelmodel + ' looking');
+        } else {
+            camelmodel.setAttribute('animation-mixer', {clip: '*graze', clampWhenFinished: 'true', startAt: '0'})
+            console.log(camelmodel + ' grazing');
+        }
+    };
+
+    var camelstandrandom = function(camelmodel) { 
+        rand = Math.floor(Math.random() * 10);
+        console.log(rand);
+        if (rand < 5) {
+            camelmodel.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '0'})
+            shastawaking.components.sound.playSound();
+        console.log(camelmodel + ' idling');
+        } else {
+            camelmodel.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '0'})
+            console.log(camelmodel + ' grazing');
+        }
+    };
+
     switch(e.target.id) {
         case "sleepy-shasta": // The sloths have randomized behavior. Each have one more common animation and one rarer one
             rand = Math.floor(Math.random() * 10);
             console.log(rand);
             if (rand < 2) {
-                sleepyshasta.setAttribute('animation-mixer', {clip: 'shasta.waking', clampWhenFinished: 'true'})
+                sleepyshasta.setAttribute('animation-mixer', {clip: 'shasta.waking', clampWhenFinished: 'true', timeScale: '1'})
                 shastawaking.components.sound.playSound();
             console.log('shasta waking');
             } else {
-                sleepyshasta.setAttribute('animation-mixer', {clip: 'shasta.sleeping', clampWhenFinished: 'true'})
+                sleepyshasta.setAttribute('animation-mixer', {clip: 'shasta.sleeping', clampWhenFinished: 'true', timeScale: '1'})
                 console.log('shasta sleeping');
             }
             break;
@@ -436,18 +476,36 @@ sceneEl.addEventListener("animation-loop", function(e) {
             rand = Math.floor(Math.random() * 10);
             console.log(rand);
             if (rand < 3) {
-                eatingshasta.setAttribute('animation-mixer', {clip: 'shasta.looking', clampWhenFinished: 'true'})
-                joshuatree.setAttribute('animation-mixer', {clip: 'joshuatree.swaying', clampWhenFinished: 'true'})
+                eatingshasta.setAttribute('animation-mixer', {clip: 'shasta.looking', clampWhenFinished: 'true', timeScale: '1'})
+                joshuatree.setAttribute('animation-mixer', {clip: 'joshuatree.swaying', clampWhenFinished: 'true', timeScale: '1'})
             console.log('shasta looking');
             } else {
-                eatingshasta.setAttribute('animation-mixer', {clip: 'shasta.eating', clampWhenFinished: 'true'})
-                joshuatree.setAttribute('animation-mixer', {clip: 'joshuatree.eaten', clampWhenFinished: 'true'})
+                eatingshasta.setAttribute('animation-mixer', {clip: 'shasta.eating', clampWhenFinished: 'true', timeScale: '1'})
+                joshuatree.setAttribute('animation-mixer', {clip: 'joshuatree.eaten', clampWhenFinished: 'true', timeScale: '1'})
                 shastaeating.components.sound.playSound();
                 console.log('shasta eating');
             }
             break;
         case "scrounging-raccoon":
             raccoonscrounging.components.sound.playSound();
+            break;
+        case "camel-sit-1":
+            camelsitrandom(camelsit1);
+            break;
+        case "camel-sit-2":
+            camelsitrandom(camelsit2);
+            break;
+        case "camel-stand-1":
+            camelstandrandom(camelstand1);
+            break;
+        case "camel-stand-2":
+            camelstandrandom(camelstand2);
+            break;
+        case "camel-stand-3":
+            camelstandrandom(camelstand3);
+            break;
+        case "camel-stand-4":
+            camelstandrandom(camelstand4);
             break;
     }
 
