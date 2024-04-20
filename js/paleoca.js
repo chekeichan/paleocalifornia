@@ -539,7 +539,6 @@ AFRAME.registerComponent('buttonlogic', {
             const el = this.el;
             const sceneEl = document.querySelector('a-scene');
             let creditcounter = 0;
-    
             
             let trackvisibility = false;
             const rig = document.querySelector('#rig');
@@ -1014,6 +1013,10 @@ AFRAME.registerComponent('buttonlogic', {
                     break;           
                 case "scene2bwarpbutt1":
                 case "scene2bwarpbutt2":
+                    transitionclosewarp(50, 0.05, -26.2, scene2switches);
+                    break; 
+                case "scene3warpbutt1":
+                case "scene3warpbutt2":
                     transitionclosewarp(50, 0.05, -26.2, scene2switches);
                     break; 
                     

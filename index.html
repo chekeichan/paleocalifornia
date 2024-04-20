@@ -81,8 +81,7 @@
  </a-assets>
  <a-entity gltf-model="#navmesh" nav-mesh class="nav" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity>
  <a-entity gltf-model="models/infopoles.glb" class="walk" position="0 -3 0" rotation="0 0 0" visible="false"></a-entity>
- <a-entity gltf-model="models/placeholder.glb" position="0.23 0 0" rotation="0 0 0" visible="true"></a-entity>
- <a-entity gltf-model="models/caoatgrasstest.glb" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+ <a-entity gltf-model="models/placeholder.glb" class="hide scene2" position="0.23 0 -0.71" rotation="0 0 0" visible="true"></a-entity>
 
 <!-- Player Character -->
 <a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
@@ -232,6 +231,8 @@
   <a-text id="scene2awarpstext1" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
   <a-entity id="scene2bwarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
   <a-text id="scene2bwarpstext1" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
+  <a-entity id="scene3warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.4 -0.4 0.05" visible="true"></a-entity>
+  <a-text id="scene3warpstext1" mixin="text-label" position="0.5 -0.4 0.05" rotation="0 0 0" value="Scene 3 Preview"></a-text>
 </a-entity>
 
 <!-- Map Panel 2-->
@@ -245,6 +246,8 @@
   <a-text id="scene2awarpstext2" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
   <a-entity id="scene2bwarpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
   <a-text id="scene2bwarpstext2" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
+  <a-entity id="scene3warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.4 -0.4 0.05" visible="true"></a-entity>
+  <a-text id="scene3warpstext2" mixin="text-label" position="0.5 -0.4 0.05" rotation="0 0 0" value="Scene 3 Preview"></a-text>
 </a-entity>
 
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
@@ -252,7 +255,7 @@
 <a-text visible="true" class="scene0" position="2.35 3.5 3.24" rotation="0 -90 0" value="Part One" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="false" class="scene0" position="-6 1.4 14.4" rotation="0 90 0" value="Thank you for visiting PaleoCA!\nMore scenes and features are planned" color="black" width="8" line-height="50" text="wrapCount: 40"></a-text>
 <a-text visible="true" class="scene0" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
-<a-entity gltf-model="models/track.glb" position="0 0.05 0" rotation="0 0 0" visible="true"></a-entity> <!-- Temp Track -->
+<a-entity gltf-model="models/track.glb" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
 <a-entity gltf-model="#start" class="scene0" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity id= "podplaceholder" gltf-model="#podstart" static-body="shape: box" visible="true" position="0 0.5 0"></a-entity>
 <a-entity id="start-doors" class="scene1" visible="true" gltf-model="#startdoors" position="0 0 0" rotation="0 0 0"></a-entity>
@@ -352,7 +355,8 @@
 <a-entity id="scene2-text-4b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2sbctext" position="51.404 -1.45 -26.06" rotation="0 -90 0" material="color: #8f856b" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nThe muscular bodies and long canine teeth would have assisted a hunting strategy of pouncing on large prey from cover. The lighter jaw muscle structure produced less biting force than other cats, but allowed the jaw to open 120 degrees;"></a-entity><!-- Info Box -->
 
 <!-- Scene 3 -->
-<a-entity gltf-model="models/scene3.glb" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene3.glb" class="hide scene3" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene3b.glb" class="hide scene3" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity no-cull id="camel-sit-1" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-sit-2" gltf-model="models/westerncamel-sit2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *scratch; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-stand-1" gltf-model="models/westerncamel-stand1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 1; startAt: 300" shadow="recieve: true"></a-entity>
