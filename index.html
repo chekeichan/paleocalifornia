@@ -82,6 +82,7 @@
  <a-entity gltf-model="#navmesh" nav-mesh class="nav" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity>
  <a-entity gltf-model="models/infopoles.glb" class="walk" position="0 -3 0" rotation="0 0 0" visible="false"></a-entity>
  <a-entity gltf-model="models/placeholder.glb" position="0.23 0 0" rotation="0 0 0" visible="true"></a-entity>
+ <a-entity gltf-model="models/caoatgrasstest.glb" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 
 <!-- Player Character -->
 <a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
@@ -101,7 +102,7 @@
         
  </a-entity>
  
-<a-light id="ambientlight" type="ambient" color="white" intensity="0.1"></a-light> 
+<a-light id="ambientlight" type="ambient" color="white" intensity="0.4"></a-light> <!-- 0.1 intensity usually -->
 <a-light id="light1" class="light" color="white" position="-4.2 3.6 5" light="type: point; intensity: 1.5; decay: 1; distance: 15"></a-light>
 <a-light id="light2" class="light" color="white" position="0 5.4 -17.4" light="type: point; intensity: 0.3; decay: 1; distance: 15"></a-light>
 <a-light id="timetunnellight" visible="true" color="#0bee8d" position="14.4 1.6 -20" light="type: point; intensity: 0.75; decay: 0.01; distance: 9"></a-light>
@@ -151,8 +152,8 @@
 <a-curve id="track3" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
   <a-curve-point class="curve" id="track_straight5_4b" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_1" position="48.1 0 -12.3" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn5_2" position="44.34 0 -11.07" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn5_3" position="40.64 0 -10.2" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_2" position="44.42 0 -10.9" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_3" position="40.28 0 -10.23" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_4" position="38.64 0 -6.8" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_5" position="38.75 0 -3.1" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_6" position="41.2 0 -0.2" gltf-model="models/trackorb.glb"></a-curve-point>
