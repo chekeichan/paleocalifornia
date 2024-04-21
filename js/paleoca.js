@@ -573,6 +573,7 @@ AFRAME.registerComponent('buttonlogic', {
             const scene2animations = sceneEl.querySelectorAll('.scene2anim');
             const scene2sounds = sceneEl.querySelectorAll('.scene2sound');
             const scene2toggle = sceneEl.querySelectorAll('.scene2');
+            const scene3toggle = sceneEl.querySelectorAll('.scene3');
             const light1 = document.querySelector('#light1');
             const light2 = document.querySelector('#light2');
             const ambilight = document.querySelector('#ambientlight');
@@ -637,6 +638,20 @@ AFRAME.registerComponent('buttonlogic', {
                 crickets2.components.sound.playSound();
                 raccoonyelp.components.sound.playSound();
                 crickets3.components.sound.playSound();
+                for (let each of scene2animations) {
+                    each.setAttribute('animation-mixer', {timeScale: '1'})
+                };
+                sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'false', loop: 'repeat', timeScale: '1'})
+                sbc1cat.setAttribute('sound', {src: '#sbc-steps', autoplay: 'true', loop: 'true', distanceModel: 'linear', maxDistance: '5'})
+                sbc1plant.setAttribute('animation-mixer', {clip: '*flat', clampWhenFinished: 'true', loop: 'once', timeScale: '1'})
+            };
+
+            let scene3switches = function() { // Turns on Scene 3 for Walk Mode
+                visiswitch(scene3toggle, true);
+                setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 1.5, to: 2, dur: 500}, "decay": 0.01, "distance": 11.9})
+                setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.715, dur: 500}})
+                setAttributes(warpmap1, {"position": {x: 54.16, y: 0.85, z: 13.3}, "rotation": {x: -62.1, y: 180, z: 0}})
+                setAttributes(warpmap2, {"position": {x: 45.25, y: 0.812, z: -14.4}, "rotation": {x: -62.1, y: 0, z: 0}})
                 for (let each of scene2animations) {
                     each.setAttribute('animation-mixer', {timeScale: '1'})
                 };
@@ -1017,7 +1032,7 @@ AFRAME.registerComponent('buttonlogic', {
                     break; 
                 case "scene3warpbutt1":
                 case "scene3warpbutt2":
-                    transitionclosewarp(50, 0.05, -26.2, scene2switches);
+                    transitionclosewarp(49.33, 0.05, -14.5, scene3switches);
                     break; 
                     
                 case "narrationbutt":
