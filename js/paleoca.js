@@ -572,6 +572,7 @@ AFRAME.registerComponent('buttonlogic', {
             const raccoonyelp = document.querySelector('#raccoon-yelp-s');
             const scene2animations = sceneEl.querySelectorAll('.scene2anim');
             const scene2sounds = sceneEl.querySelectorAll('.scene2sound');
+            const scene1toggle = sceneEl.querySelectorAll('.scene1');
             const scene2toggle = sceneEl.querySelectorAll('.scene2');
             const scene3toggle = sceneEl.querySelectorAll('.scene3');
             const light1 = document.querySelector('#light1');
@@ -608,7 +609,9 @@ AFRAME.registerComponent('buttonlogic', {
           
             
             let rideresetswitches = function() { // Resets ride mode to starting settings
+                visiswitch(scene1toggle, true);
                 visiswitch(scene2toggle, false);
+                visiswitch(scene3toggle, false);
                 setAttributes(light1, {"position": {x: -0.123, y: 4.9, z: 5}, "color": "white", "animation": {property: 'light.intensity', from: 2, to: 1.5, dur: 500}, "decay": 1, "distance": 15})
                 setAttributes(light2, {"position": {x: 0, y: 5.4, z: -17.4}, "color": "white", "animation": {property: 'light.intensity', to: 0.3, dur: 500}, "decay": 1, "distance": 11})
                 setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
@@ -628,7 +631,9 @@ AFRAME.registerComponent('buttonlogic', {
             };
 
             let scene2switches = function() { // Turns on Scene 2 for Walk Mode
+                visiswitch(scene1toggle, false);
                 visiswitch(scene2toggle, true);
+                visiswitch(scene3toggle, false);
                 crickets1.components.sound.playSound();
                 setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 1.5, to: 2, dur: 500}, "decay": 0.01, "distance": 11.9})
                 setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "light.intensity": 2, "decay": 0.1, "distance": 5.5})
@@ -647,6 +652,8 @@ AFRAME.registerComponent('buttonlogic', {
             };
 
             let scene3switches = function() { // Turns on Scene 3 for Walk Mode
+                visiswitch(scene1toggle, false);
+                visiswitch(scene2toggle, false);
                 visiswitch(scene3toggle, true);
                 setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 1.5, to: 2, dur: 500}, "decay": 0.01, "distance": 11.9})
                 setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.715, dur: 500}})
