@@ -143,16 +143,17 @@
   <a-curve-point class="curve" id="track_turn4_2" position="48.757 0 -40.452" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn4_3" position="49.585 0 -36.397" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight5_1" position="49.924 0 -31.4" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_2" position="49.96 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_3" position="49.96 0 -20.443" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_4a" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_2a" position="49.875 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
+
 </a-curve>
 
 <a-curve id="track3" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
-  <a-curve-point class="curve" id="track_straight5_4b" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn5_1" position="48.1 0 -12.3" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn5_2" position="44.42 0 -10.9" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn5_3" position="40.28 0 -10.23" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_2b" position="49.875 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_3" position="49.742 0 -20.443" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_4a" position="49.355 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_1" position="47.913 0 -11.775" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_2" position="44.053 0 -11.03" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_3" position="39.722 0 -9.83" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_4" position="38.64 0 -6.8" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_5" position="38.75 0 -3.1" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_6" position="41.2 0 -0.2" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -311,7 +312,7 @@
 </a-entity>
 </a-entity>
 
-<a-entity id="scene2-room" gltf-model="models/scene2.glb" class="hide scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
+<a-entity id="scene2-room" gltf-model="models/scene2.glb" class="scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
 <a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
 <a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
 <a-entity id="crickets3-s" mixin="sound" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>

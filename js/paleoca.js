@@ -94,7 +94,7 @@ AFRAME.registerComponent("tour-start", {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track3', dur: 40000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track3', dur: 80000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
         };
 
         el.addEventListener("mouseup", function(evt) {
