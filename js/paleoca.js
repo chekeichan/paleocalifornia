@@ -326,30 +326,10 @@ AFRAME.registerComponent("tour-mechanics", {
                     case "track_turn4_2":
                         break;
                     case "track_turn4_3":
-                        for (let each of timetunnel2) {
-                            each.setAttribute('animation-mixer', {timeScale: '1'})
-                        };
-                        console.log('Time Tunnel 2 undulate on');
                         break;
                     case "track_straight5_1":
-                        for (let each of timetunneldoor2) {
-                            aniswitchdelay(each, 'animation-mixer', {clip: 'TimeTunnel.door.entrance.open', loop: 'once', clampWhenFinished: 'true'}, 2000);
-                        };
-                        audiswitchdelay(timetunneldoor2ent, "play", 2000);
-                        console.log('time door entrance open 2');
-                        audiswitchdelay(timetunnel2insidesound, "play", 2000);
-                        audiswitchdelay(timetunnel3insidesound, "play", 2000);
-                        console.log('time tunnel 2 inside sound on');
                     break;
                     case "track_straight5_3":
-                        visiswitch(scene0toggle, true);
-                        for (let each of timetunneldoor2) {
-                            each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
-                        };
-                        timetunneldoor2ent.components.sound.playSound();
-                        console.log('time door entrance 2 close');
-                        light2.setAttribute('animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
-                        console.log('track 1 off')
                     break;
                     case "track_straight_end_1_1":
                         sbc1cat.removeAttribute('animation-mixer')
@@ -406,6 +386,32 @@ AFRAME.registerComponent("tour-mechanics", {
                     break;
                     case "track_straight_dismount_1":
                     break;
+                    /* case "track_turn4_3":
+                        for (let each of timetunnel2) {
+                            each.setAttribute('animation-mixer', {timeScale: '1'})
+                        };
+                        console.log('Time Tunnel 2 undulate on');
+                    break; */
+                    /* case "track_straight5_1":
+                        for (let each of timetunneldoor2) {
+                            aniswitchdelay(each, 'animation-mixer', {clip: 'TimeTunnel.door.entrance.open', loop: 'once', clampWhenFinished: 'true'}, 2000);
+                        };
+                        audiswitchdelay(timetunneldoor2ent, "play", 2000);
+                        console.log('time door entrance open 2');
+                        audiswitchdelay(timetunnel2insidesound, "play", 2000);
+                        audiswitchdelay(timetunnel3insidesound, "play", 2000);
+                        console.log('time tunnel 2 inside sound on');
+                    break; */
+                    /* case "track_straight5_3":
+                        visiswitch(scene0toggle, true);
+                        for (let each of timetunneldoor2) {
+                            each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
+                        };
+                        timetunneldoor2ent.components.sound.playSound();
+                        console.log('time door entrance 2 close');
+                        light2.setAttribute('animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
+                        console.log('track 1 off')
+                    break; */
                 }    
             })
 
