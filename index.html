@@ -142,16 +142,16 @@
   <a-curve-point class="curve" id="track_turn4_1" position="44.277 0 -41.298" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn4_2" position="48.757 0 -40.452" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn4_3" position="49.585 0 -36.397" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_1" position="49.924 0 -31.4" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_2a" position="49.875 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_1a" position="49.924 0 -31.4" gltf-model="models/trackorb.glb"></a-curve-point>
 
 </a-curve>
 
 <a-curve id="track3" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
-  <a-curve-point class="curve" id="track_straight5_2b" position="49.875 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_3" position="49.742 0 -20.443" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_4a" position="49.355 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn5_1" position="47.913 0 -11.775" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_1b" position="49.924 0 -31.4" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_2" position="49.875 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_3" position="49.73 0 -19.3" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_4a" position="49.4 0 -14.5" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_1" position="47.28 0 -11.61" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_2" position="44.053 0 -11.03" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_3" position="39.722 0 -9.83" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_4" position="38.64 0 -6.8" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -342,6 +342,8 @@
 <a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="hide scene2 scene2sbc" visible="true" position="52.07 1.76 -40.62" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; loop: once; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2sbc" position="52 1.88 -40.63" rotation="0 0 3" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; loop: once; timeScale: 0" sound="src: #sbc-steps; autoplay: false; loop: true; maxDistance: 5; distanceModel: linear"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2anim" position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose;  timeScale: 0"></a-entity>
+<a-entity id="scene2-exitplant-door" gltf-model="models/scene2endplants.glb" class="scene2anim" position="0 0 0" rotation="0 0 0" animation-mixer="clip: *open; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
+<a-entity id="scene2-exit-door" gltf-model="models/scene2exit.glb" class="scene2anim" position="0 0 0" rotation="0 0 0" animation-mixer="clip: *open; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
 
 <a-entity id="scene2-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="29.64 -2.1 -22.23" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 <a-entity id="scene2-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="32.65 -2.1 -40.9" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
@@ -358,7 +360,6 @@
 
 <!-- Scene 3 -->
 <a-entity gltf-model="models/scene3.glb" class= "scene3" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
-<a-entity gltf-model="models/scene3b.glb" class="scene3" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity no-cull id="camel-sit-1" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-sit-2" gltf-model="models/westerncamel-sit2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *scratch; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-stand-1" gltf-model="models/westerncamel-stand1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 1; startAt: 300" shadow="recieve: true"></a-entity>
@@ -368,6 +369,7 @@
 <a-entity no-cull id="camel-chew-1" gltf-model="models/westerncamel-chew1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew1; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-chew-2" gltf-model="models/westerncamel-chew2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew2; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-roll" gltf-model="models/westerncamel-roll.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *roll; timeScale: 1" shadow="recieve: true"></a-entity>
+<a-entity gltf-model="models/coyote.glb" class="scene3" position="45.143 0 3.845" rotation="0 162.16 0" visible="true" animation-mixer="clip: *idle; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-light id="lightscene3" visible="false" class="scene3 light" color="white" position="46.93116 10.12055 -6.32583" light="type: point; intensity: 1.5; decay: 0; distance: 15"></a-light>
 
 <!-- Welcome Panel -->

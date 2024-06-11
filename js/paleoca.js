@@ -1,6 +1,6 @@
 // console.warn = console.error = () => {}; // Suppresses Three.js warnings. Remove to debug
 
-AFRAME.registerComponent('no-cull', { // solution to disappearing animated models found on Sketchfab
+AFRAME.registerComponent('no-cull', { // solution to disappearing animated models found on StackOverflow
     init() {
       this.el.addEventListener('model-loaded', () => {
         this.el.object3D.traverse(obj => obj.frustumCulled = false)
@@ -94,7 +94,7 @@ AFRAME.registerComponent("tour-start", {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track3', dur: 80000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track3', dur: 100000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
         };
 
         el.addEventListener("mouseup", function(evt) {
@@ -185,6 +185,8 @@ AFRAME.registerComponent("tour-mechanics", {
         const raccoonyelp = document.querySelector('#raccoon-yelp-s');
         const sbcplants1 = document.querySelector('#sbcplants1-s');
         const sbcplants2 = document.querySelector('#sbcplants2-s');
+        const scene2exitplant = document.querySelector('#scene2-exitplant-door');
+        const scene2exitdoor = document.querySelector('#scene2-exit-door');
 
         const camelsit1 = document.querySelector('#camel-sit-1');
         const camelsit2 = document.querySelector('#camel-sit-2');
@@ -327,9 +329,17 @@ AFRAME.registerComponent("tour-mechanics", {
                         break;
                     case "track_turn4_3":
                         break;
-                    case "track_straight5_1":
+                    case "track_straight5_2":
+                        aniswitchdelay(scene2exitplant, "animation-mixer", {clip: '*open', timeScale: "1"}, "250");
+                        console.log('scene 2 exit plant open')
                     break;
                     case "track_straight5_3":
+                        aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*open', timeScale: "1"}, "800");
+                        console.log('scene 2 exit door open')
+                    break;
+                    case "track_straight5_4a":
+                        aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*close', timeScale: "1"}, "800");
+                        console.log('scene 2 exit door close')
                     break;
                     case "track_straight_end_1_1":
                         sbc1cat.removeAttribute('animation-mixer')
