@@ -12,6 +12,7 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
     init: function() {
         const sceneEl = document.querySelector('a-scene');
         const rig = document.querySelector('#rig');
+        const check = AFRAME.utils.device.isOculusBrowser();
         if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
             // rig.setAttribute("movement-controls", "speed", 0.15);
             document.querySelector('#GL-SP').object3D.visible = true;
@@ -24,6 +25,7 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
             rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
             console.log('PC detected');
+            console.log(check);
             document.querySelector('#GL-PC').object3D.visible = true;
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
