@@ -18,7 +18,7 @@
   <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
   <meta http-equiv="pragma" content="no-cache" />
 <meta name="description" content="VR tour of California 40,000 years ago">
-<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
 <script src="js/aframe-alongpath-component.js"></script> <!-- Custom code to fix rig camera angle-->
@@ -26,11 +26,11 @@
 <script src="js/aframe-surface-scatter.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/diarmidmackenzie/instanced-mesh@v0.7.0/src/instanced-mesh.min.js"></script>
 <script src="js/paleoca.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/gh/kylebakerio/a-console@1.0.2/a-console.js"></script> -->
+<script src="https://cdn.jsdelivr.net/gh/kylebakerio/a-console@1.0.2/a-console.js"></script>
 </head>
  
 <body>
-<a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false">
+<a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false" raycaster="far: 4; objects: .clickable">
 
 <a-assets timeout="80000"> <!-- Loads models -->
     <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navmesh.glb"></a-asset-item>
@@ -87,13 +87,13 @@
 <a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
 <!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
   <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 1.0 -0.1"></a-entity> 
-  <a-entity id="camera" rotation="180 180 0" camera look-controls cursor="rayOrigin:mouse" raycaster="far: 4; objects: .clickable"  position="0 1.6 0">
+  <a-entity id="camera" rotation="180 180 0" camera look-controls  position="0 1.6 0" cursor="rayOrigin: entity; fuseTimeout: 0">
     <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity><!-- Transition animation -->
 </a-entity>
-        <a-entity id="lefthand" class="hand" hand-controls="hand: left; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: left; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange" >
+        <a-entity id="lefthand" class="hand" hand-tracking-controls="hand: left;" hand-controls="hand: left; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: left; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange" >
           <!-- <a-console thumbstick-scrolling="#left-hand" font-size="35" position="0 .13 -.36" scale=".33 .33 .33" rotation="-70.7 -1.77"></a-console>-->
         </a-entity> 
-        <a-entity id="righthand" class="hand" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: right; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange"></a-entity>
+        <a-entity id="righthand" class="hand" hand-tracking-controls="hand: right;" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: right; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange"></a-entity>
 
         <a-entity id="boop-s" mixin="sound" class="scene0sound" position="0 1.6 0" sound="src: #boop-sound; loop: false; maxDistance: 4"></a-entity>
         <a-entity id="beep-s" mixin="sound" class="scene0sound" position="0 1.6 0" sound="src: #beep-sound; loop: false; maxDistance: 4"></a-entity>
@@ -313,7 +313,7 @@
 </a-entity>
 
 <a-entity id="scene2-room" gltf-model="models/scene2.glb" class="scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
-<a-entity id="scene2-end" gltf-model="models/scene2end.glb" class="scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
+<a-entity id="scene2-end" gltf-model="models/scene2end.glb" class="scene2end" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
 <a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
 <a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
 <a-entity id="crickets3-s" mixin="sound" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
@@ -360,6 +360,10 @@
 
 <!-- Scene 3 -->
 <a-entity gltf-model="models/scene3.glb" class= "scene3" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene3end.glb" class= "scene3end" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene34divider.glb" class= "scene34" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity id="caoatgrasssmall" gltf-model="models/caoatgrass-small.glb" visible="false"></a-entity>
+<a-entity gltf-model="models/plantspawn3.glb" class="" position="0 -0.04 0" surface-scatter="object:#caoatgrasssmall; count:200; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
 <a-entity no-cull id="camel-sit-1" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-sit-2" gltf-model="models/westerncamel-sit2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *scratch; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-stand-1" gltf-model="models/westerncamel-stand1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 1; startAt: 300" shadow="recieve: true"></a-entity>
@@ -369,7 +373,8 @@
 <a-entity no-cull id="camel-chew-1" gltf-model="models/westerncamel-chew1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew1; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-chew-2" gltf-model="models/westerncamel-chew2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew2; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-roll" gltf-model="models/westerncamel-roll.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *roll; timeScale: 1" shadow="recieve: true"></a-entity>
-<a-entity gltf-model="models/coyote.glb" class="scene3" position="45.143 0 3.845" rotation="0 162.16 0" visible="true" animation-mixer="clip: *idle; timeScale: 1" shadow="recieve: true"></a-entity>
+<a-entity id="coyote-1" gltf-model="models/coyote.glb" class="scene3" position="45.143 0 3.845" rotation="0 162.16 0" visible="true" animation-mixer="clip: *idle; timeScale: 1" shadow="recieve: true"></a-entity>
+<a-entity id="harlanssloth-1" gltf-model="models/harlanssloth.glb" class="scene3" position="60.3 0.1 -7.524" rotation="0 -21 0" visible="true" animation-mixer="clip: *idle; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-light id="lightscene3" visible="false" class="scene3 light" color="white" position="46.93116 10.12055 -6.32583" light="type: point; intensity: 1.5; decay: 0; distance: 15"></a-light>
 
 <!-- Welcome Panel -->
