@@ -12,11 +12,12 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
     init: function() {
         const sceneEl = document.querySelector('a-scene');
         const rig = document.querySelector('#rig');
-        const check = AFRAME.utils.device.isOculusBrowser();
         if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
             // rig.setAttribute("movement-controls", "speed", 0.15);
             document.querySelector('#GL-SP').object3D.visible = true;
+            AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
+            
         } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
             document.querySelector('#GL-VR').object3D.visible = true;
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode");
@@ -24,9 +25,12 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
             console.log('VR detected');
             rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
-            console.log('PC detected');
-            console.log(check);
+            console.log('PC detected' + check);
             document.querySelector('#GL-PC').object3D.visible = true;
+            setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
+            AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
+        } else { // Mystery Mode
+            console.log('No known device detected');
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
     }
