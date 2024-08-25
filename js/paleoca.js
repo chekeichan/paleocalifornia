@@ -12,19 +12,37 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
     init: function() {
         const sceneEl = document.querySelector('a-scene');
         const rig = document.querySelector('#rig');
-        if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
+
+         if (AFRAME.utils.device.isMobile() === true) { // Smartphone and AVP Mode
             // rig.setAttribute("movement-controls", "speed", 0.15);
-            document.querySelector('#GL-SP').object3D.visible = true;
+            if (screen.width == 1306) { // AVP Mode
+                document.querySelector('#GL-AVP').object3D.visible = true;
+                document.querySelector('#movemodebutt').object3D.visible = false;
+                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", " ");
+                setAttributes(sceneEl, {"cursor": {rayOrigin: 'xrselect', fuseTimeout: 0}})
+                console.log('AVP detected');
+                rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
+            } else { // Smartphone Mode
+                document.querySelector('#GL-SP').object3D.visible = true;
+                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
+                setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
+            };
         } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
             document.querySelector('#GL-VR').object3D.visible = true;
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode");
             console.log('VR detected');
             rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
-            console.log('PC detected');
+            console.log('PC detected' + screen.width);
             document.querySelector('#GL-PC').object3D.visible = true;
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
+            console.log(rig);
+        } else { // Mystery Mode
+            console.log('No known device detected');
+            setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
+            AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
     }
+
 }});
 
 AFRAME.registerComponent('all-wait', { // Waits for certain models to load then makes them not visible. If models start out not visible, they will cause a pause then they are loaded
@@ -652,168 +670,230 @@ AFRAME.registerComponent('buttonlogic', {
                         movemode = 0;
                     }
                     if (movemode === 0) { // Ride Mode
-                            startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.close', loop: 'once', clampWhenFinished: 'true'})
-                            swingingdoor.components.sound.playSound();
-                            startdoorstate = 0;
-
-            
-                            const movementgeneralride = function() {
-                                for (let each of walk) {
-                                    each.object3D.visible = false;
-                                    each.object3D.position.y -= 3;
-                                }
-                                for (let each of walklabel) {
-                                    each.object3D.position.y -= 3;
-                                }
-                                for (let each of ride) {
-                                    each.object3D.visible = true;
-                                    each.object3D.position.y += 3;
-                                }
-                                console.log(timetunneldoor1state);
-                            tunneldoorswitch();
-                            }
-                        
-                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
-                                const transitioncloseride = function() {
-                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
-                                    setTimeout(function(){warpwarpride();}, 1000);
-                                };
-                        
-                                const warpwarpride = function() {
-                                    movementgeneralride();
-                                    rig.object3D.position.set(-6.5, 0.6, 5);
-                                    camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
-                                    rig.setAttribute("movement-controls", 'enabled', true); 
-                                    for (let each of hands) {
-                                        each.setAttribute('raycaster', 'far', 4); // Makes VR raycaster lines long
-                                        each.removeAttribute("mixin"); 
+                                startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.close', loop: 'once', clampWhenFinished: 'true'})
+                                swingingdoor.components.sound.playSound();
+                                startdoorstate = 0;
+    
+                
+                                const movementgeneralride = function() {
+                                    for (let each of walk) {
+                                        each.object3D.visible = false;
+                                        each.object3D.position.y -= 3;
                                     }
-                                    
-                                    AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Ride Mode");
-                                    AFRAME.utils.entity.setComponentProperty(glvrtext, "value", "Turn: use headset or right thumbstick\nMove: press forward on thumbsticks to\nteleport\nSelect: point and use trigger\n\nMove around and see the scenes at your\nown pace!");
-                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Warp Mode"); 
-                                    console.log('setting Ride Mode')
-                                    setTimeout(function(){transitionopenride();}, 700)
-                                };
-                                
-                                const transitionopenride = function() {
-                                    transition.dispatchEvent(new CustomEvent("transitionopen"));
-                                };
-
-                                transitioncloseride();
-                                
-                            } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
-                                const transitioncloseride = function() {
-                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
-                                    setTimeout(function(){warpwarpride();}, 1000);
-                                };
-                        
-                                const warpwarpride = function() {
-                                    movementgeneralride()
-                                    rig.object3D.position.set(-6.5, 0.6, 5);
-                                    camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
-                                    rig.setAttribute("movement-controls", 'enabled', false); 
-                                    AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Ride Mode");
-                                    AFRAME.utils.entity.setComponentProperty(glpctext, "value", "Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select button on ramp to start ride!");
-                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode"); 
-                                    console.log('setting Ride Mode')
-                                    setTimeout(function(){transitionopenride();}, 700)
-                                };
-                                
-                                const transitionopenride = function() {
-                                    transition.dispatchEvent(new CustomEvent("transitionopen"));
-                                };
-
-                                transitioncloseride();
-                                
-                            } else if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
-                                const transitioncloseride = function() {
-                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
-                                    setTimeout(function(){warpwarpride();}, 1000);
-                                };
-                        
-                                const warpwarpride = function() {
-                                    movementgeneralride()
-                                    rig.object3D.position.set(-6.5, 0.6, 5);
-                                    camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
-                                    rig.setAttribute("movement-controls", 'enabled', false); 
-                                    AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Ride Mode");
-                                    AFRAME.utils.entity.setComponentProperty(glsptext, "value", "Turn: turn device\nSelect: tap\n\n1. Check options on right panel\n2. Select button on ramp to start ride!");
-                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode"); 
-                                    console.log('setting Ride Mode')
-                                    setTimeout(function(){transitionopenride();}, 700)
-                                };
-                                
-                                const transitionopenride = function() {
-                                    transition.dispatchEvent(new CustomEvent("transitionopen"));
-                                };
-
-                                transitioncloseride();
-                            };
-
-                    } else if (movemode === 1) { // Walk Mode   
-                            startdoorstate = 1;
-                            const movementgeneralwalk = function() {
-                                for (let each of walk) {
-                                    each.object3D.visible = true;
-                                    each.object3D.position.y += 3;
-                                }
-                                for (let each of walklabel) {
-                                    each.object3D.position.y += 3;
-                                }
-                                for (let each of ride) {
-                                    each.object3D.visible = false;
-                                    each.object3D.position.y -= 3;
-                                }
-                            }
-                            if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
-                                const transitionclosetele = function() {
-                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
-                                    setTimeout(function(){warpwarptele();}, 1000);
-                                };
-                    
-                                const warpwarptele = function() {
-                                    rig.setAttribute("movement-controls", 'enabled', false); 
-                                    movementgeneralwalk();
-                                    if (podvisibility === false) { // Makes pod visible again for telport mode
-                                        podplaceholder.object3D.visible = true;
-                                        AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
-                                        podvisibility = true;
-                                        podwarningtext.setAttribute("visible", false); 
+                                    for (let each of walklabel) {
+                                        each.object3D.position.y -= 3;
                                     }
-                                    startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
-                                    swingingdoor.components.sound.playSound();
-                                    for (let each of hands) {
-                                        each.setAttribute('raycaster', 'far', 1.0); // Makes VR raycaster lines short
-                                        each.setAttribute("mixin", "blink"); 
+                                    for (let each of ride) {
+                                        each.object3D.visible = true;
+                                        each.object3D.position.y += 3;
                                     }
-                                    AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Warp Mode");
-                                    AFRAME.utils.entity.setComponentProperty(glvrtext, "value", "Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!");
-                                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode");
-                                        console.log('setting Warp Mode')
-                                        setTimeout(function(){transitionopentele();}, 700)
+                                    console.log(timetunneldoor1state);
+                                tunneldoorswitch();
+                                }
+                            
+                                if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
+                                    const transitioncloseride = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                        setTimeout(function(){warpwarpride();}, 1000);
                                     };
-                                
-                                const transitionopentele = function() {
-                                    transition.dispatchEvent(new CustomEvent("transitionopen"));
-                                };
-
-                                transitionclosetele();
-                                
-                                 
-                            } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
-                                
-                                const transitionclosewalk = function() {
-                                    transition.dispatchEvent(new CustomEvent("transitionclose"));
-                                    setTimeout(function(){warpwarpwalk();}, 1000);
-                                };
-                    
-                                const warpwarpwalk = function() {
-                                    movementgeneralwalk();
-                                    rig.setAttribute("movement-controls", "enabled", true);
-                                    rig.setAttribute("movement-controls", "speed", 0.15);
-                                    rig.setAttribute("movement-controls", "constrainToNavMesh", true);
+                            
+                                    const warpwarpride = function() {
+                                        movementgeneralride();
+                                        rig.object3D.position.set(-6.5, 0.6, 5);
+                                        camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
+                                        rig.setAttribute("movement-controls", 'enabled', true); 
+                                        for (let each of hands) {
+                                            each.setAttribute('raycaster', 'far', 4); // Makes VR raycaster lines long
+                                            each.removeAttribute("mixin"); 
+                                        }
+                                        
+                                        AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Ride Mode");
+                                        AFRAME.utils.entity.setComponentProperty(glvrtext, "value", "Turn: use headset or right thumbstick\nMove: press forward on thumbsticks to\nteleport\nSelect: point and use trigger\n\nMove around and see the scenes at your\nown pace!");
+                                        AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Warp Mode"); 
+                                        console.log('setting Ride Mode')
+                                        setTimeout(function(){transitionopenride();}, 700)
+                                    };
                                     
+                                    const transitionopenride = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                    };
+    
+                                    transitioncloseride();
+                                    
+                                } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
+                                    const transitioncloseride = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                        setTimeout(function(){warpwarpride();}, 1000);
+                                    };
+                            
+                                    const warpwarpride = function() {
+                                        movementgeneralride()
+                                        rig.object3D.position.set(-6.5, 0.6, 5);
+                                        camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
+                                        rig.setAttribute("movement-controls", 'enabled', false); 
+                                        AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Ride Mode");
+                                        AFRAME.utils.entity.setComponentProperty(glpctext, "value", "Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select button on ramp to start ride!");
+                                        AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode"); 
+                                        console.log('setting Ride Mode')
+                                        setTimeout(function(){transitionopenride();}, 700)
+                                    };
+                                    
+                                    const transitionopenride = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                    };
+    
+                                    transitioncloseride();
+                                    
+                                } else if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
+                                    const transitioncloseride = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                        setTimeout(function(){warpwarpride();}, 1000);
+                                    };
+                            
+                                    const warpwarpride = function() {
+                                        movementgeneralride()
+                                        rig.object3D.position.set(-6.5, 0.6, 5);
+                                        camera.components['look-controls'].yawObject.rotation.set(0,THREE.MathUtils.degToRad(0),0);
+                                        rig.setAttribute("movement-controls", 'enabled', false); 
+                                        AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Ride Mode");
+                                        AFRAME.utils.entity.setComponentProperty(glsptext, "value", "Turn: turn device\nSelect: tap\n\n1. Check options on right panel\n2. Select button on ramp to start ride!");
+                                        AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode"); 
+                                        console.log('setting Ride Mode')
+                                        setTimeout(function(){transitionopenride();}, 700)
+                                    };
+                                    
+                                    const transitionopenride = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                    };
+    
+                                    transitioncloseride();
+                                };
+    
+                        } else if (movemode === 1) { // Walk Mode   
+                                startdoorstate = 1;
+                                const movementgeneralwalk = function() {
+                                    for (let each of walk) {
+                                        each.object3D.visible = true;
+                                        each.object3D.position.y += 3;
+                                    }
+                                    for (let each of walklabel) {
+                                        each.object3D.position.y += 3;
+                                    }
+                                    for (let each of ride) {
+                                        each.object3D.visible = false;
+                                        each.object3D.position.y -= 3;
+                                    }
+                                }
+                                if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
+                                            
+                                    const transitionclosewalk = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                        setTimeout(function(){warpwarpwalk();}, 1000);
+                                    };
+                        
+                                    const warpwarpwalk = function() {
+                                        movementgeneralwalk();
+                                        rig.setAttribute("movement-controls", "enabled", true);
+                                        rig.setAttribute("movement-controls", "speed", 0.15);
+                                        rig.setAttribute("movement-controls", "constrainToNavMesh", true);
+                                        
+                                        if (podvisibility === false) { // Makes pod visible again for walk mode
+                                            podplaceholder.object3D.visible = true;
+                                            AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
+                                            podvisibility = true;
+                                        }
+                                        startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
+                                        swingingdoor.components.sound.playSound();
+                                        AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Walk Mode");
+                                        AFRAME.utils.entity.setComponentProperty(glsptext, "value", "Turn: turn device\nMove: press screen\nSelect: tap\n\nMove around and see the scenes at your\nown pace!");
+                                        AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode (Mobile)"); 
+                                        console.log('setting Walk Mode')
+                                        setTimeout(function(){transitionopenwalk();}, 700)
+                                        };
+                                    
+                                    const transitionopenwalk = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                    };
+    
+                                    transitionclosewalk();
+                                    
+                                     
+                                } else if (AFRAME.utils.device.checkHeadsetConnected() === false && AFRAME.utils.device.isMobile() === false) { // PC Mode
+                                    
+                                    const transitionclosewalk = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                        setTimeout(function(){warpwarpwalk();}, 1000);
+                                    };
+                        
+                                    const warpwarpwalk = function() {
+                                        movementgeneralwalk();
+                                        rig.setAttribute("movement-controls", "enabled", true);
+                                        rig.setAttribute("movement-controls", "speed", 0.15);
+                                        rig.setAttribute("movement-controls", "constrainToNavMesh", true);
+                                        
+                                        if (podvisibility === false) { // Makes pod visible again for walk mode
+                                            podplaceholder.object3D.visible = true;
+                                            AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
+                                            podvisibility = true;
+                                        }
+                                        startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
+                                        swingingdoor.components.sound.playSound();
+                                        AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Walk Mode");
+                                        AFRAME.utils.entity.setComponentProperty(glpctext, "value", "Turn: drag with mouse\nMove: use wasd keys\nSelect: left click\n\nMove around and see the scenes at your\nown pace!");
+                                        AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode"); 
+                                        console.log('setting Walk Mode')
+                                        setTimeout(function(){transitionopenwalk();}, 700)
+                                        };
+                                    
+                                    const transitionopenwalk = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                    };
+    
+                                    transitionclosewalk();
+                                    
+                                } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
+                                    const transitionclosetele = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionclose"));
+                                        setTimeout(function(){warpwarptele();}, 1000);
+                                    };
+                        
+                                    const warpwarptele = function() {
+                                        rig.setAttribute("movement-controls", 'enabled', false); 
+                                        movementgeneralwalk();
+                                        if (podvisibility === false) { // Makes pod visible again for walk mode
+                                            podplaceholder.object3D.visible = true;
+                                            AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
+                                            podvisibility = true;
+                                            podwarningtext.setAttribute("visible", false); 
+                                        }
+                                        startdoors.setAttribute('animation-mixer', {clip: 'start.door.*.open', loop: 'once', clampWhenFinished: 'true'})
+                                        swingingdoor.components.sound.playSound();
+                                        for (let each of hands) {
+                                            each.setAttribute('raycaster', 'far', 1.0); // Makes VR raycaster lines short
+                                            each.setAttribute("mixin", "blink"); 
+                                        }
+                                        AFRAME.utils.entity.setComponentProperty(instructionsstitle, "value", "Instructions: Warp Mode");
+                                        AFRAME.utils.entity.setComponentProperty(glvrtext, "value", "Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!");
+                                        AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Ride Mode (VR)");
+                                            console.log('setting Warp Mode')
+                                            setTimeout(function(){transitionopentele();}, 700)
+                                        };
+                                    
+                                    const transitionopentele = function() {
+                                        transition.dispatchEvent(new CustomEvent("transitionopen"));
+                                    };
+    
+                                    transitionclosetele();
+                        }
+                    }
+                        break;
+                    case "podvisiblebutt":
+                        podplaceholder.object3D.visible = !podplaceholder.getAttribute("visible");
+                        podvisibility = !podvisibility;
+                        if (podvisibility === true) {
+                                AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
+                                if (AFRAME.utils.device.checkHeadsetConnected() === true) { 
+                                    podwarningtext.setAttribute("visible", false); 
                                     if (podvisibility === false) { // Makes pod visible again for walk mode
                                         podplaceholder.object3D.visible = true;
                                         AFRAME.utils.entity.setComponentProperty(podvisibletext, "value", "TimePod: On");
@@ -866,7 +946,6 @@ AFRAME.registerComponent('buttonlogic', {
                                 };
 
                                 transitionclosewalk();
-                                
                     }
                 }
                     break;
