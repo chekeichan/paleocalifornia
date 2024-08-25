@@ -12,11 +12,22 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
     init: function() {
         const sceneEl = document.querySelector('a-scene');
         const rig = document.querySelector('#rig');
-        if (AFRAME.utils.device.isMobile() === true) { // Smartphone Mode
+
+         if (AFRAME.utils.device.isMobile() === true) { // Smartphone and AVP Mode
             // rig.setAttribute("movement-controls", "speed", 0.15);
-            document.querySelector('#GL-SP').object3D.visible = true;
-            AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode (Mobile)");
-            setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
+            if (screen.width == 1306) { // AVP Mode
+                document.querySelector('#GL-AVP').object3D.visible = true;
+                document.querySelector('#movemodebutt').object3D.visible = false;
+                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", " ");
+                setAttributes(sceneEl, {"cursor": {rayOrigin: 'xrselect', fuseTimeout: 0}})
+                console.log('AVP detected');
+                rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
+            } else { // Smartphone Mode
+                document.querySelector('#GL-SP').object3D.visible = true;
+                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
+                setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
+            
+            };
         } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
             document.querySelector('#GL-VR').object3D.visible = true;
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode");
@@ -24,15 +35,17 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
             console.log('VR detected');
             rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
-            console.log('PC detected');
+            console.log('PC detected' + screen.width);
             document.querySelector('#GL-PC').object3D.visible = true;
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
+            console.log(rig);
         } else { // Mystery Mode
             console.log('No known device detected');
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
     }
+
 }});
 
 AFRAME.registerComponent('all-wait', { // Waits for certain models to load then makes them not visible. If models start out not visible, they will cause a pause then they are loaded
