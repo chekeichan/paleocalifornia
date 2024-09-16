@@ -88,7 +88,12 @@
 <!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
   <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 1.0 -0.1"></a-entity> 
   <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 4; objects: .clickable"  position="0 1.6 0">
-    <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity><!-- Transition animation -->
+    <a-entity
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            material="color: orange; shader: flat">
+  </a-entity>
+  <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity><!-- Transition animation -->
 </a-entity>
         <a-entity id="lefthand" class="hand" hand-tracking-controls="hand: left;" hand-controls="hand: left; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: left; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange" >
           <!-- <a-console thumbstick-scrolling="#left-hand" font-size="35" position="0 .13 -.36" scale=".33 .33 .33" rotation="-70.7 -1.77"></a-console>-->
