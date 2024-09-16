@@ -30,7 +30,7 @@
 </head>
  
 <body>
-<a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false">
+  <a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false" raycaster="far: 4; objects: .clickable" cursor="">
 
 <a-assets timeout="80000"> <!-- Loads models -->
     <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navmesh.glb"></a-asset-item>
@@ -87,13 +87,13 @@
 <a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
 <!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
   <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 1.0 -0.1"></a-entity> 
-  <a-entity id="camera" rotation="180 180 0" camera look-controls cursor="rayOrigin:mouse" raycaster="far: 4; objects: .clickable"  position="0 1.6 0">
+  <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 4; objects: .clickable"  position="0 1.6 0">
     <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity><!-- Transition animation -->
 </a-entity>
-        <a-entity id="lefthand" class="hand" hand-controls="hand: left; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: left; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange" >
+        <a-entity id="lefthand" class="hand" hand-tracking-controls="hand: left;" hand-controls="hand: left; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: left; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange" >
           <!-- <a-console thumbstick-scrolling="#left-hand" font-size="35" position="0 .13 -.36" scale=".33 .33 .33" rotation="-70.7 -1.77"></a-console>-->
         </a-entity> 
-        <a-entity id="righthand" class="hand" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: right; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange"></a-entity>
+        <a-entity id="righthand" class="hand" hand-tracking-controls="hand: right;" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: right; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange"></a-entity>
 
         <a-entity id="boop-s" mixin="sound" class="scene0sound" position="0 1.6 0" sound="src: #boop-sound; loop: false; maxDistance: 4"></a-entity>
         <a-entity id="beep-s" mixin="sound" class="scene0sound" position="0 1.6 0" sound="src: #beep-sound; loop: false; maxDistance: 4"></a-entity>
@@ -210,7 +210,7 @@
 <a-entity id="instructionspanel" position="-5.342 1.237 2.811" rotation="-62.62 -52.71 0">
   <a-text id="instructionsstitle" mixin="text-title" position="0.063 0.525 0" rotation="0 0 0" value="Instructions: Ride Mode"></a-text>
   <a-text id="GL-VR" mixin="text-label" position="0.068 0.123 -0.006" rotation="0 0 0" visible="false" value="Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!"></a-text>
-  <a-text id="GL-AVP" mixin="text-label" position="0.068 0.123 -0.006" rotation="0 0 0" visible="false" value="\nImportant: reload page for sound\n\nTurn: use headset\nSelect: point to orange button\nwith face and pinch fingers\n\n1. Check options on right panel\n2. Get comfortable\n3. Select button on ramp to start ride!"></a-text>
+  <a-text id="GL-AVP" mixin="text-label" position="0.068 0.123 -0.006" rotation="0 0 0" visible="false" value="\nNo sound? Try reloading\n\nTurn: use headset\nSelect: point to orange button\nwith face and pinch fingers\n\n1. Check options on right panel\n2. Get comfortable\n3. Select button on ramp to start ride!"></a-text>
   <a-text id="GL-PC" mixin="text-label" position="0.08 0.19 0" rotation="0 0 0" visible="false" value="Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
   <a-text id="GL-SP" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag across screen or turn device\nSelect: aim screen center to button and\ntap screen or tap button directly\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
   <a-entity id="movemodebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.12 -0.30 0" visible="true"></a-entity>
@@ -332,7 +332,7 @@
 <a-entity id="sleepy-shasta" gltf-model="models/shastasloth.glb" class="hide scene2 scene2anim" position="38.86 -0.03 -43.54" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleeping; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="hide scene2 scene2anim" position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" class="hide scene2 scene2anim" position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *; timeScale: 0"></a-entity>
-<a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="hide scene2 scene2sbc" visible="true" position="52.07 1.76 -40.62" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; loop: once; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="hide scene2 scene2sbc" visible="true" position="52.07 1.76 -40.62" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *push; clampWhenFinished: true; loop: once; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2sbc" position="52 1.88 -40.63" rotation="0 0 3" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; loop: once; timeScale: 0" sound="src: #sbc-steps; autoplay: false; loop: true; maxDistance: 5; distanceModel: linear"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2anim" position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose;  timeScale: 0"></a-entity>
 
