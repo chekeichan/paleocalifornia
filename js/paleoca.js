@@ -13,26 +13,24 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
         const sceneEl = document.querySelector('a-scene');
         const rig = document.querySelector('#rig');
 
-         if (AFRAME.utils.device.isMobile() === true) { // Smartphone and AVP Mode
+         if (AFRAME.utils.device.isMobile() === true) { // Smartphone
             // rig.setAttribute("movement-controls", "speed", 0.15);
+                document.querySelector('#GL-SP').object3D.visible = true;
+                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
+                setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
+        } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
             if (screen.width == 1306) { // AVP Mode
                 document.querySelector('#GL-AVP').object3D.visible = true;
                 document.querySelector('#movemodebutt').object3D.visible = false;
                 AFRAME.utils.entity.setComponentProperty(movemodetext, "value", " ");
-                setAttributes(sceneEl, {"cursor": {rayOrigin: 'xrselect', fuseTimeout: 0}})
+                document.querySelector('#crosshairs').object3D.visible = true;
                 console.log('AVP detected');
-                rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
-            } else { // Smartphone Mode
-                document.querySelector('#GL-SP').object3D.visible = true;
-                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
-                setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
-            
-            };
-        } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
-            document.querySelector('#GL-VR').object3D.visible = true;
-            AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode");
+            } else {
+                document.querySelector('#GL-VR').object3D.visible = true;
+                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode");
+                console.log('VR detected');
+            }
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'xrselect', fuseTimeout: 0}})
-            console.log('VR detected');
             rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
             console.log('PC detected' + screen.width);
@@ -91,6 +89,7 @@ AFRAME.registerComponent("tour-start", {
                 each.setAttribute('raycaster', 'far', 0); // Makes VR raycaster lines invisible during ride
             }
             podplaceholder.object3D.visible = false;
+            document.querySelector('#crosshairs').object3D.visible = false;
             if (podvisibility === true) {
                 pod.object3D.visible = true;
             } else {
@@ -143,7 +142,10 @@ AFRAME.registerComponent("tour-end", {
             console.log('light1 move to end')
             setTimeout(function(){transitionopen();}, 700)
         };
-        
+        if (AFRAME.utils.device.isMobile() === true && screen.width == 1306) { // AVP Mode
+            document.querySelector('#crosshairs').object3D.visible = false;
+        };
+    
         const transitionopen = function() {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
         };
