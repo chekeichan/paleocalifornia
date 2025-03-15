@@ -23,14 +23,14 @@
 <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
 <script src="js/aframe-alongpath-component.js"></script> <!-- Custom code to fix rig camera angle-->
 <script src="https://cdn.jsdelivr.net/npm/aframe-curves@1.0.0/build/curve.min.js"></script>
-<script src="js/aframe-surface-scatter.min.js"></script>
+<script src="js/aframe-surface-scatter.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/diarmidmackenzie/instanced-mesh@v0.7.0/src/instanced-mesh.min.js"></script>
 <script src="js/paleoca.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/kylebakerio/a-console@1.0.2/a-console.js"></script>
 </head>
  
 <body>
-  <a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false" raycaster="far: 4; objects: .clickable" cursor="">
+  <a-scene all-wait warp device-set device-orientation-permission-ui inspector="url: https://cdn.jsdelivr.net/gh/c-frame/aframe-editor@1.7.0/dist/aframe-editor.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false" raycaster="far: 4; objects: .clickable" cursor="">
 
 <a-assets timeout="80000"> <!-- Loads models -->
     <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navmesh.glb"></a-asset-item>
@@ -320,7 +320,7 @@
 </a-entity>
 </a-entity>
 
-<a-entity id="scene2-room" gltf-model="models/scene2.glb" class="scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
+<a-entity id="scene2-room" gltf-model="models/scene2.glb" class="scene2 hide" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
 <a-entity id="scene2-end" gltf-model="models/scene2end.glb" class="scene2end" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
 <a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
 <a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
@@ -341,8 +341,8 @@
 <a-entity gltf-model="models/raccoon-baby.glb" class="hide scene2 scene2anim" position="27.16 1.65 -30.07" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing2; timeScale: 0"></a-entity>
 <a-entity id="wheatgrassnight" gltf-model="models/westernwheatgrass-night.glb" visible="false"></a-entity>
 <a-entity id="scene2rocknight" gltf-model="models/scene2rock-night.glb" visible="false"></a-entity>
-<a-entity gltf-model="models/grassspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter="object:#wheatgrassnight; count:100; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
-<a-entity gltf-model="models/rockspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter="object:#scene2rocknight; count:30; scaleJitter: 1 1 1; rotationJitter: 360 360 360; uniformJitter: false" shadow="cast: false; receive: false"></a-entity>
+<a-entity gltf-model="models/grassspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter__wheatgrass="object:#wheatgrassnight; count:100; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
+<a-entity gltf-model="models/rockspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter__scene2rocks="object:#scene2rocknight; count:30; scaleJitter: 1 1 1; rotationJitter: 360 360 360; uniformJitter: false" shadow="cast: false; receive: false"></a-entity>
 <a-entity id="mountainlion1" gltf-model="models/mountainlion.glb" class="hide scene2 scene2anim" position="29.585 1.636 -46.27" rotation="-7 124 0" animation-mixer="clip: *resting; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="sleepy-shasta" gltf-model="models/shastasloth.glb" class="hide scene2 scene2anim" position="38.86 -0.03 -43.54" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleeping; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="hide scene2 scene2anim" position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
@@ -371,7 +371,7 @@
 <a-entity gltf-model="models/scene3end.glb" class= "scene3end" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity gltf-model="models/scene34divider.glb" class= "scene34" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity id="caoatgrasssmall" gltf-model="models/caoatgrass-small.glb" visible="false"></a-entity>
-<a-entity gltf-model="models/plantspawn3.glb" class="" position="0 -0.04 0" surface-scatter="object:#caoatgrasssmall; count:200; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
+<a-entity gltf-model="models/plantspawn3.glb" class="" position="0 -0.04 0" surface-scatter__oatgrass="object:#caoatgrasssmall; count:200; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
 <a-entity no-cull id="camel-sit-1" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-sit-2" gltf-model="models/westerncamel-sit2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *scratch; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-stand-1" gltf-model="models/westerncamel-stand1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 1; startAt: 300" shadow="recieve: true"></a-entity>
@@ -383,7 +383,17 @@
 <a-entity no-cull id="camel-roll" gltf-model="models/westerncamel-roll.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *roll; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity id="coyote-1" gltf-model="models/coyote.glb" class="scene3" position="45.143 0 3.845" rotation="0 162.16 0" visible="true" animation-mixer="clip: *idle; timeScale: 1" shadow="recieve: true"></a-entity>
 <a-entity id="harlanssloth-1" gltf-model="models/harlanssloth.glb" class="scene3" position="60.3 0.1 -7.524" rotation="0 -21 0" visible="true" animation-mixer="clip: *idle; timeScale: 1" shadow="recieve: true"></a-entity>
-<a-light id="lightscene3" visible="false" class="scene3 light" color="white" position="46.93116 10.12055 -6.32583" light="type: point; intensity: 1.5; decay: 0; distance: 15"></a-light>
+<a-light id="lightscene3" visible="true" class="scene3 light" color="white" position="47 10 -6.3" light="type: point; intensity: 1.5; decay: 0; distance: 15"></a-light>
+
+<!-- Scene 4 -->
+<a-entity gltf-model="models/scene4.glb" class= "scene4" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-light id="lightscene4" visible="true" class="scene3 light" color="white" position="66 10 -1" light="type: point; intensity: 1.5; decay: 0; distance: 15"></a-light>
+<a-entity id="mammoth-pullbranch" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="55.7 0 2.9" rotation="0 70 0" animation-mixer="clip: mammoth.eating; timeScale: 1"></a-entity>
+<a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 scene4anim" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: buckbush.neutral; timeScale: 1"></a-entity>
+<a-entity id="mammoth-fight-right" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="49.4 0 8.6" rotation="0 150 0" animation-mixer="clip: mammoth.fight.right; timeScale: 1"></a-entity>
+<a-entity id="mammoth-fight-left" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="45.8 0 14.7" rotation="0 150 0" animation-mixer="clip: mammoth.fight.left; timeScale: 1"></a-entity>
+<a-entity id="mammoth-laying" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="57 0 13.3" rotation="0 -90 0" animation-mixer="clip: mammoth.laying; timeScale: 1"></a-entity>
+<a-entity id="mammoth-standing" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="38 0 8.6" rotation="0 70 0" animation-mixer="clip: mammoth.standing; timeScale: 1"></a-entity>
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">

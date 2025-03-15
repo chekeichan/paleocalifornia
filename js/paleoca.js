@@ -684,6 +684,10 @@ rig.addEventListener("movingended__#trackdismount", function(){
                     sbc1cat.setAttribute('sound', {src: '#sbc-steps', autoplay: 'true', loop: 'true', distanceModel: 'linear', maxDistance: '5'})
                     sbc1plant.setAttribute('animation-mixer', {clip: '*flat', clampWhenFinished: 'true', loop: 'once', timeScale: '1'})
                 };
+
+                let scene3switches = function() { // Turns on Scene 3 for Walk Mode
+
+                };
     
                 let tunneldoorswitch = function() {
                     var cent = document.getElementById("scene0-text-2");
@@ -1054,7 +1058,9 @@ rig.addEventListener("movingended__#trackdismount", function(){
                     case "scene2bwarpbutt2":
                         transitionclosewarp(50, 0.05, -26.2, scene2switches);
                         break; 
-                        
+                    case "scene3warpbutt1":
+                        transitionclosewarp(60, 0.05, 6, scene3switches);
+                        break;    
                     case "narrationbutt":
                         narrationcounter++;
                         console.log(narrationcounter);
