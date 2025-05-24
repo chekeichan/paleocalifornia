@@ -114,7 +114,7 @@ AFRAME.registerComponent("tour-start", {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track3', dur: 100000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track0', dur: 10000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
         };
 
         el.addEventListener("mouseup", function(evt) {
@@ -335,13 +335,10 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('stop raccoon yelp')
                         break;
                     case "track_turn3_3":
-                        timelight1.setAttribute('position', {x: 50, y: 1.6, z: -15})
-                        console.log('Time Tunnel light move to position 2');
                         break;
                     case "track_turn4_1":
-                        for (let each of sbc1) {
-                            aniswitchdelay(each, "animation-mixer", {timeScale: "1"}, "8200");
-                        };
+                        aniswitchdelay(sbc1cat, "animation-mixer", {timeScale: "1"}, "8200");
+                        aniswitchdelay(sbc1plant, "animation-mixer", {timeScale: "1"}, "8200");
                         audiswitchdelay(sbcplants1, "play", 8200);
                         audiswitchdelay(sbcplants2, "play", 20240);
                         console.log('SBC sequence');
@@ -364,6 +361,38 @@ AFRAME.registerComponent("tour-mechanics", {
                         aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*close', timeScale: "1"}, "800");
                         console.log('scene 2 exit door close')
                     break;
+
+
+
+                    /* case "track_turn4_3":
+                        for (let each of timetunnel2) {
+                            each.setAttribute('animation-mixer', {timeScale: '1'})
+                        };
+                        console.log('Time Tunnel 2 undulate on');
+                    break; */
+                    /* case "track_straight5_1":
+                        for (let each of timetunneldoor2) {
+                            aniswitchdelay(each, 'animation-mixer', {clip: 'TimeTunnel.door.entrance.open', loop: 'once', clampWhenFinished: 'true'}, 2000);
+                        };
+                        audiswitchdelay(timetunneldoor2ent, "play", 2000);
+                        console.log('time door entrance open 2');
+                        audiswitchdelay(timetunnel2insidesound, "play", 2000);
+                        audiswitchdelay(timetunnel3insidesound, "play", 2000);
+                        console.log('time tunnel 2 inside sound on');
+                    break; */
+                    /* case "track_straight5_3":
+                        visiswitch(scene0toggle, true);
+                        for (let each of timetunneldoor2) {
+                            each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
+                        };
+                        timetunneldoor2ent.components.sound.playSound();
+                        console.log('time door entrance 2 close');
+                        light2.setAttribute('animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
+                        console.log('track 1 off')
+                    break; */
+
+
+
                     case "track_straight_end_1_1":
                         sbc1cat.removeAttribute('animation-mixer')
                         sbc1plant.removeAttribute('animation-mixer')
@@ -419,32 +448,10 @@ AFRAME.registerComponent("tour-mechanics", {
                     break;
                     case "track_straight_dismount_1":
                     break;
-                    /* case "track_turn4_3":
-                        for (let each of timetunnel2) {
-                            each.setAttribute('animation-mixer', {timeScale: '1'})
-                        };
-                        console.log('Time Tunnel 2 undulate on');
-                    break; */
-                    /* case "track_straight5_1":
-                        for (let each of timetunneldoor2) {
-                            aniswitchdelay(each, 'animation-mixer', {clip: 'TimeTunnel.door.entrance.open', loop: 'once', clampWhenFinished: 'true'}, 2000);
-                        };
-                        audiswitchdelay(timetunneldoor2ent, "play", 2000);
-                        console.log('time door entrance open 2');
-                        audiswitchdelay(timetunnel2insidesound, "play", 2000);
-                        audiswitchdelay(timetunnel3insidesound, "play", 2000);
-                        console.log('time tunnel 2 inside sound on');
-                    break; */
-                    /* case "track_straight5_3":
-                        visiswitch(scene0toggle, true);
-                        for (let each of timetunneldoor2) {
-                            each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
-                        };
-                        timetunneldoor2ent.components.sound.playSound();
-                        console.log('time door entrance 2 close');
-                        light2.setAttribute('animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
-                        console.log('track 1 off')
-                    break; */
+                    case "ssssssss": // code to move timelight1 from start to end time tunnels
+                        timelight1.setAttribute('position', {x: 50, y: 1.6, z: -15})
+                        console.log('Time Tunnel light move to position 2');
+                    break;
                 }    
             })
 
@@ -555,10 +562,13 @@ rig.addEventListener("movingended__#track0", function(){
     rig.setAttribute('alongpath', {curve: '#track1', dur: '140000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#track1", function(){
-    rig.setAttribute('alongpath', {curve: '#track2', dur: '200000', triggerRadius: '0.1'})
+    rig.setAttribute('alongpath', {curve: '#track2', dur: '150000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#track2", function(){
-    rig.setAttribute('alongpath', {curve: '#trackend', dur: '53000', triggerRadius: '0.1'})
+    rig.setAttribute('alongpath', {curve: '#track3', dur: '200000', triggerRadius: '0.1'})
+})
+rig.addEventListener("movingended__#track3", function(){
+    rig.setAttribute('alongpath', {curve: '#trackend', dur: '100000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#trackend", function(){
     rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '5000', triggerRadius: '0.001'}) // This adds a delay to the stop at the exit ramp with imperceptible movement 
