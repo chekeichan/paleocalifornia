@@ -149,15 +149,14 @@
   <a-curve-point class="curve" id="track_turn4_1" position="44.277 0 -41.298" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn4_2" position="48.757 0 -40.452" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn4_3" position="49.585 0 -36.397" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_1a" position="49.924 0 -31.4" gltf-model="models/trackorb.glb"></a-curve-point>
-
+  <a-curve-point class="curve" id="track_straight5_1" position="49.924 0 -31.4" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_2a" position="49.875 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track3" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
-  <a-curve-point class="curve" id="track_straight5_1b" position="49.924 0 -31.4" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_2" position="49.875 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
+<a-curve id="track34" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
+  <a-curve-point class="curve" id="track_straight5_2b" position="49.875 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight5_3" position="49.73 0 -19.3" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_4a" position="49.4 0 -14.5" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_4" position="49.4 0 -14.5" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_1" position="47.28 0 -11.61" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_2" position="44.053 0 -11.03" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_3" position="39.722 0 -9.83" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -179,6 +178,9 @@
   <a-curve-point class="curve" id="track_straight6_1" position="44.3 0 12.4" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight6_2" position="39.8 0 12.4" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight6_3" position="35.72 0 12.4" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight6_4" position="31.6 0 12.4" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight6_5" position="27.5 0 12.4" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight6_6" position="23.4 0 12.4" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
 <a-curve id="trackend" class="track" closed="false" visible="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Ending -->
@@ -292,8 +294,8 @@
 <a-entity id="scene1-room" gltf-model="models/scene1.glb" class="scene1" position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-outside" gltf-model="#timetunnel-outside" position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-inside" gltf-model="models/timetunnel-inside.glb" position="0 0 0" rotation="0 0 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
-<a-entity id="timetunnel2-outside" class="scene4 hide linkedtunnelout" visible="true" gltf-model="#timetunnel-outside" position="11.8 0 32.66" rotation="0 0 0"></a-entity>
-<a-entity id="timetunnel2-inside" class="scene4 hide linkedtunnel" visible="true" gltf-model="models/timetunnel-inside.glb" position="11.8 0 32.66" rotation="0 0 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
+<a-entity id="timetunnel2-outside" class="scene4 hide linkedtunnelout" visible="true" gltf-model="#timetunnel-outside" position="40 0 -7.5" rotation="0 180 0"></a-entity>
+<a-entity id="timetunnel2-inside" class="scene4 hide linkedtunnel" visible="true" gltf-model="models/timetunnel-inside.glb" position="40 0 -7.5" rotation="0 180 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
 <a-entity id="timetunnel3-outside" class="scene0 linkedtunnelout" gltf-model="#timetunnel-outside" position="20.16 0 37.65" rotation="0 90 0"></a-entity>
 <a-entity id="timetunnel3-inside" class="scene0 linkedtunnel" gltf-model="models/timetunnel-inside.glb" position="20.16 0 37.65" rotation="0 90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
 <a-entity id="swinging-door-s" mixin="sound" class="scene1sound" position="0.07 1.7 -3.4" sound="src: #swinging-door-sound; loop: false; maxDistance: 10"></a-entity>
@@ -329,7 +331,7 @@
 </a-entity>
 
 <a-entity id="scene2-room" gltf-model="models/scene2.glb" class="scene2 hide" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
-<a-entity id="scene2-end" gltf-model="models/scene2end.glb" class="scene2end" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
+<a-entity id="scene2-end" gltf-model="models/scene2end.glb" class="scene2end hide" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
 <a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
 <a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
 <a-entity id="crickets3-s" mixin="sound" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
@@ -357,8 +359,8 @@
 <a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="hide scene2 scene2sbc" visible="true" position="52.07 1.76 -40.62" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *push; clampWhenFinished: true; loop: once; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2sbc" position="52 1.88 -40.63" rotation="0 0 3" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; loop: once; timeScale: 0" sound="src: #sbc-steps; autoplay: false; loop: true; maxDistance: 5; distanceModel: linear"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2anim" position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose;  timeScale: 0"></a-entity>
-<a-entity id="scene2-exitplant-door" gltf-model="models/scene2endplants.glb" class="scene2anim" position="0 0 0" rotation="0 0 0" animation-mixer="clip: *open; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
-<a-entity id="scene2-exit-door" gltf-model="models/scene2exit.glb" class="scene2anim" position="0 0 0" rotation="0 0 0" animation-mixer="clip: *open; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
+<a-entity id="scene2-exitplant-door" gltf-model="models/scene2endplants.glb" class="scene2end hide" position="0 0 0" rotation="0 0 0" animation-mixer="clip: *open; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
+<a-entity id="scene2-exit-door" gltf-model="models/scene2exit.glb" class="scene2end hide" position="0 0 0" rotation="0 0 0" animation-mixer="clip: *open; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
 
 <a-entity id="scene2-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="29.64 -2.1 -22.23" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 <a-entity id="scene2-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="32.65 -2.1 -40.9" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
@@ -374,33 +376,33 @@
 <a-entity id="scene2-text-4b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2sbctext" position="51.404 -1.45 -26.06" rotation="0 -90 0" material="color: #8f856b" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nThe muscular bodies and long canine teeth would have assisted a hunting strategy of pouncing on large prey from cover. The lighter jaw muscle structure produced less biting force than other cats, but allowed the jaw to open 120 degrees;"></a-entity><!-- Info Box -->
 
 <!-- Scene 3 -->
-<a-entity gltf-model="models/scene3.glb" class= "scene3" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
-<a-entity gltf-model="models/scene3end.glb" class= "scene3end" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
-<a-entity gltf-model="models/scene34divider.glb" class= "scene34" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene3.glb" class="scene3 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene3end.glb" class="scene3 scene3end hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene34divider.glb" class="scene3 scene34 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity id="caoatgrasssmall" gltf-model="models/caoatgrass-small.glb" visible="false"></a-entity>
 <a-entity gltf-model="models/plantspawn3.glb" class="" position="0 -0.04 0" surface-scatter__oatgrass="object:#caoatgrasssmall; count:200; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
-<a-entity no-cull id="camel-sit-1" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 1" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-sit-2" gltf-model="models/westerncamel-sit2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *scratch; timeScale: 1" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-stand-1" gltf-model="models/westerncamel-stand1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 1; startAt: 300" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-stand-2" gltf-model="models/westerncamel-stand2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *grazing; timeScale: 1; startAt: 180" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-stand-3" gltf-model="models/westerncamel-stand3.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 1; startAt: 1" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-stand-4" gltf-model="models/westerncamel-stand4.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *grazing; timeScale: 1; startAt: 1" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-chew-1" gltf-model="models/westerncamel-chew1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew1; timeScale: 1" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-chew-2" gltf-model="models/westerncamel-chew2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew2; timeScale: 1" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-roll" gltf-model="models/westerncamel-roll.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *roll; timeScale: 1" shadow="recieve: true"></a-entity>
-<a-entity id="coyote-1" gltf-model="models/coyote.glb" class="scene3" position="45.143 0 3.845" rotation="0 162.16 0" visible="true" animation-mixer="clip: *idle; timeScale: 1" shadow="recieve: true"></a-entity>
-<a-entity id="harlanssloth-1" gltf-model="models/harlanssloth.glb" class="scene3" position="60.3 0.1 -7.524" rotation="0 -21 0" visible="true" animation-mixer="clip: *idle; timeScale: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-sit-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-sit-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-sit2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *scratch; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: 300" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *grazing; timeScale: 0; startAt: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-3" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand3.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-4" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand4.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *grazing; timeScale: 0; startAt: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-chew-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-chew1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew1; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-chew-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-chew2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew2; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-roll" class="hide scene3 scene3anim" gltf-model="models/westerncamel-roll.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *roll; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="coyote-1" class="hide scene3 scene3anim" gltf-model="models/coyote.glb" position="45.143 0 3.845" rotation="0 162.16 0" visible="true" animation-mixer="clip: *idle; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="harlanssloth-1" class="hide scene3 scene3anim" gltf-model="models/harlanssloth.glb" position="60.3 0.1 -7.524" rotation="0 -21 0" visible="true" animation-mixer="clip: *idle; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-light id="lightscene3" visible="true" class="scene3 light" color="white" position="47 10 -6.3" light="type: point; intensity: 1.5; decay: 1; distance: 15"></a-light>
 
 <!-- Scene 4 -->
-<a-entity gltf-model="models/scene4.glb" class= "scene4" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
-<a-light id="lightscene4" visible="true" class="scene3 light" color="white" position="66 10 -1" light="type: point; intensity: 1.5; decay: 1; distance: 15"></a-light>
-<a-entity id="mammoth-pullbranch" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="55.7 0 2.9" rotation="0 70 0" animation-mixer="clip: mammoth.eating; timeScale: 1"></a-entity>
-<a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 scene4anim" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: buckbush.neutral; timeScale: 1"></a-entity>
-<a-entity id="mammoth-fight-right" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="49.4 0 8.6" rotation="0 150 0" animation-mixer="clip: mammoth.fight.right; timeScale: 1"></a-entity>
-<a-entity id="mammoth-fight-left" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="45.8 0 14.7" rotation="0 150 0" animation-mixer="clip: mammoth.fight.left; timeScale: 1"></a-entity>
-<a-entity id="mammoth-laying" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="57 0 13.3" rotation="0 -90 0" animation-mixer="clip: mammoth.laying; timeScale: 1"></a-entity>
-<a-entity id="mammoth-standing" gltf-model="models/columbianmammoth.glb" class="scene4 scene4anim" position="38 0 8.6" rotation="0 70 0" animation-mixer="clip: mammoth.standing; timeScale: 1"></a-entity>
+<a-entity gltf-model="models/scene4.glb" class="scene4 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-light id="lightscene4" visible="true" class="scene4 light" color="white" position="66 10 -1" light="type: point; intensity: 1.5; decay: 1; distance: 15"></a-light>
+<a-entity id="mammoth-pullbranch" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4bush" position="55.7 0 2.9" rotation="0 70 0" animation-mixer="clip: mammoth.eating; timeScale: 0"></a-entity>
+<a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 hide scene4bush" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: buckbush.neutral; timeScale: 0"></a-entity>
+<a-entity id="mammoth-fight-right" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="49.4 0 8.6" rotation="0 150 0" animation-mixer="clip: mammoth.fight.right; timeScale: 0"></a-entity>
+<a-entity id="mammoth-fight-left" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="45.8 0 14.7" rotation="0 150 0" animation-mixer="clip: mammoth.fight.left; timeScale: 0"></a-entity>
+<a-entity id="mammoth-laying" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="57 0 13.3" rotation="0 -90 0" animation-mixer="clip: mammoth.laying; timeScale: 0"></a-entity>
+<a-entity id="mammoth-standing" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="38 0 8.6" rotation="0 70 0" animation-mixer="clip: mammoth.standing; timeScale: 0"></a-entity>
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">

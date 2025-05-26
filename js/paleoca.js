@@ -161,7 +161,7 @@ AFRAME.registerComponent("tour-end", {
 
         el.addEventListener("endtour", function(evt) {
             transitionclose();
-            rig.removeAttribute('alongpath'); // alongpath crashes if it is left with no instructions
+            
 
         })
     }}
@@ -179,7 +179,7 @@ AFRAME.registerComponent("tour-mechanics", {
 
         const track1 = document.querySelector('#track1'); // Tracks
         const track2 = document.querySelector('#track2');
-        const track3 = document.querySelector('#track3');
+        const track34 = document.querySelector('#track34');
         
         const scene0toggle = sceneEl.querySelectorAll('.scene0'); // Scene 0 Assets
         const narration = document.querySelector('#narration');
@@ -193,30 +193,39 @@ AFRAME.registerComponent("tour-mechanics", {
         const timetunnel3insidesound = document.querySelector('#timetunnel3-inside-s');
 
         const scene2toggle = sceneEl.querySelectorAll('.scene2'); // Scene 2 Models
+        const scene2animations = sceneEl.querySelectorAll('.scene2anim');
         const sleepyshasta = document.querySelector('#sleepy-shasta');
         const eatingshasta = document.querySelector('#eating-shasta');
         const joshuatree = document.querySelector('#joshua-tree');
         const sbc1 = sceneEl.querySelectorAll('.scene2sbc');
         const sbc1cat = document.querySelector('#sbc1a');
         const sbc1plant = document.querySelector('#sbc1-plant');
+        const scene2endtoggle = sceneEl.querySelectorAll('.scene2end');
+        const scene2exitplant = document.querySelector('#scene2-exitplant-door');
+        const scene2exitdoor = document.querySelector('#scene2-exit-door');
         
         const scene2sounds = sceneEl.querySelectorAll('.scene2sound'); // Scene 2 Sounds
-        const scene2animations = sceneEl.querySelectorAll('.scene2anim');
         const crickets1 = document.querySelector('#crickets1-s');
         const crickets2 = document.querySelector('#crickets2-s');
         const crickets3 = document.querySelector('#crickets3-s');
         const raccoonyelp = document.querySelector('#raccoon-yelp-s');
         const sbcplants1 = document.querySelector('#sbcplants1-s');
         const sbcplants2 = document.querySelector('#sbcplants2-s');
-        const scene2exitplant = document.querySelector('#scene2-exitplant-door');
-        const scene2exitdoor = document.querySelector('#scene2-exit-door');
+        
 
+        const scene3toggle = sceneEl.querySelectorAll('.scene3'); // Scene 3 Models
+        const scene3animations = sceneEl.querySelectorAll('.scene3anim');
         const camelsit1 = document.querySelector('#camel-sit-1');
         const camelsit2 = document.querySelector('#camel-sit-2');
         const camelstand1 = document.querySelector('#camel-stand-1');
         const camelstand2 = document.querySelector('#camel-stand-2');
         const camelstand3 = document.querySelector('#camel-stand-3');
         const camelstand4 = document.querySelector('#camel-stand-4');
+        const scene3endtoggle = sceneEl.querySelectorAll('.scene3end');
+
+        const scene4toggle = sceneEl.querySelectorAll('.scene4'); // Scene 4 Models
+        const scene4gateanimation = sceneEl.querySelectorAll('.scene4bush');
+        const scene4animations = sceneEl.querySelectorAll('.scene4anim');
 
         const timetunneldoor1 = document.querySelector('#timetunnel1-outside'); // Time Tunnels
         const timetunnel1 = document.querySelector('#timetunnel1-inside');
@@ -226,6 +235,7 @@ AFRAME.registerComponent("tour-mechanics", {
         const timetunnel2 = sceneEl.querySelectorAll('.linkedtunnel');
         const timetunneldoor2ent = document.querySelector('#timetunnel-door-2-entrance-s');
         const timetunneldoor3exit = document.querySelector('#timetunnel-door-3-exit-s');
+    
 
         var visiswitch = function(zone, toggle) {
             for (let each of zone) {
@@ -334,7 +344,8 @@ AFRAME.registerComponent("tour-mechanics", {
                         raccoonyelp.components.sound.stopSound();
                         console.log('stop raccoon yelp')
                         break;
-                    case "track_turn3_3":
+                    case "track_asympt2":
+                        visiswitch(scene2endtoggle, true);
                         break;
                     case "track_turn4_1":
                         aniswitchdelay(sbc1cat, "animation-mixer", {timeScale: "1"}, "8200");
@@ -346,31 +357,59 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('stop crickets1 sound')
                     break;
                     case "track_turn4_2":
+                        visiswitch(scene3toggle, true);
                         break;
                     case "track_turn4_3":
                         break;
-                    case "track_straight5_2":
-                        aniswitchdelay(scene2exitplant, "animation-mixer", {clip: '*open', timeScale: "1"}, "250");
+                    case "track_straight5_2a":
+                        aniswitchdelay(scene2exitplant, "animation-mixer", {clip: '*open*', loop: 'once', clampWhenFinished: 'true', timeScale: "0.75"}, "1000");
                         console.log('scene 2 exit plant open')
+                        for (let each of scene3animations) {
+                            each.setAttribute('animation-mixer', {timeScale: '1'})
+                        };
+                        console.log('scene 3 animations on');
                     break;
                     case "track_straight5_3":
-                        aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*open', timeScale: "1"}, "800");
+                        aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*open', loop: 'once', clampWhenFinished: 'true', timeScale: "1"}, "800");
                         console.log('scene 2 exit door open')
                     break;
-                    case "track_straight5_4a":
-                        aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*close', timeScale: "1"}, "800");
+                    case "track_straight5_4":
+                        aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*close', loop: 'once', clampWhenFinished: 'true', timeScale: "1"}, "800");
                         console.log('scene 2 exit door close')
                     break;
-
-
-
-                    /* case "track_turn4_3":
+                    case "track_turn5_1":
+                        visiswitch(scene2toggle, false);
+                        console.log('scene 2 hide')
+                    break;
+                    case "track_turn5_2":
+                    break;
+                    case "track_turn5_5":
+                        visiswitch(scene4toggle, true);
+                        console.log('scene 4 show')
+                    break;
+                    case "track_turn5_6":
+                        for (let each of scene4animations) {
+                            each.setAttribute('animation-mixer', {timeScale: '1'})
+                        };
+                        console.log('scene 4 general animations on');
+                    break;
+                    case "track_turn6_4":
+                        for (let each of scene4gateanimation) {
+                            each.setAttribute('animation-mixer', {clip: '*pull*', timeScale: '0.75'})
+                        };
+                        console.log('scene 4 gate animation')
+                    break;
+                    case "track_turn6_7":
+                        visiswitch(scene2endtoggle, false);
+                        console.log('scene 2 end hide')
+                    break;
+                    case "track_straight6_1":
                         for (let each of timetunnel2) {
                             each.setAttribute('animation-mixer', {timeScale: '1'})
                         };
                         console.log('Time Tunnel 2 undulate on');
-                    break; */
-                    /* case "track_straight5_1":
+                    break;
+                    case "track_straight6_2":
                         for (let each of timetunneldoor2) {
                             aniswitchdelay(each, 'animation-mixer', {clip: 'TimeTunnel.door.entrance.open', loop: 'once', clampWhenFinished: 'true'}, 2000);
                         };
@@ -379,8 +418,12 @@ AFRAME.registerComponent("tour-mechanics", {
                         audiswitchdelay(timetunnel2insidesound, "play", 2000);
                         audiswitchdelay(timetunnel3insidesound, "play", 2000);
                         console.log('time tunnel 2 inside sound on');
-                    break; */
-                    /* case "track_straight5_3":
+                    break;
+                    case "track_straight6_4":
+                        timelight1.setAttribute('position', {x: 50, y: 1.6, z: -15})
+                        console.log('Time Tunnel light move to position 2');
+                    break;
+                    case "track_straight6_5":
                         visiswitch(scene0toggle, true);
                         for (let each of timetunneldoor2) {
                             each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
@@ -389,7 +432,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('time door entrance 2 close');
                         light2.setAttribute('animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
                         console.log('track 1 off')
-                    break; */
+                    break;
 
 
 
@@ -446,11 +489,9 @@ AFRAME.registerComponent("tour-mechanics", {
                     break;
                     case "track_straight_end_1_6":
                     break;
-                    case "track_straight_dismount_1":
-                    break;
-                    case "ssssssss": // code to move timelight1 from start to end time tunnels
-                        timelight1.setAttribute('position', {x: 50, y: 1.6, z: -15})
-                        console.log('Time Tunnel light move to position 2');
+                    case "track_straight_dismount_2":
+                        rig.removeAttribute('alongpath'); // alongpath crashes if it is left with no instructions
+                        console.log('dismount action');
                     break;
                 }    
             })
@@ -559,15 +600,15 @@ sceneEl.addEventListener("animation-loop", function(e) {
 
 
 rig.addEventListener("movingended__#track0", function(){
-    rig.setAttribute('alongpath', {curve: '#track1', dur: '140000', triggerRadius: '0.1'})
+    rig.setAttribute('alongpath', {curve: '#track1', dur: '140000', triggerRadius: '0.1'}) // 140000
 })
 rig.addEventListener("movingended__#track1", function(){
-    rig.setAttribute('alongpath', {curve: '#track2', dur: '150000', triggerRadius: '0.1'})
+    rig.setAttribute('alongpath', {curve: '#track2', dur: '160700', triggerRadius: '0.1'}) // 160700
 })
 rig.addEventListener("movingended__#track2", function(){
-    rig.setAttribute('alongpath', {curve: '#track3', dur: '200000', triggerRadius: '0.1'})
+    rig.setAttribute('alongpath', {curve: '#track34', dur: '289000', triggerRadius: '0.1'}) // 289000
 })
-rig.addEventListener("movingended__#track3", function(){
+rig.addEventListener("movingended__#track34", function(){
     rig.setAttribute('alongpath', {curve: '#trackend', dur: '100000', triggerRadius: '0.1'})
 })
 rig.addEventListener("movingended__#trackend", function(){
