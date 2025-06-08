@@ -81,7 +81,6 @@
  </a-assets>
  <a-entity gltf-model="#navmesh" nav-mesh class="nav" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity>
  <a-entity gltf-model="models/infopoles.glb" class="walk" position="0 -3 0" rotation="0 0 0" visible="false"></a-entity>
- <a-entity gltf-model="models/placeholder.glb" class="hide scene2" position="0.23 0 -0.71" rotation="0 0 0" visible="true"></a-entity>
 
 <!-- Player Character -->
 <a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
@@ -330,8 +329,8 @@
 </a-entity>
 </a-entity>
 
-<a-entity id="scene2-room" gltf-model="models/scene2.glb" class="scene2 hide" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
-<a-entity id="scene2-end" gltf-model="models/scene2end.glb" class="scene2end hide" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> <!-- removed hide class for testing-->
+<a-entity id="scene2-room" gltf-model="models/scene2.glb" class="scene2 hide" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> 
+<a-entity id="scene2-end" gltf-model="models/scene2end.glb" class="scene2end hide" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> 
 <a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
 <a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
 <a-entity id="crickets3-s" mixin="sound" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
@@ -376,15 +375,15 @@
 <a-entity id="scene2-text-4b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2sbctext" position="51.404 -1.45 -26.06" rotation="0 -90 0" material="color: #8f856b" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nThe muscular bodies and long canine teeth would have assisted a hunting strategy of pouncing on large prey from cover. The lighter jaw muscle structure produced less biting force than other cats, but allowed the jaw to open 120 degrees;"></a-entity><!-- Info Box -->
 
 <!-- Scene 3 -->
-<a-entity gltf-model="models/scene3.glb" class="scene3 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene3.glb" class="scene3 scene3room hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity gltf-model="models/scene3end.glb" class="scene3 scene3end hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity gltf-model="models/scene34divider.glb" class="scene3 scene34 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity id="caoatgrasssmall" gltf-model="models/caoatgrass-small.glb" visible="false"></a-entity>
 <a-entity gltf-model="models/plantspawn3.glb" class="" position="0 -0.04 0" surface-scatter__oatgrass="object:#caoatgrasssmall; count:200; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
 <a-entity no-cull id="camel-sit-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-sit-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-sit2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *scratch; timeScale: 0" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-stand-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: 300" shadow="recieve: true"></a-entity>
-<a-entity no-cull id="camel-stand-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *grazing; timeScale: 0; startAt: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: -2000" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *grazing; timeScale: 0; startAt: 500" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-stand-3" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand3.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-stand-4" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand4.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *grazing; timeScale: 0; startAt: 1" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-chew-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-chew1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew1; timeScale: 0" shadow="recieve: true"></a-entity>
@@ -392,13 +391,13 @@
 <a-entity no-cull id="camel-roll" class="hide scene3 scene3anim" gltf-model="models/westerncamel-roll.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *roll; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="coyote-1" class="hide scene3 scene3anim" gltf-model="models/coyote.glb" position="45.143 0 3.845" rotation="0 162.16 0" visible="true" animation-mixer="clip: *idle; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="harlanssloth-1" class="hide scene3 scene3anim" gltf-model="models/harlanssloth.glb" position="60.3 0.1 -7.524" rotation="0 -21 0" visible="true" animation-mixer="clip: *idle; timeScale: 0" shadow="recieve: true"></a-entity>
-<a-light id="lightscene3" visible="true" class="scene3 light" color="white" position="47 10 -6.3" light="type: point; intensity: 1.5; decay: 1; distance: 15"></a-light>
-
+<!-- <a-light id="lightscene3" visible="true" class="scene3 light" color="d5e0f4" position="47 10 -6.3" light="type: point; intensity: 1.44; decay: 0.1; distance: 13"></a-light> -->
+<!-- <a-light id="lightscene3end" visible="true" class="scene3 light" color="white" position="66 10 -1" light="type: point; intensity: 1; decay: 1; distance: 15"></a-light> -->
 <!-- Scene 4 -->
 <a-entity gltf-model="models/scene4.glb" class="scene4 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
-<a-light id="lightscene4" visible="true" class="scene4 light" color="white" position="66 10 -1" light="type: point; intensity: 1.5; decay: 1; distance: 15"></a-light>
-<a-entity id="mammoth-pullbranch" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4bush" position="55.7 0 2.9" rotation="0 70 0" animation-mixer="clip: mammoth.eating; timeScale: 0"></a-entity>
-<a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 hide scene4bush" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: buckbush.neutral; timeScale: 0"></a-entity>
+<!-- <a-light id="lightscene4" visible="true" class="scene4 light" color="white" position="54 10 10.7" light="type: point; intensity: 1.5; decay: 0.01; distance: 15"></a-light> -->
+<a-entity id="mammoth-pullbranch" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4bush" position="55.7 0 2.9" rotation="0 70 0" animation-mixer="clip: mammoth.eating; startAt: 1; timeScale: 0"></a-entity>
+<a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 hide scene4bush" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: buckbush.neutral; startAt: 1; timeScale: 0"></a-entity>
 <a-entity id="mammoth-fight-right" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="49.4 0 8.6" rotation="0 150 0" animation-mixer="clip: mammoth.fight.right; timeScale: 0"></a-entity>
 <a-entity id="mammoth-fight-left" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="45.8 0 14.7" rotation="0 150 0" animation-mixer="clip: mammoth.fight.left; timeScale: 0"></a-entity>
 <a-entity id="mammoth-laying" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="57 0 13.3" rotation="0 -90 0" animation-mixer="clip: mammoth.laying; timeScale: 0"></a-entity>
