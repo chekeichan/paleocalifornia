@@ -366,7 +366,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         visiswitch(scene3toggle, true);
                         break;
                     case "track_turn4_3":
-                        setAttributes(light1, {"position":  {x: 47, y: 10, z: -6.3}, "color": "#d5e0f4", "light.intensity": 1.44, "decay": 0.1, "distance": 13})
+                        setAttributes(light1, {"position":  {x: 41, y: 10, z: -4.8}, "color": "#d5e0f4", "light.intensity": 1.44, "decay": 0.1, "distance": 13})
                         console.log('light1 move to scene3')
                     break;
                     case "track_straight5_1":
@@ -374,7 +374,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('ambient light brighten');
                         break;
                     case "track_straight5_2a":
-                        aniswitchdelay(scene2exitplant, "animation-mixer", {clip: '*open*', loop: 'once', clampWhenFinished: 'true', timeScale: "0.75"}, "1000");
+                        aniswitchdelay(scene2exitplant, "animation-mixer", {clip: '*open*', loop: 'once', clampWhenFinished: 'true', timeScale: "0.55"}, "2000");
                         console.log('scene 2 exit plant open')
                         for (let each of scene3animations) {
                             each.setAttribute('animation-mixer', {timeScale: '1'})
@@ -384,7 +384,7 @@ AFRAME.registerComponent("tour-mechanics", {
                     case "track_straight5_3":
                         aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*open', loop: 'once', clampWhenFinished: 'true', timeScale: "1"}, "5800");
                         console.log('scene 2 exit door open')
-                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.75, dur: 2000}})
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.75, dur: 8000}})
                         console.log('ambient light brighten');
                     break;
                     case "track_straight5_4":
@@ -401,7 +401,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 2 hide');
                     break;
                     case "track_turn5_3":
-                        setAttributes(light3, {"position":  {x: 66, y: 10, z: -1}, "color": "#fedccb", "light.intensity": 1, "decay": 1, "distance": 15})
+                        setAttributes(light3, {"position":  {x: 66, y: 7, z: -1}, "color": "white", "light.intensity": 0.64, "decay": 1, "distance": 14})
                         console.log('light3 move to scene 3 end')
                     break;
                     case "track_turn5_4":
@@ -425,7 +425,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 4 general animations on');
                     break;
                     case "track_turn6_1":
-                        setAttributes(light2, {"position":  {x: 54, y: 10, z: 10.7}, "color": "#fedccb", "light.intensity": 1.5, "decay": 0.01, "distance": 15})
+                        setAttributes(light2, {"position":  {x: 48.6, y: 9, z: 12.4}, "color": "white", "light.intensity": 1.16, "decay": 0.01, "distance": 17.24})
                         console.log('light2 move to scene 4')
                     break;
                     case "track_turn6_4":
@@ -439,20 +439,10 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 2 end hide')
                     break;
                     case "track_turn6_6":
-                        camelsit1.removeAttribute('animation-mixer')
-                        camelsit2.removeAttribute('animation-mixer')
-                        camelstand1.removeAttribute('animation-mixer')
-                        camelstand2.removeAttribute('animation-mixer')
-                        camelstand3.removeAttribute('animation-mixer')
-                        camelstand4.removeAttribute('animation-mixer')
-                        camelsit1.setAttribute('animation-mixer', {clip: '*look', timeScale: '0'})
-                        camelsit2.setAttribute('animation-mixer', {clip: '*scratch', timeScale: '0'})
-                        camelstand1.setAttribute('animation-mixer', {clip: '*idle', timeScale: '0'})
-                        camelstand2.setAttribute('animation-mixer', {clip: '*grazing', timeScale: '0'})
-                        camelstand3.setAttribute('animation-mixer', {clip: '*idle', timeScale: '0'})
-                        camelstand4.setAttribute('animation-mixer', {clip: '*grazing', timeScale: '0'})
-
-                        console.log('scene 3 animation reset');
+                        for (let each of scene3animations) {
+                            each.setAttribute('animation-mixer', {timeScale: '0'})
+                        };
+                        console.log('Scene 3 animations off');
                         visiswitch(scene3roomtoggle, false);
                         console.log('scene 3 camel room hide')
                     break;
@@ -473,8 +463,8 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('time tunnel 2 inside sound on');
                     break;
                     case "track_straight6_4":
-                        timelight1.setAttribute('position', {x: 50, y: 1.6, z: -15})
-                        console.log('Time Tunnel light move to position 2');
+                        timelight1.setAttribute('position', {x: 25.6, y: 1.6, z: 12.457})
+                        console.log('Time Tunnel light move to position 3');
                     break;
                     case "track_straight6_5":
                         visiswitch(scene0toggle, true);
@@ -657,7 +647,7 @@ rig.addEventListener("movingended__#track1", function(){
     rig.setAttribute('alongpath', {curve: '#track2', dur: '160700', triggerRadius: '0.1'}) // 160700
 })
 rig.addEventListener("movingended__#track2", function(){
-    rig.setAttribute('alongpath', {curve: '#track34', dur: '289000', triggerRadius: '0.1'}) // 289000
+    rig.setAttribute('alongpath', {curve: '#track34', dur: '278300', triggerRadius: '0.1'}) // 289000
 })
 rig.addEventListener("movingended__#track34", function(){
     rig.setAttribute('alongpath', {curve: '#trackend', dur: '100000', triggerRadius: '0.1'})
