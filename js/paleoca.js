@@ -114,7 +114,7 @@ AFRAME.registerComponent("tour-start", {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track0', dur: 10000, triggerRadius: 0.001}) // Set to #track0 dur 10000 for tour start
+            rig.setAttribute('alongpath', {curve: '#track2', dur: 50000, triggerRadius: 0.01}) // Set to #track0 dur 10000 for tour start
         };
 
         el.addEventListener("mouseup", function(evt) {
@@ -222,11 +222,12 @@ AFRAME.registerComponent("tour-mechanics", {
         const camelstand2 = document.querySelector('#camel-stand-2');
         const camelstand3 = document.querySelector('#camel-stand-3');
         const camelstand4 = document.querySelector('#camel-stand-4');
+        const camelstand5 = document.querySelector('#camel-stand-5');
         const camelchew1 = document.querySelector('#camel-chew-1');
         const camelchew2 = document.querySelector('#camel-chew-2');
         const camelroll = document.querySelector('#camel-roll');
         const scene4coyote = document.querySelector('#coyote-1');
-        const scene4harlan = document.querySelector('#harlansloth-1');
+        const scene4harlan = document.querySelector('#harlanssloth-1');
         const scene3endtoggle = sceneEl.querySelectorAll('.scene3end');
 
         const scene4toggle = sceneEl.querySelectorAll('.scene4'); // Scene 4 Models
@@ -320,7 +321,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('play cricket sounds')
                         break;
                     case "track_straight2_2":
-                        setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "light.intensity": 2, "decay": 0.1, "distance": 5.5})
+                        setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "intensity": 2, "decay": 0.1, "distance": 5.5})
                         console.log('light2 move to sbc dawn')
                         break;
                     case "track_turn2_1":
@@ -366,7 +367,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         visiswitch(scene3toggle, true);
                         break;
                     case "track_turn4_3":
-                        setAttributes(light1, {"position":  {x: 41, y: 10, z: -4.8}, "color": "#d5e0f4", "light.intensity": 1.44, "decay": 0.1, "distance": 13})
+                        setAttributes(light1, {"position":  {x: 42, y: 10, z: -7.6}, "color": "#d5e0f4", "intensity": 1.44, "decay": 0.1, "distance": 14.4})
                         console.log('light1 move to scene3')
                     break;
                     case "track_straight5_1":
@@ -374,11 +375,20 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('ambient light brighten');
                         break;
                     case "track_straight5_2a":
-                        aniswitchdelay(scene2exitplant, "animation-mixer", {clip: '*open*', loop: 'once', clampWhenFinished: 'true', timeScale: "0.55"}, "2000");
+                        aniswitchdelay(scene2exitplant, "animation-mixer", {clip: '*open*', loop: 'once', clampWhenFinished: 'true', timeScale: "0.7"}, "2200");
                         console.log('scene 2 exit plant open')
-                        for (let each of scene3animations) {
-                            each.setAttribute('animation-mixer', {timeScale: '1'})
-                        };
+                        camelsit1.setAttribute('animation-mixer', {clip: '*look', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
+                        camelsit2.setAttribute('animation-mixer', {clip: '*scratch', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
+                        camelstand1.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '3000', timeScale: '0.9'})
+                        camelstand2.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'false', loop: 'true', startAt: '-2000', timeScale: '1'})
+                        camelstand3.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '-0.8'})
+                        camelstand4.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
+                        camelstand5.setAttribute('animation-mixer', {clip: '*idle2', clampWhenFinished: 'true', startAt: '1', timeScale: '0.9'})
+                        camelchew1.setAttribute('animation-mixer', {clip: '*chew1', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
+                        camelchew2.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
+                        camelroll.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
+                        scene4coyote.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
+                        scene4harlan.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
                         console.log('scene 3 animations on');
                     break;
                     case "track_straight5_3":
@@ -401,7 +411,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 2 hide');
                     break;
                     case "track_turn5_3":
-                        setAttributes(light3, {"position":  {x: 66, y: 7, z: -1}, "color": "white", "light.intensity": 0.64, "decay": 1, "distance": 14})
+                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", "intensity": 1.2, "decay": 0.6, "distance": 21.4})
                         console.log('light3 move to scene 3 end')
                     break;
                     case "track_turn5_4":
@@ -425,7 +435,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 4 general animations on');
                     break;
                     case "track_turn6_1":
-                        setAttributes(light2, {"position":  {x: 48.6, y: 9, z: 12.4}, "color": "white", "light.intensity": 1.16, "decay": 0.01, "distance": 17.24})
+                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 22.8}, "color": "white", "intensity": 1.16, "decay": 0.25, "distance": 24.9})
                         console.log('light2 move to scene 4')
                     break;
                     case "track_turn6_4":
@@ -451,6 +461,8 @@ AFRAME.registerComponent("tour-mechanics", {
                             each.setAttribute('animation-mixer', {timeScale: '1'})
                         };
                         console.log('Time Tunnel 2 undulate on');
+                        setAttributes(timelight1, {"position":  {x: 25.6, y: 1.6, z: 12.457}, "intensity": 0.05})
+                        console.log('Time Tunnel light move to position 3');
                     break;
                     case "track_straight6_2":
                         for (let each of timetunneldoor2) {
@@ -462,9 +474,11 @@ AFRAME.registerComponent("tour-mechanics", {
                         audiswitchdelay(timetunnel3insidesound, "play", 2000);
                         console.log('time tunnel 2 inside sound on');
                     break;
-                    case "track_straight6_4":
-                        timelight1.setAttribute('position', {x: 25.6, y: 1.6, z: 12.457})
-                        console.log('Time Tunnel light move to position 3');
+                    case "track_straight6_3":
+                        setAttributes(light2, {'animation': {property: 'light.intensity', to: 0.0, dur: 10000}})
+                        console.log('light2 dims')
+                        setAttributes(timelight1, {'animation': {property: 'light.intensity', to: 0.75, dur: 10000}})
+                        console.log('Time Tunnel light brightens')
                     break;
                     case "track_straight6_5":
                         visiswitch(scene0toggle, true);
@@ -473,18 +487,18 @@ AFRAME.registerComponent("tour-mechanics", {
                         };
                         timetunneldoor2ent.components.sound.playSound();
                         console.log('time door entrance 2 close');
-                        light2.setAttribute('animation', {property: 'light.intensity', from: 2, to: 0, dur: 3000});
-                        console.log('track 1 off')
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
+                        console.log('ambient light back to original');
                     break;
 
 
 
                     case "track_straight_end_1_1":
-                        
+                        visiswitch(scene3roomtoggle, false);
                         break;
                     case "track_straight_end_1_2":
                         visiswitch(scene1toggle, true);
-                        setAttributes(light1, {"position": {x: -0.123, y: 4.9, z: 5}, "color": "white", "animation": {property: 'light.intensity', from: 2, to: 1.5, dur: 4000}, "decay": 1, "distance": 15})
+                        setAttributes(light1, {"position": {x: -0.123, y: 4.9, z: 5}, "color": "white", "animation": {property: 'light.intensity', from: 2, to: 1.5, dur: 10000}, "decay": 1, "distance": 15})
                         console.log('light1 move to scene 0 for dismount')
                         for (let each of timetunneldoor2) {
                             each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.open', loop: 'once', clampWhenFinished: 'true'})
@@ -500,8 +514,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('Scene 4 looping sounds off');
                     break;
                     case "track_straight_end_1_3":
-                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
-                        console.log('ambient light back to original');
+
                     break;
                     case "track_straight_end_1_4":
                         visiswitch(scene2toggle, false);
@@ -527,7 +540,7 @@ AFRAME.registerComponent("tour-mechanics", {
                     case "track_straight_end_1_6":
                         visiswitch(scene3toggle, false);
                         visiswitch(scene4toggle, false);
-                        setAttributes(light3, {"position":  {x: 39.5, y: 4.5, z: -42}, "color": "#3657f3", "light.intensity": 0.4, "decay": 0.01, "distance": 16.5})
+                        setAttributes(light3, {"position":  {x: 39.5, y: 4.5, z: -42}, "color": "#3657f3", "intensity": 0.4, "decay": 0.01, "distance": 16.5})
                         console.log('light3 move to original position')
                     break;
                     case "track_straight_dismount_2":
@@ -557,7 +570,7 @@ sceneEl.addEventListener("animation-loop", function(e) {
 
     var camelsitrandom = function(camelmodel) { 
         rand = Math.floor(Math.random() * 10);
-        console.log(rand);
+        console.log('Camel rand 1 ' + rand);
         if (rand < 2) {
             camelmodel.setAttribute('animation-mixer', {clip: '*scratch', clampWhenFinished: 'true', startAt: '0'})
             shastawaking.components.sound.playSound();
@@ -576,13 +589,14 @@ sceneEl.addEventListener("animation-loop", function(e) {
 
     var camelstandrandom = function(camelmodel) { 
         rand = Math.floor(Math.random() * 10);
-        console.log(rand);
+        rand2 = +(Math.random() * (0.99 - 0.75) + 0.75).toFixed(2);
+        console.log('Camel Rand 2 ' + rand + ' ');
         if (rand < 5) {
-            camelmodel.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '0'})
+            camelmodel.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', timeScale: rand2, startAt: '0'})
             shastawaking.components.sound.playSound();
         console.log(camelmodel + ' idling');
         } else {
-            camelmodel.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '0'})
+            camelmodel.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', timeScale: rand2, startAt: '0'})
             console.log(camelmodel + ' grazing');
         }
     };
