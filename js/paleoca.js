@@ -71,6 +71,7 @@ AFRAME.registerComponent('all-wait', { // Waits for certain models to load then 
 AFRAME.registerComponent("tour-start", {
     init: function() {
         const el = this.el;
+        const sceneEl = document.querySelector('a-scene');
         const rig = document.querySelector('#rig');
         const camera = document.querySelector('#camera');
         const hands = document.querySelectorAll('.hand');
@@ -78,8 +79,16 @@ AFRAME.registerComponent("tour-start", {
         const podplaceholder = document.querySelector('#podplaceholder');
         const pod = document.querySelector('#pod');
         const transition = document.querySelector("#transition");
+        const scene2toggle = sceneEl.querySelectorAll('.scene2');
+        const scene2endtoggle = sceneEl.querySelectorAll('.scene2end');
+        const scene3toggle = sceneEl.querySelectorAll('.scene3');
         let headadjust = null;
         let y = null;
+        var visiswitch = function(zone, toggle) {
+            for (let each of zone) {
+               each.object3D.visible = toggle;
+           }
+        };
         const transitionclose = function() {
             const campos = camera.object3D.position
             headadjust = 1.6 - campos.y;
@@ -114,7 +123,16 @@ AFRAME.registerComponent("tour-start", {
             transition.dispatchEvent(new CustomEvent("transitionopen"));
             // rig.setAttribute("movement-controls", "constrainToNavMesh", false);
             // rig.removeAttribute('movement-controls');
-            rig.setAttribute('alongpath', {curve: '#track2', dur: 50000, triggerRadius: 0.01}) // Set to #track0 dur 10000 for tour start
+            if (startareacounter === 0) { // Start at scene 0
+                rig.setAttribute('alongpath', {curve: '#track0', dur: 10000, triggerRadius: 0.01}) // Set to #track0 dur 10000 for tour start
+
+            } else if (startareacounter === 1) { // Start at scene 3
+                visiswitch(scene2toggle, true);
+                visiswitch(scene2endtoggle, true);
+                visiswitch(scene3toggle, true);
+                rig.setAttribute('alongpath', {curve: '#track34', dur: 278300, triggerRadius: 0.01}) 
+
+            }
         };
 
         el.addEventListener("mouseup", function(evt) {
@@ -132,6 +150,7 @@ AFRAME.registerComponent("tour-end", {
         const hands = el.querySelectorAll('.hand');
         const podplaceholder = document.querySelector('#podplaceholder');
         const pod = document.querySelector('#pod');
+        const light1 = document.querySelector('#light1');
         const transition = document.querySelector("#transition");
 
         const transitionclose = function() {
@@ -228,6 +247,11 @@ AFRAME.registerComponent("tour-mechanics", {
         const camelroll = document.querySelector('#camel-roll');
         const scene4coyote = document.querySelector('#coyote-1');
         const scene4harlan = document.querySelector('#harlanssloth-1');
+        const pronghorn1 = document.querySelector('#pronghorn-1');
+        const pronghorn2 = document.querySelector('#pronghorn-2');
+        const pronghorn3 = document.querySelector('#pronghorn-3');
+        const pronghorn4 = document.querySelector('#pronghorn-4');
+        const pronghorn5 = document.querySelector('#pronghorn-5');
         const scene3endtoggle = sceneEl.querySelectorAll('.scene3end');
 
         const scene4toggle = sceneEl.querySelectorAll('.scene4'); // Scene 4 Models
@@ -371,10 +395,10 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('light1 move to scene3')
                     break;
                     case "track_straight5_1":
-                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.02, dur: 4000}})
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.02, dur: 10000}})
                         console.log('ambient light brighten');
                         break;
-                    case "track_straight5_2a":
+                    case "track_straight5_2b":
                         aniswitchdelay(scene2exitplant, "animation-mixer", {clip: '*open*', loop: 'once', clampWhenFinished: 'true', timeScale: "0.7"}, "2200");
                         console.log('scene 2 exit plant open')
                         camelsit1.setAttribute('animation-mixer', {clip: '*look', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
@@ -407,6 +431,10 @@ AFRAME.registerComponent("tour-mechanics", {
                         sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
                         sbc1plant.setAttribute('animation-mixer', {clip: '*push', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
                         console.log('sbc animation reset');
+                        scene2exitplant.setAttribute('animation-mixer', {clip: '*open', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
+                        console.log('scene 2 exit plant animation reset');
+                        scene2exitdoor.setAttribute('animation-mixer', {clip: '*open', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
+                        console.log('scene 2 exit door animation reset');
                         visiswitch(scene2toggle, false);
                         console.log('scene 2 hide');
                     break;
@@ -440,7 +468,7 @@ AFRAME.registerComponent("tour-mechanics", {
                     break;
                     case "track_turn6_4":
                         for (let each of scene4gateanimation) {
-                            each.setAttribute('animation-mixer', {clip: '*pull*', timeScale: '0.75'})
+                            each.setAttribute('animation-mixer', {clip: '*pull*', timeScale: '0.75', startAt: '1'})
                         };
                         console.log('scene 4 gate animation')
                     break;
@@ -479,8 +507,6 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('light2 dims')
                         setAttributes(timelight1, {'animation': {property: 'light.intensity', to: 0.75, dur: 10000}})
                         console.log('Time Tunnel light brightens')
-                    break;
-                    case "track_straight6_5":
                         visiswitch(scene0toggle, true);
                         for (let each of timetunneldoor2) {
                             each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
@@ -489,6 +515,17 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('time door entrance 2 close');
                         setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
                         console.log('ambient light back to original');
+                    break;
+                    case "track_straight6_4":
+                         visiswitch(scene0toggle, true);
+                        for (let each of timetunneldoor2) {
+                            each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
+                        };
+                        timetunneldoor2ent.components.sound.playSound();
+                        console.log('time door entrance 2 close');
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
+                        console.log('ambient light back to original');
+                        
                     break;
 
 
@@ -514,7 +551,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('Scene 4 looping sounds off');
                     break;
                     case "track_straight_end_1_3":
-
+                        setAttributes(timelight1, {"position":  {x: 14.4, y: 1.6, z: -20}, "intensity": 0.75})
                     break;
                     case "track_straight_end_1_4":
                         visiswitch(scene2toggle, false);
@@ -530,12 +567,16 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('time tunnel 2 inside sound off');
                     break;
                     case "track_straight_end_1_5":
-                        timelight1.setAttribute('position', {x: 14.4, y: 1.6, z: -20})
+                        setAttributes(timelight1, {"position":  {x: 14.4, y: 1.6, z: -20}, "intensity": 0.75})
                         console.log('time light 1 to original position');
                         for (let each of timetunnel2) {
                             each.setAttribute('animation-mixer', {timeScale: '0'})
                         };
                         console.log('Time Tunnel 2 undulate off');
+                        for (let each of scene4gateanimation) {
+                            each.setAttribute('animation-mixer', {clip: '*eating', timeScale: '0'})
+                        };
+                        console.log('Reset buckbush mammoth animations');
                     break;
                     case "track_straight_end_1_6":
                         visiswitch(scene3toggle, false);
@@ -601,6 +642,30 @@ sceneEl.addEventListener("animation-loop", function(e) {
         }
     };
 
+    var pronghornrandom = function(pronghornmodel) { 
+        rand = Math.floor(Math.random() * 10);
+        console.log('Pronghorn rand ' + rand);
+        if (rand < 2) { // 0 and 1
+            pronghornmodel.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '0'})
+            console.log(pronghornmodel + ' grazing');
+        } else if (rand > 1 && rand < 4) { // 2 to 3
+            pronghornmodel.setAttribute('animation-mixer', {clip: '*grazing.2', clampWhenFinished: 'true', startAt: '0'})
+            console.log(pronghornmodel + ' grazing2');
+        } else if (rand > 3 && rand < 5) { // 4
+            pronghornmodel.setAttribute('animation-mixer', {clip: '*backlick', clampWhenFinished: 'true', startAt: '0'})
+            console.log(pronghornmodel + '  backlick');
+        } else if (rand > 4 && rand < 7) { // 5 to 6
+            pronghornmodel.setAttribute('animation-mixer', {clip: '*look.left.short', clampWhenFinished: 'true', startAt: '0'})
+            console.log(pronghornmodel + ' left short');
+        } else if (rand > 6 && rand < 9) { // 7 to 8
+            pronghornmodel.setAttribute('animation-mixer', {clip: '*look.right.short', clampWhenFinished: 'true', startAt: '0'})
+            console.log(pronghornmodel + ' right short');
+        } else { // 9 to 10
+            pronghornmodel.setAttribute('animation-mixer', {clip: '*look.right.long', clampWhenFinished: 'true', startAt: '0'})
+            console.log(pronghornmodel + ' right long');
+        }
+    };
+
     switch(e.target.id) {
         case "sleepy-shasta": // The sloths have randomized behavior. Each have one more common animation and one rarer one
             rand = Math.floor(Math.random() * 10);
@@ -649,6 +714,22 @@ sceneEl.addEventListener("animation-loop", function(e) {
         case "camel-stand-4":
             camelstandrandom(camelstand4);
             break;
+        case "pronghorn-1":
+            pronghornrandom(pronghorn1);
+            break;
+        case "pronghorn-2":
+            pronghornrandom(pronghorn2);
+            break;
+        case "pronghorn-3":
+            pronghornrandom(pronghorn3);
+            break;
+        case "pronghorn-4":
+            pronghornrandom(pronghorn4);
+            break;
+        case "pronghorn-5":
+            pronghornrandom(pronghorn5);
+            break;
+        
     }
 
 })
@@ -662,6 +743,9 @@ rig.addEventListener("movingended__#track1", function(){
 })
 rig.addEventListener("movingended__#track2", function(){
     rig.setAttribute('alongpath', {curve: '#track34', dur: '278300', triggerRadius: '0.1'}) // 289000
+})
+rig.addEventListener("movingended__#track3start", function(){
+    rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '5000', triggerRadius: '0.001'}) // This adds a delay to the start of scene 3 with imperceptible movement 
 })
 rig.addEventListener("movingended__#track34", function(){
     rig.setAttribute('alongpath', {curve: '#trackend', dur: '100000', triggerRadius: '0.1'})
@@ -678,6 +762,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
 
     let timetunneldoor1state = 0;
     let movemode = 0; // This variable has to be here I guess? It's used below.
+    let startareacounter = 0; 
     
     AFRAME.registerComponent('buttonlogic', {
         init: function () {    
@@ -696,6 +781,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                 const originalColor = el.getAttribute('material').color;
                 const narration = document.querySelector('#narration');
                 let narrationcounter = 1; 
+                
                 const warpmap1 = document.querySelector('#warp-map1');
                 const warpmap2 = document.querySelector('#warp-map2');
                 const podvisibletext = document.querySelector('#podvisibletext');
@@ -703,6 +789,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                 const track = document.querySelectorAll(".track");
                 const trackorbstext = document.querySelector('#trackorbstext');
                 const narrationtext = document.querySelector('#narrationtext');
+                const startareatext = document.querySelector('#startareatext');
                 const glvrtext = document.querySelector('#GL-VR');
                 const glpctext = document.querySelector('#GL-PC');
                 const glsptext = document.querySelector('#GL-SP');
@@ -1173,7 +1260,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                         break;    
                     case "narrationbutt":
                         narrationcounter++;
-                        console.log(narrationcounter);
+                        console.log("Narration Counter " + narrationcounter);
                         if (narrationcounter > 3) { // Value is total narration tracks (plus none) minus one
                             narrationcounter = 0;
                             AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: None");
@@ -1203,6 +1290,21 @@ rig.addEventListener("movingended__#trackdismount", function(){
                             console.log("commentary track set")               
                         }
                         break;
+                    case "startareabutt": // Set tour scene start
+                        startareacounter++;
+                        console.log("Start Area Counter " + narrationcounter);
+                        if (startareacounter > 1) { // Value 0 is scene 0 and value 1 is scene 4 (camels)
+                            startareacounter = 0;
+                            AFRAME.utils.entity.setComponentProperty(startareatext, "value", "Start: Beginning");
+
+                            console.log("Start at scene 0 set")     
+                        
+                        } else if (startareacounter === 1) {
+                            AFRAME.utils.entity.setComponentProperty(startareatext, "value", "Start: Part 2");
+
+                            console.log("Start at scene 4 set");              
+                        }
+                        break;    
                     case "creditsbutt": // Flips credit panels
                         for (let each of creditslist) {
                             each.setAttribute("visible", false);     

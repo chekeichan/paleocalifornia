@@ -18,6 +18,9 @@
   <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
   <meta http-equiv="pragma" content="no-cache" />
 <meta name="description" content="VR tour of California 40,000 years ago">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loadingio/loading-bar@v0.1.0/dist/loading-bar.min.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/loadingio/loading-bar@v0.1.0/dist/loading-bar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kylebakerio/a-load-screen@v0.1.2/a-load-screen.js"></script>
 <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
@@ -30,7 +33,7 @@
 </head>
  
 <body>
-  <a-scene all-wait warp device-set device-orientation-permission-ui inspector="url: https://cdn.jsdelivr.net/gh/c-frame/aframe-editor@1.7.0/dist/aframe-editor.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false" raycaster="far: 4; objects: .clickable" cursor="">
+  <a-scene all-wait warp device-set device-orientation-permission-ui inspector="url: https://cdn.jsdelivr.net/gh/c-frame/aframe-editor@1.7.0/dist/aframe-editor.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" loading-screen="enabled:false;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false" raycaster="far: 4; objects: .clickable" cursor="">
 
 <a-assets timeout="80000"> <!-- Loads models -->
     <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navmesh.glb"></a-asset-item>
@@ -57,6 +60,10 @@
     <a-asset-item id="sbc-plants1" response-type="arraybuffer" src="sounds/sbcplants1.mp3"></a-asset-item>
     <a-asset-item id="sbc-plants2" response-type="arraybuffer" src="sounds/sbcplants2.mp3"></a-asset-item>
     <a-asset-item id="sbc-steps" response-type="arraybuffer" src="sounds/sbc1lightsteps.mp3"></a-asset-item>
+    <a-asset-item id="camel1-sound" response-type="arraybuffer" src="sounds/camel1.mp3"></a-asset-item>
+    <a-asset-item id="camel2-sound" response-type="arraybuffer" src="sounds/camel2.mp3"></a-asset-item>
+    <a-asset-item id="camelchew1-sound" response-type="arraybuffer" src="sounds/camel-chew-1.mp3"></a-asset-item>
+    <a-asset-item id="camelchew2-sound" response-type="arraybuffer" src="sounds/camel-chew-2.mp3"></a-asset-item>
 
     <a-mixin id="obj" hoverable grabbable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, abuttondown, bbuttondown, xbuttondown, ybuttondown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, abuttonup, bbuttonup, xbuttonup, ybuttonup, thumbstickup, mouseup" scale="1 1 1" rotation="0 0 0" shadow></a-mixin>
     <a-mixin id="blink" blink-controls="cameraRig: #rig; teleportOrigin: #camera; collisionEntities:.nav;"></a-mixin>
@@ -79,6 +86,36 @@
     <a-mixin id="sound" ></a-mixin>
 
  </a-assets>
+
+ <script>
+    // simple:
+    // window.initALoadScreen();
+    
+  <!--  optionally, you can specify options.  -->
+    // with full options specified, with default values shown
+    window.initALoadScreen({
+      debug: [], // can include 'log','warn','error', etc.
+      showLogoLoader: true,
+      logoURL: "https://aframe.io/aframe-school/media/img/aframe-logo.png",
+      logoSize: "200,200",
+      showBarLoaders: true,
+      showLoadPercent: true, // not implemented
+      showFileNames: true,   // not complete
+      showFileSizes: true,   // not implemented
+      barLoaderPreset: "rainbow", // one of: line, fan, circle, bubble, rainbow, energy, stripe, text | see https://loading.io/progress/
+      customLoaderAttributes: null, // see usage of this object in this script to get a clearer idea, along with docs @ https://loading.io/progress
+      backgroundColor: "black",
+      backgroundOpacity: .5,
+      sceneOpacity: 1,
+      onComplete: function() {this.hideLoader()}, 
+      // this.hideLoader() will be added and made available to you on the object 
+      // (so: don't bind onComplete function to another context if you want access.)
+      // you probably always want to call this.hideLoader() eventually, 
+      // but it's your app :)
+      // you could also just inject a button first if you want for audio, etc.
+    })
+  </script>
+  
  <a-entity gltf-model="#navmesh" nav-mesh class="nav" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity>
  <a-entity gltf-model="models/infopoles.glb" class="walk" position="0 -3 0" rotation="0 0 0" visible="false"></a-entity>
 
@@ -152,12 +189,17 @@
   <a-curve-point class="curve" id="track_straight5_2a" position="49.7 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
+<a-curve id="track3start" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Pre-Start for Starting Track 2 -->
+  <a-curve-point class="curve" id="track_straight0_0" position="49.7 0 -26.0100001" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight1_0a" position="49.7 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
+</a-curve>
+
 <a-curve id="track34" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
   <a-curve-point class="curve" id="track_straight5_2b" position="49.7 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight5_3" position="49.7 0 -19.3" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight5_4" position="49.5 0 -14.5" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_1" position="47.28 0 -11.61" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn5_2" position="44.053 0 -11.03" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_2" position="43.75 0 -11.1" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_3" position="39.722 0 -9.83" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_4" position="38.64 0 -6.8" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn5_5" position="38.75 0 -3.1" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -222,6 +264,8 @@
   <a-text id="podwarningtext" mixin="text-label" visible="false" position="0.62 0 0.054" rotation="0 0 0" value="For VR pros!"></a-text>
   <a-entity id="narrationbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
   <a-text id="narrationtext" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Narration: Adventure"></a-text>
+  <a-entity id="startareabutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.30 0.05" visible="true"></a-entity>
+  <a-text id="startareatext" mixin="text-label" position="0.1 -0.30 0.05" rotation="0 0 0" value="Start: Beginning"></a-text>
   
   <!-- <a-entity id="soundcheck" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
   <a-text id="soundchecktext" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Sound Check"></a-text> -->
@@ -270,8 +314,8 @@
 
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="true" class="scene0" position="2.42 3.5 -2" rotation="0 -90 0" value="By Keith Chan" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="true" class="scene0" position="2.35 3.5 3.24" rotation="0 -90 0" value="Part Two Preview" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="false" class="scene0" position="-6 1.4 14.4" rotation="0 90 0" value="Thank you for visiting PaleoCA!\nMore scenes and features are planned" color="black" width="8" line-height="50" text="wrapCount: 40"></a-text>
+<a-text visible="true" class="scene0" position="2.35 3.5 3.24" rotation="0 -90 0" value="Part Two" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="false" class="scene0" position="-6 1.4 14.4" rotation="0 90 0" value="Thank you for visiting PaleoCA!\nEven more scenes and features are planned" color="black" width="8" line-height="50" text="wrapCount: 40"></a-text>
 <a-text visible="true" class="scene0" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
 <a-entity gltf-model="models/track.glb" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
 <a-entity gltf-model="#start" class="scene0" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
@@ -378,6 +422,12 @@
 <a-entity gltf-model="models/scene3.glb" class="scene3 scene3room hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity gltf-model="models/scene3end.glb" class="scene3 scene3end hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity gltf-model="models/scene34divider.glb" class="scene3 scene34 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+
+<a-entity id="camel1-s" mixin="sound" class="scene3sound" position="38.1 0.35 -43.44" sound="src: #camel1-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="camel2-s" mixin="sound" class="scene3sound" position="38.1 0.35 -43.44" sound="src: #camel2-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="camelchew-1-s" mixin="sound" class="scene3sound" position="38.1 0.35 -43.44" sound="src: #camelchew1-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="camelchew-2-s" mixin="sound" class="scene3sound" position="38.1 0.35 -43.44" sound="src: #camelchew2-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+
 <a-entity id="caoatgrasssmall" gltf-model="models/caoatgrass-small.glb" visible="false"></a-entity>
 <a-entity gltf-model="models/plantspawn3.glb" class="" position="0 -0.04 0" surface-scatter__oatgrass="object:#caoatgrasssmall; count:200; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
 <a-entity no-cull id="camel-sit-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 0" shadow="recieve: true"></a-entity>
@@ -391,18 +441,23 @@
 <a-entity no-cull id="camel-chew-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-chew2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew2; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity no-cull id="camel-roll" class="hide scene3 scene3anim" gltf-model="models/westerncamel-roll.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *roll; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="coyote-1" class="hide scene3 scene3anim" gltf-model="models/coyote.glb" position="45.143 0 3.845" rotation="0 162.16 0" visible="true" animation-mixer="clip: *idle; timeScale: 0" shadow="recieve: true"></a-entity>
-<a-entity id="harlanssloth-1" class="hide scene3 scene3anim" gltf-model="models/harlanssloth.glb" position="60.3 0.1 -7.524" rotation="0 -21 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: -4000" shadow="recieve: true"></a-entity>
+<a-entity id="harlanssloth-1" class="hide scene3 scene3anim" gltf-model="models/harlanssloth.glb" position="60.3 0.1 -7.524" rotation="0 -21 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: -8000" shadow="recieve: true"></a-entity>
 <!-- <a-light id="lightscene3" visible="true" class="scene3 light" color="d5e0f4" position="41 10 -4.8" light="type: point; intensity: 0.6; decay: 0.1; distance: 17.3"></a-light> -->
 <!-- <a-light id="lightscene3end" visible="true" class="scene3 light" color="white" position="66 7 -1" light="type: point; intensity: 0.64; decay: 0.1; distance: 14"></a-light> -->
 <!-- Scene 4 -->
 <a-entity gltf-model="models/scene4.glb" class="scene4 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <!-- <a-light id="lightscene4" visible="true" class="scene4 light" color="white" position="48.6 9 12.4" light="type: point; intensity: 1.16; decay: 0.01; distance: 17.24"></a-light> -->
 <a-entity id="mammoth-pullbranch" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4bush" position="55.413 0 3.003" rotation="0 70 0" animation-mixer="clip: *eating; startAt: 0; timeScale: 0"></a-entity>
-<a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 hide scene4bush" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: *neutral; startAt: 0; timeScale: 0"></a-entity>
+<a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 hide scene4bush" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: *eating; startAt: 0; timeScale: 0"></a-entity>
 <a-entity id="mammoth-fight-right" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="48.825 0 9.572" rotation="0 150 0" animation-mixer="clip: *fight.right; timeScale: 0"></a-entity>
 <a-entity id="mammoth-fight-left" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="45.8 0 14.7" rotation="0 150 0" animation-mixer="clip: *fight.left; timeScale: 0"></a-entity>
 <a-entity id="mammoth-laying" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="57 0 13.3" rotation="0 -90 0" animation-mixer="clip: *laying; timeScale: 0"></a-entity>
 <a-entity id="mammoth-standing" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="38 0 8.6" rotation="0 70 0" animation-mixer="clip: *standing; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-1" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="52.37 0 16.6" rotation="0 -110 0" animation-mixer="clip: *grazing; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-2" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="51.25 0.114 14.86" rotation="0 -150 0" animation-mixer="clip: *look.left.short; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-3" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="43.1 0 7.016" rotation="0 30 0" animation-mixer="clip: *look.right.long; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-4" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="36.65 0 16.06" rotation="0 160 0" animation-mixer="clip: *look.right.short; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-5" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="36.65 0 16.06" rotation="0 160 0" animation-mixer="clip: *look.right.short; timeScale: 0"></a-entity>
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
