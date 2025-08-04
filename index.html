@@ -60,10 +60,15 @@
     <a-asset-item id="sbc-plants1" response-type="arraybuffer" src="sounds/sbcplants1.mp3"></a-asset-item>
     <a-asset-item id="sbc-plants2" response-type="arraybuffer" src="sounds/sbcplants2.mp3"></a-asset-item>
     <a-asset-item id="sbc-steps" response-type="arraybuffer" src="sounds/sbc1lightsteps.mp3"></a-asset-item>
+    <a-asset-item id="scene2-plantgate-sound" response-type="arraybuffer" src="sounds/scene2-plantgate.mp3"></a-asset-item>
+    <a-asset-item id="scene2-door-sound" response-type="arraybuffer" src="sounds/scene2-door.mp3"></a-asset-item>
     <a-asset-item id="camel1-sound" response-type="arraybuffer" src="sounds/camel1.mp3"></a-asset-item>
     <a-asset-item id="camel2-sound" response-type="arraybuffer" src="sounds/camel2.mp3"></a-asset-item>
     <a-asset-item id="camelchew1-sound" response-type="arraybuffer" src="sounds/camel-chew-1.mp3"></a-asset-item>
     <a-asset-item id="camelchew2-sound" response-type="arraybuffer" src="sounds/camel-chew-2.mp3"></a-asset-item>
+    <a-asset-item id="harlan-sloth-sequence-sound" response-type="arraybuffer" src="sounds/harlan-sloth-sequence.mp3"></a-asset-item>
+    <a-asset-item id="mammoth-buckbush-sequence-sound" response-type="arraybuffer" src="sounds/mammoth-buckbush-sequence.mp3"></a-asset-item>
+    <a-asset-item id="mammoth-fight-sequence-sound" response-type="arraybuffer" src="sounds/mammoth-fight-sequence.mp3"></a-asset-item>
 
     <a-mixin id="obj" hoverable grabbable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, abuttondown, bbuttondown, xbuttondown, ybuttondown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, abuttonup, bbuttonup, xbuttonup, ybuttonup, thumbstickup, mouseup" scale="1 1 1" rotation="0 0 0" shadow></a-mixin>
     <a-mixin id="blink" blink-controls="cameraRig: #rig; teleportOrigin: #camera; collisionEntities:.nav;"></a-mixin>
@@ -189,7 +194,7 @@
   <a-curve-point class="curve" id="track_straight5_2a" position="49.7 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track3start" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Pre-Start for Starting Track 2 -->
+<a-curve id="track3start" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model=""> <!-- Pre-Start for Starting Track 3 -->
   <a-curve-point class="curve" id="track_straight0_0" position="49.7 0 -26.0100001" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight1_0a" position="49.7 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
@@ -238,7 +243,7 @@
   <a-curve-point class="curve" id="track_straight_dismount_2" position="0 0 4.9999" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track-fake1" class="track" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
+<a-curve id="track-fake1" class="track" visible="false" closed="false" tension="0" position="5.54 0 -37.41" rotation="0 -90 0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
   <a-curve-point class="curve" id="track_straight_fake_1_1" position="49.96 0 -20.443" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight_fake_1_2" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight_fake_1_3" position="49.96 0 -11.3" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -290,11 +295,13 @@
   <a-entity id="scene1warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0 0.05" visible="true"></a-entity>
   <a-text id="scene1warpstext1" mixin="text-label" position="0.1 0 0.05" rotation="0 0 0" value="Los Angeles"></a-text>
   <a-entity id="scene2awarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
-  <a-text id="scene2awarpstext1" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
+  <a-text id="scene2awarpstext1" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Arroyo Entrance"></a-text>
   <a-entity id="scene2bwarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
-  <a-text id="scene2bwarpstext1" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
+  <a-text id="scene2bwarpstext1" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Arroyo Exit"></a-text>
   <a-entity id="scene3warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.4 -0.4 0.05" visible="true"></a-entity>
-  <a-text id="scene3warpstext1" mixin="text-label" position="0.5 -0.4 0.05" rotation="0 0 0" value="Scene 3 Preview"></a-text>
+  <a-text id="scene3warpstext1" mixin="text-label" position="0.5 -0.4 0.05" rotation="0 0 0" value="Coastal Plains"></a-text>
+  <a-entity id="scene4warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.4 -0.4 0.05" visible="true"></a-entity>
+  <a-text id="scene4warpstext1" mixin="text-label" position="0.5 -0.4 0.05" rotation="0 0 0" value="Oak Savannah"></a-text>
 </a-entity>
 
 <!-- Map Panel 2-->
@@ -305,11 +312,13 @@
   <a-entity id="scene1warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0 0.05" visible="true"></a-entity>
   <a-text id="scene1warpstext2" mixin="text-label" position="0.1 0 0.05" rotation="0 0 0" value="Los Angeles"></a-text>
   <a-entity id="scene2awarpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
-  <a-text id="scene2awarpstext2" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
+  <a-text id="scene2awarpstext2" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Arroyo Entrance"></a-text>
   <a-entity id="scene2bwarpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
-  <a-text id="scene2bwarpstext2" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
+  <a-text id="scene2bwarpstext2" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Arroyo Exit"></a-text>
   <a-entity id="scene3warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.4 -0.4 0.05" visible="true"></a-entity>
-  <a-text id="scene3warpstext2" mixin="text-label" position="0.5 -0.4 0.05" rotation="0 0 0" value="Scene 3 Preview"></a-text>
+  <a-text id="scene3warpstext2" mixin="text-label" position="0.5 -0.4 0.05" rotation="0 0 0" value="Coastal Plains"></a-text>
+  <a-entity id="scene4warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.4 -0.4 0.05" visible="true"></a-entity>
+  <a-text id="scene4warpstext2" mixin="text-label" position="0.5 -0.4 0.05" rotation="0 0 0" value="Oak Savannah"></a-text>
 </a-entity>
 
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
@@ -384,6 +393,8 @@
 <a-entity id="shasta-eating-s" mixin="sound" class="scene2sound" position="42.8 1.54 -42.55" sound="src: #shasta-eating-sound; maxDistance: 6; distanceModel: linear"></a-entity>
 <a-entity id="sbcplants1-s" mixin="sound" class="scene2sound" position="51.8 2 -40.5" sound="src: #sbc-plants1; maxDistance: 10"></a-entity>
 <a-entity id="sbcplants2-s" mixin="sound" class="scene2sound" position="53.3 2.17 -34.3" sound="src: #sbc-plants2; maxDistance: 10"></a-entity>
+<a-entity id="scene2-plantgate-s" mixin="sound" class="scene2sound" position="0.07 1.7 -3.4" sound="src: #scene2-plantgate-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="scene2-door-s" mixin="sound" class="scene2sound" position="0.07 1.7 -3.4" sound="src: #scene2-door-sound; loop: false; maxDistance: 4"></a-entity>
 
 <a-entity gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing; timeScale: 0"></a-entity>
 <a-entity id="scrounging-raccoon" gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" position="26.892 1.13 -36.67" rotation="0 65 0" animation-mixer="clip: raccoon.adult.scrounging; timeScale: 0"></a-entity>
@@ -423,10 +434,11 @@
 <a-entity gltf-model="models/scene3end.glb" class="scene3 scene3end hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity gltf-model="models/scene34divider.glb" class="scene3 scene34 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 
-<a-entity id="camel1-s" mixin="sound" class="scene3sound" position="38.1 0.35 -43.44" sound="src: #camel1-sound; maxDistance: 10; distanceModel: linear"></a-entity>
-<a-entity id="camel2-s" mixin="sound" class="scene3sound" position="38.1 0.35 -43.44" sound="src: #camel2-sound; maxDistance: 10; distanceModel: linear"></a-entity>
-<a-entity id="camelchew-1-s" mixin="sound" class="scene3sound" position="38.1 0.35 -43.44" sound="src: #camelchew1-sound; maxDistance: 10; distanceModel: linear"></a-entity>
-<a-entity id="camelchew-2-s" mixin="sound" class="scene3sound" position="38.1 0.35 -43.44" sound="src: #camelchew2-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="camel1-s" mixin="sound" class="scene3sound" position="50.31 1.38 -9.86" sound="src: #camel1-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="camel2-s" mixin="sound" class="scene3sound" position="33.64 1.54 -9.18" sound="src: #camel2-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="camelchew-1-s" mixin="sound" class="scene3sound" position="48.4 1.02 0.69" sound="src: #camelchew1-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="camelchew-2-s" mixin="sound" class="scene3sound" position="47.75 1.45 -1.74" sound="src: #camelchew2-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="harlan-sequence-s" mixin="sound" class="scene3sound" position="60 0.58 -7.13" sound="src: #harlan-sloth-sequence-sound; maxDistance: 10; distanceModel: linear"></a-entity>
 
 <a-entity id="caoatgrasssmall" gltf-model="models/caoatgrass-small.glb" visible="false"></a-entity>
 <a-entity gltf-model="models/plantspawn3.glb" class="" position="0 -0.04 0" surface-scatter__oatgrass="object:#caoatgrasssmall; count:200; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
@@ -444,8 +456,19 @@
 <a-entity id="harlanssloth-1" class="hide scene3 scene3anim" gltf-model="models/harlanssloth.glb" position="60.3 0.1 -7.524" rotation="0 -21 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: -8000" shadow="recieve: true"></a-entity>
 <!-- <a-light id="lightscene3" visible="true" class="scene3 light" color="d5e0f4" position="41 10 -4.8" light="type: point; intensity: 0.6; decay: 0.1; distance: 17.3"></a-light> -->
 <!-- <a-light id="lightscene3end" visible="true" class="scene3 light" color="white" position="66 7 -1" light="type: point; intensity: 0.64; decay: 0.1; distance: 14"></a-light> -->
+
+<!-- Scene 3 Info Boxes -->
+<a-entity id="scene3-text-1a" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2cameltext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Western Camel\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene3-text-1b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2cameltext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Western Camel\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene3-text-2" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2poppytext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: California Poppy\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene3-text-3" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2coyotetext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Coyote\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene3-text-4" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2harlantext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Harlan's Ground Sloth\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+
+
 <!-- Scene 4 -->
 <a-entity gltf-model="models/scene4.glb" class="scene4 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity id="mammoth-buckbush-s" mixin="sound" class="scene4sound" position="59.63 1.55 4.43" sound="src: #mammoth-buckbush-sequence-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="mammoth-fight-s" mixin="sound" class="scene4sound" position="47.48 3.31 11.82" sound="src: #mammoth-fight-sequence-sound; maxDistance: 10; distanceModel: linear"></a-entity>
 <!-- <a-light id="lightscene4" visible="true" class="scene4 light" color="white" position="48.6 9 12.4" light="type: point; intensity: 1.16; decay: 0.01; distance: 17.24"></a-light> -->
 <a-entity id="mammoth-pullbranch" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4bush" position="55.413 0 3.003" rotation="0 70 0" animation-mixer="clip: *eating; startAt: 0; timeScale: 0"></a-entity>
 <a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 hide scene4bush" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: *eating; startAt: 0; timeScale: 0"></a-entity>
@@ -458,6 +481,12 @@
 <a-entity id="pronghorn-3" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="43.1 0 7.016" rotation="0 30 0" animation-mixer="clip: *look.right.long; timeScale: 0"></a-entity>
 <a-entity id="pronghorn-4" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="36.65 0 16.06" rotation="0 160 0" animation-mixer="clip: *look.right.short; timeScale: 0"></a-entity>
 <a-entity id="pronghorn-5" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="36.65 0 16.06" rotation="0 160 0" animation-mixer="clip: *look.right.short; timeScale: 0"></a-entity>
+
+<!-- Scene 4 Info Boxes -->
+<a-entity id="scene4-text-1" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2buckbushtext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Buckbush\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene4-text-2a" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2mammothtext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Columbian Mammoth\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene4-text-2b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2mammothtext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Columbian Mammoth\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene4-text-3" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2pronghorntext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Dwarf Pronghorn\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">

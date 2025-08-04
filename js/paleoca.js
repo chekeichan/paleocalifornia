@@ -230,8 +230,9 @@ AFRAME.registerComponent("tour-mechanics", {
         const raccoonyelp = document.querySelector('#raccoon-yelp-s');
         const sbcplants1 = document.querySelector('#sbcplants1-s');
         const sbcplants2 = document.querySelector('#sbcplants2-s');
+        const scene2plantgates = document.querySelector('#scene2-plantgate-s');
+        const scene2exitgates = document.querySelector('#scene2-exitgate-s');
         
-
         const scene3toggle = sceneEl.querySelectorAll('.scene3'); // Scene 3 Models
         const scene3roomtoggle = sceneEl.querySelectorAll('.scene3room');
         const scene3animations = sceneEl.querySelectorAll('.scene3anim');
@@ -254,9 +255,20 @@ AFRAME.registerComponent("tour-mechanics", {
         const pronghorn5 = document.querySelector('#pronghorn-5');
         const scene3endtoggle = sceneEl.querySelectorAll('.scene3end');
 
+        const scene3sounds = sceneEl.querySelectorAll('.scene3sound'); // Scene 3 Sounds
+        const camels1 = document.querySelector('#camel1-s');
+        const camels2 = document.querySelector('#camel2-s');
+        const camelchews1 = document.querySelector('#camelchew-1-s');
+        const camelchews2 = document.querySelector('#camelchew-2 -s');
+        const harlans1 = document.querySelector('#harlan-sequence-s');
+
         const scene4toggle = sceneEl.querySelectorAll('.scene4'); // Scene 4 Models
         const scene4gateanimation = sceneEl.querySelectorAll('.scene4bush');
         const scene4animations = sceneEl.querySelectorAll('.scene4anim');
+
+        const scene4sounds = sceneEl.querySelectorAll('.scene4sound'); // Scene 4 Sounds
+        const mammoths1 = document.querySelector('#mammoth-buckbush-s');
+        const mammoths2 = document.querySelector('#mammoth-fight-s');
 
         const timetunneldoor1 = document.querySelector('#timetunnel1-outside'); // Time Tunnels
         const timetunnel1 = document.querySelector('#timetunnel1-inside');
@@ -400,47 +412,58 @@ AFRAME.registerComponent("tour-mechanics", {
                         break;
                     case "track_straight5_2b":
                         aniswitchdelay(scene2exitplant, "animation-mixer", {clip: '*open*', loop: 'once', clampWhenFinished: 'true', timeScale: "0.7"}, "2200");
-                        console.log('scene 2 exit plant open')
-                        camelsit1.setAttribute('animation-mixer', {clip: '*look', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
-                        camelsit2.setAttribute('animation-mixer', {clip: '*scratch', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
-                        camelstand1.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '3000', timeScale: '0.9'})
+                        audiswitchdelay(scene2plantgates, "play", 2200);
+                        console.log('scene 2 exit plant open');
+
+                        camelsit1.setAttribute('animation-mixer', {clip: '*look', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelsit2.setAttribute('animation-mixer', {clip: '*scratch', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelstand1.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '3000', timeScale: '0.9'});
                         camelstand2.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'false', loop: 'true', startAt: '-2000', timeScale: '1'})
-                        camelstand3.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '-0.8'})
-                        camelstand4.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
-                        camelstand5.setAttribute('animation-mixer', {clip: '*idle2', clampWhenFinished: 'true', startAt: '1', timeScale: '0.9'})
-                        camelchew1.setAttribute('animation-mixer', {clip: '*chew1', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
-                        camelchew2.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
-                        camelroll.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
-                        scene4coyote.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
-                        scene4harlan.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'})
+                        camelstand3.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '-0.8'});
+                        camelstand4.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelstand5.setAttribute('animation-mixer', {clip: '*idle2', clampWhenFinished: 'true', startAt: '1', timeScale: '0.9'});
+                        camelchew1.setAttribute('animation-mixer', {clip: '*chew1', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelchew2.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelroll.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        scene4coyote.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        scene4harlan.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        harlans1.components.sound.playSound();
                         console.log('scene 3 animations on');
                     break;
                     case "track_straight5_3":
                         aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*open', loop: 'once', clampWhenFinished: 'true', timeScale: "1"}, "5800");
+                        audiswitchdelay(scene2exitgates, "play", 5800);
                         console.log('scene 2 exit door open')
-                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.75, dur: 8000}})
+
+                        audiswitchdelay(camels1, "play", 5850);
+                        audiswitchdelay(camels2, "play", 5850);
+                        audiswitchdelay(camelchews1, "play", 5850);
+                        audiswitchdelay(camelchews2, "play", 5850);
+                        console.log('camel sounds start');
+
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.75, dur: 8000}});
                         console.log('ambient light brighten');
                     break;
                     case "track_straight5_4":
                         aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*close', loop: 'once', clampWhenFinished: 'true', timeScale: "1"}, "800");
-                        console.log('scene 2 exit door close')
+                        console.log('scene 2 exit door close');
                     break;
                     case "track_turn5_2":
-                        sbc1cat.removeAttribute('animation-mixer')
-                        sbc1plant.removeAttribute('animation-mixer')
-                        sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
-                        sbc1plant.setAttribute('animation-mixer', {clip: '*push', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
+                        sbc1cat.removeAttribute('animation-mixer');
+                        sbc1plant.removeAttribute('animation-mixer');
+                        sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'true', loop: 'once', timeScale: '0'});
+                        sbc1plant.setAttribute('animation-mixer', {clip: '*push', clampWhenFinished: 'true', loop: 'once', timeScale: '0'});
                         console.log('sbc animation reset');
-                        scene2exitplant.setAttribute('animation-mixer', {clip: '*open', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
+                        scene2exitplant.setAttribute('animation-mixer', {clip: '*open', clampWhenFinished: 'true', loop: 'once', timeScale: '0'});
                         console.log('scene 2 exit plant animation reset');
-                        scene2exitdoor.setAttribute('animation-mixer', {clip: '*open', clampWhenFinished: 'true', loop: 'once', timeScale: '0'})
+                        scene2exitdoor.setAttribute('animation-mixer', {clip: '*open', clampWhenFinished: 'true', loop: 'once', timeScale: '0'});
                         console.log('scene 2 exit door animation reset');
                         visiswitch(scene2toggle, false);
                         console.log('scene 2 hide');
                     break;
                     case "track_turn5_3":
-                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", "intensity": 1.2, "decay": 0.6, "distance": 21.4})
-                        console.log('light3 move to scene 3 end')
+                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", "intensity": 1.2, "decay": 0.6, "distance": 21.4});
+                        console.log('light3 move to scene 3 end');
                     break;
                     case "track_turn5_4":
                         for (let each of scene2animations) {
@@ -448,7 +471,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         };
                         console.log('Scene 2 animations off');
                         for (let each of scene2sounds) {
-                            each.components.sound.stopSound();
+                            each.components.sound.pauseSound();
                         };
                         console.log('Scene 2 looping sounds off');
                     break;
@@ -460,6 +483,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         for (let each of scene4animations) {
                             each.setAttribute('animation-mixer', {timeScale: '1'})
                         };
+                        mammoths2.components.sound.playSound();
                         console.log('scene 4 general animations on');
                     break;
                     case "track_turn6_1":
@@ -470,6 +494,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         for (let each of scene4gateanimation) {
                             each.setAttribute('animation-mixer', {clip: '*pull*', timeScale: '0.75', startAt: '1'})
                         };
+                        mammoths1.components.sound.playSound();
                         console.log('scene 4 gate animation')
                     break;
                     case "track_turn6_5":
@@ -481,6 +506,10 @@ AFRAME.registerComponent("tour-mechanics", {
                             each.setAttribute('animation-mixer', {timeScale: '0'})
                         };
                         console.log('Scene 3 animations off');
+                        for (let each of scene3sounds) {
+                            each.components.sound.pauseSound();
+                        };
+                        console.log('Scene 3 looping sounds off');
                         visiswitch(scene3roomtoggle, false);
                         console.log('scene 3 camel room hide')
                     break;
@@ -508,16 +537,9 @@ AFRAME.registerComponent("tour-mechanics", {
                         setAttributes(timelight1, {'animation': {property: 'light.intensity', to: 0.75, dur: 10000}})
                         console.log('Time Tunnel light brightens')
                         visiswitch(scene0toggle, true);
-                        for (let each of timetunneldoor2) {
-                            each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
-                        };
-                        timetunneldoor2ent.components.sound.playSound();
-                        console.log('time door entrance 2 close');
-                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
-                        console.log('ambient light back to original');
                     break;
                     case "track_straight6_4":
-                         visiswitch(scene0toggle, true);
+                         
                         for (let each of timetunneldoor2) {
                             each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.entrance.close', loop: 'once', clampWhenFinished: 'true'})
                         };
@@ -525,13 +547,12 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('time door entrance 2 close');
                         setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
                         console.log('ambient light back to original');
-                        
                     break;
 
 
 
                     case "track_straight_end_1_1":
-                        visiswitch(scene3roomtoggle, false);
+                        visiswitch(scene3endtoggle, false);
                         break;
                     case "track_straight_end_1_2":
                         visiswitch(scene1toggle, true);
@@ -545,8 +566,9 @@ AFRAME.registerComponent("tour-mechanics", {
                         for (let each of scene4animations) {
                             each.setAttribute('animation-mixer', {timeScale: '0'})
                         };
-                        for (let each of scene2sounds) { // update to scene 4
-                            each.components.sound.stopSound();
+                        console.log('Scene 4 looping animations off');
+                        for (let each of scene4sounds) {
+                            each.components.sound.pauseSound();
                         };
                         console.log('Scene 4 looping sounds off');
                     break;
@@ -554,7 +576,6 @@ AFRAME.registerComponent("tour-mechanics", {
                         setAttributes(timelight1, {"position":  {x: 14.4, y: 1.6, z: -20}, "intensity": 0.75})
                     break;
                     case "track_straight_end_1_4":
-                        visiswitch(scene2toggle, false);
                         setAttributes(light2, {"position": {x: 0, y: 5.4, z: -17.4}, "color": "white", "animation": {property: 'light.intensity', to: 0.3, dur: 4000}, "decay": 1, "distance": 11})
                         console.log('light2 move to scene1')
                         for (let each of timetunneldoor2) {
