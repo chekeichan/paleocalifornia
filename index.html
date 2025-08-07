@@ -61,7 +61,7 @@
     <a-asset-item id="sbc-plants2" response-type="arraybuffer" src="sounds/sbcplants2.mp3"></a-asset-item>
     <a-asset-item id="sbc-steps" response-type="arraybuffer" src="sounds/sbc1lightsteps.mp3"></a-asset-item>
     <a-asset-item id="scene2-plantgate-sound" response-type="arraybuffer" src="sounds/scene2-plantgate.mp3"></a-asset-item>
-    <a-asset-item id="scene2-door-sound" response-type="arraybuffer" src="sounds/scene2-door.mp3"></a-asset-item>
+    <a-asset-item id="scene2-exitdoor-sound" response-type="arraybuffer" src="sounds/scene2-exitdoor.mp3"></a-asset-item>
     <a-asset-item id="camel1-sound" response-type="arraybuffer" src="sounds/camel1.mp3"></a-asset-item>
     <a-asset-item id="camel2-sound" response-type="arraybuffer" src="sounds/camel2.mp3"></a-asset-item>
     <a-asset-item id="camelchew1-sound" response-type="arraybuffer" src="sounds/camel-chew-1.mp3"></a-asset-item>
@@ -96,7 +96,7 @@
     // simple:
     // window.initALoadScreen();
     
-  <!--  optionally, you can specify options.  -->
+  // <!--  optionally, you can specify options.  -->
     // with full options specified, with default values shown
     window.initALoadScreen({
       debug: [], // can include 'log','warn','error', etc.
@@ -393,8 +393,8 @@
 <a-entity id="shasta-eating-s" mixin="sound" class="scene2sound" position="42.8 1.54 -42.55" sound="src: #shasta-eating-sound; maxDistance: 6; distanceModel: linear"></a-entity>
 <a-entity id="sbcplants1-s" mixin="sound" class="scene2sound" position="51.8 2 -40.5" sound="src: #sbc-plants1; maxDistance: 10"></a-entity>
 <a-entity id="sbcplants2-s" mixin="sound" class="scene2sound" position="53.3 2.17 -34.3" sound="src: #sbc-plants2; maxDistance: 10"></a-entity>
-<a-entity id="scene2-plantgate-s" mixin="sound" class="scene2sound" position="0.07 1.7 -3.4" sound="src: #scene2-plantgate-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="scene2-door-s" mixin="sound" class="scene2sound" position="0.07 1.7 -3.4" sound="src: #scene2-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="scene2-plantgate-s" mixin="sound" class="scene2sound" position="49.6 1.01 -22.6" sound="src: #scene2-plantgate-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="scene2-exitdoor-s" mixin="sound" class="scene2sound" position="49.5 1.0 -15.8" sound="src: #scene2-exitdoor-sound; loop: false; maxDistance: 4"></a-entity>
 
 <a-entity gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing; timeScale: 0"></a-entity>
 <a-entity id="scrounging-raccoon" gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" position="26.892 1.13 -36.67" rotation="0 65 0" animation-mixer="clip: raccoon.adult.scrounging; timeScale: 0"></a-entity>
@@ -434,11 +434,11 @@
 <a-entity gltf-model="models/scene3end.glb" class="scene3 scene3end hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 <a-entity gltf-model="models/scene34divider.glb" class="scene3 scene34 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
 
-<a-entity id="camel1-s" mixin="sound" class="scene3sound" position="50.31 1.38 -9.86" sound="src: #camel1-sound; maxDistance: 10; distanceModel: linear"></a-entity>
-<a-entity id="camel2-s" mixin="sound" class="scene3sound" position="33.64 1.54 -9.18" sound="src: #camel2-sound; maxDistance: 10; distanceModel: linear"></a-entity>
-<a-entity id="camelchew-1-s" mixin="sound" class="scene3sound" position="48.4 1.02 0.69" sound="src: #camelchew1-sound; maxDistance: 10; distanceModel: linear"></a-entity>
-<a-entity id="camelchew-2-s" mixin="sound" class="scene3sound" position="47.75 1.45 -1.74" sound="src: #camelchew2-sound; maxDistance: 10; distanceModel: linear"></a-entity>
-<a-entity id="harlan-sequence-s" mixin="sound" class="scene3sound" position="60 0.58 -7.13" sound="src: #harlan-sloth-sequence-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="camel1-s" mixin="sound" class="scene3sound" position="50.31 1.38 -9.86" sound="src: #camel1-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="camel2-s" mixin="sound" class="scene3sound" position="33.64 1.54 -9.18" sound="src: #camel2-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="camelchew-1-s" mixin="sound" class="scene3sound" position="48.4 1.02 0.69" sound="src: #camelchew1-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="camelchew-2-s" mixin="sound" class="scene3sound" position="47.75 1.45 -1.74" sound="src: #camelchew2-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="harlan-sequence-s" mixin="sound" class="scene3sound" position="60 0.58 -7.13" sound="src: #harlan-sloth-sequence-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
 
 <a-entity id="caoatgrasssmall" gltf-model="models/caoatgrass-small.glb" visible="false"></a-entity>
 <a-entity gltf-model="models/plantspawn3.glb" class="" position="0 -0.04 0" surface-scatter__oatgrass="object:#caoatgrasssmall; count:200; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
@@ -467,8 +467,8 @@
 
 <!-- Scene 4 -->
 <a-entity gltf-model="models/scene4.glb" class="scene4 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
-<a-entity id="mammoth-buckbush-s" mixin="sound" class="scene4sound" position="59.63 1.55 4.43" sound="src: #mammoth-buckbush-sequence-sound; maxDistance: 10; distanceModel: linear"></a-entity>
-<a-entity id="mammoth-fight-s" mixin="sound" class="scene4sound" position="47.48 3.31 11.82" sound="src: #mammoth-fight-sequence-sound; maxDistance: 10; distanceModel: linear"></a-entity>
+<a-entity id="mammoth-buckbush-s" mixin="sound" class="scene4sound" position="59.63 1.55 4.43" sound="src: #mammoth-buckbush-sequence-sound; maxDistance: 10; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="mammoth-fight-s" mixin="sound" class="scene4sound" position="47.48 3.31 11.82" sound="src: #mammoth-fight-sequence-sound; maxDistance: 10; distanceModel: linear; loop: true"></a-entity>
 <!-- <a-light id="lightscene4" visible="true" class="scene4 light" color="white" position="48.6 9 12.4" light="type: point; intensity: 1.16; decay: 0.01; distance: 17.24"></a-light> -->
 <a-entity id="mammoth-pullbranch" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4bush" position="55.413 0 3.003" rotation="0 70 0" animation-mixer="clip: *eating; startAt: 0; timeScale: 0"></a-entity>
 <a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 hide scene4bush" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: *eating; startAt: 0; timeScale: 0"></a-entity>
@@ -479,7 +479,7 @@
 <a-entity id="pronghorn-1" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="52.37 0 16.6" rotation="0 -110 0" animation-mixer="clip: *grazing; timeScale: 0"></a-entity>
 <a-entity id="pronghorn-2" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="51.25 0.114 14.86" rotation="0 -150 0" animation-mixer="clip: *look.left.short; timeScale: 0"></a-entity>
 <a-entity id="pronghorn-3" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="43.1 0 7.016" rotation="0 30 0" animation-mixer="clip: *look.right.long; timeScale: 0"></a-entity>
-<a-entity id="pronghorn-4" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="36.65 0 16.06" rotation="0 160 0" animation-mixer="clip: *look.right.short; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-4" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="41.15 0 14.7" rotation="0 120 0" animation-mixer="clip: *look.right.short; timeScale: 0"></a-entity>
 <a-entity id="pronghorn-5" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="36.65 0 16.06" rotation="0 160 0" animation-mixer="clip: *look.right.short; timeScale: 0"></a-entity>
 
 <!-- Scene 4 Info Boxes -->

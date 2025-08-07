@@ -231,7 +231,7 @@ AFRAME.registerComponent("tour-mechanics", {
         const sbcplants1 = document.querySelector('#sbcplants1-s');
         const sbcplants2 = document.querySelector('#sbcplants2-s');
         const scene2plantgates = document.querySelector('#scene2-plantgate-s');
-        const scene2exitgates = document.querySelector('#scene2-exitgate-s');
+        const scene2exitdoors = document.querySelector('#scene2-exitdoor-s');
         
         const scene3toggle = sceneEl.querySelectorAll('.scene3'); // Scene 3 Models
         const scene3roomtoggle = sceneEl.querySelectorAll('.scene3room');
@@ -432,7 +432,7 @@ AFRAME.registerComponent("tour-mechanics", {
                     break;
                     case "track_straight5_3":
                         aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*open', loop: 'once', clampWhenFinished: 'true', timeScale: "1"}, "5800");
-                        audiswitchdelay(scene2exitgates, "play", 5800);
+                        audiswitchdelay(scene2exitdoors, "play", 5800);
                         console.log('scene 2 exit door open')
 
                         audiswitchdelay(camels1, "play", 5850);
@@ -446,6 +446,7 @@ AFRAME.registerComponent("tour-mechanics", {
                     break;
                     case "track_straight5_4":
                         aniswitchdelay(scene2exitdoor, "animation-mixer", {clip: '*close', loop: 'once', clampWhenFinished: 'true', timeScale: "1"}, "800");
+                        audiswitchdelay(scene2exitdoors, "play", 800);
                         console.log('scene 2 exit door close');
                     break;
                     case "track_turn5_2":
@@ -492,7 +493,7 @@ AFRAME.registerComponent("tour-mechanics", {
                     break;
                     case "track_turn6_4":
                         for (let each of scene4gateanimation) {
-                            each.setAttribute('animation-mixer', {clip: '*pull*', timeScale: '0.75', startAt: '1'})
+                            each.setAttribute('animation-mixer', {clip: '*pull*', timeScale: '0.75', startAt: '0'})
                         };
                         mammoths1.components.sound.playSound();
                         console.log('scene 4 gate animation')
