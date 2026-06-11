@@ -80,6 +80,7 @@ AFRAME.registerComponent("tour-start", {
         const pod = document.querySelector('#pod');
         const transition = document.querySelector("#transition");
         const scene2toggle = sceneEl.querySelectorAll('.scene2');
+        const sbc2cat = document.querySelector('#sbc1b');
         const scene2endtoggle = sceneEl.querySelectorAll('.scene2end');
         const scene3toggle = sceneEl.querySelectorAll('.scene3');
         let headadjust = null;
@@ -128,9 +129,10 @@ AFRAME.registerComponent("tour-start", {
 
             } else if (startareacounter === 1) { // Start at scene 3
                 visiswitch(scene2toggle, true);
+                sbc2cat.setAttribute('animation-mixer', {timeScale: '1'})
                 visiswitch(scene2endtoggle, true);
                 visiswitch(scene3toggle, true);
-                rig.setAttribute('alongpath', {curve: '#track34', dur: 278300, triggerRadius: 0.01}) 
+                rig.setAttribute('alongpath', {curve: '#track3start', dur: 10000, triggerRadius: 0.001}) 
 
             }
         };
@@ -426,7 +428,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         camelchew2.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
                         camelroll.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
                         scene4coyote.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
-                        scene4harlan.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        scene4harlan.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '-8000', timeScale: '1'});
                         harlans1.components.sound.playSound();
                         console.log('scene 3 animations on');
                     break;
@@ -435,10 +437,10 @@ AFRAME.registerComponent("tour-mechanics", {
                         audiswitchdelay(scene2exitdoors, "play", 5800);
                         console.log('scene 2 exit door open')
 
-                        audiswitchdelay(camels1, "play", 5850);
-                        audiswitchdelay(camels2, "play", 5850);
-                        audiswitchdelay(camelchews1, "play", 5850);
-                        audiswitchdelay(camelchews2, "play", 5850);
+                        audiswitchdelay(camels1, "play", 5950);
+                        audiswitchdelay(camels2, "play", 5950);
+                        audiswitchdelay(camelchews1, "play", 5950);
+                        audiswitchdelay(camelchews2, "play", 5950);
                         console.log('camel sounds start');
 
                         setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.75, dur: 8000}});
@@ -463,7 +465,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 2 hide');
                     break;
                     case "track_turn5_3":
-                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", "intensity": 1.2, "decay": 0.6, "distance": 21.4});
+                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", 'animation': {property: 'light.intensity', to: 1.1, dur: 4000}, "decay": 0.6, "distance": 21.4});
                         console.log('light3 move to scene 3 end');
                     break;
                     case "track_turn5_4":
@@ -488,8 +490,8 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 4 general animations on');
                     break;
                     case "track_turn6_1":
-                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 22.8}, "color": "white", "intensity": 1.16, "decay": 0.25, "distance": 24.9})
-                        console.log('light2 move to scene 4')
+                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 22.8}, "color": "white", "intensity": 1.16, "decay": 0.25, "distance": 24.9});
+                        console.log('light2 move to scene 4');
                     break;
                     case "track_turn6_4":
                         for (let each of scene4gateanimation) {
@@ -767,7 +769,7 @@ rig.addEventListener("movingended__#track2", function(){
     rig.setAttribute('alongpath', {curve: '#track34', dur: '278300', triggerRadius: '0.1'}) // 289000
 })
 rig.addEventListener("movingended__#track3start", function(){
-    rig.setAttribute('alongpath', {curve: '#trackdismount', dur: '5000', triggerRadius: '0.001'}) // This adds a delay to the start of scene 3 with imperceptible movement 
+    rig.setAttribute('alongpath', {curve: '#track34', dur: '278300', triggerRadius: '0.1'}) 
 })
 rig.addEventListener("movingended__#track34", function(){
     rig.setAttribute('alongpath', {curve: '#trackend', dur: '100000', triggerRadius: '0.1'})
@@ -828,6 +830,8 @@ rig.addEventListener("movingended__#trackdismount", function(){
                 const scene2animations = sceneEl.querySelectorAll('.scene2anim');
                 const scene2sounds = sceneEl.querySelectorAll('.scene2sound');
                 const scene2toggle = sceneEl.querySelectorAll('.scene2');
+                const scene2exitdoor = document.querySelector('#scene2-exit-door');
+                const scene2endtoggle = sceneEl.querySelectorAll('.scene2end');
                 const scene3toggle = sceneEl.querySelectorAll('.scene3');
                 const scene4toggle = sceneEl.querySelectorAll('.scene4');
                 const light1 = document.querySelector('#light1');
@@ -837,7 +841,44 @@ rig.addEventListener("movingended__#trackdismount", function(){
                 const sbc1plant = document.querySelector('#sbc1-plant');
                 const scene2butt1 = sceneEl.querySelectorAll('.scene2raccoontext');
                 const scene2butt4 = sceneEl.querySelectorAll('.scene2sbctext'); 
-    
+        
+                const scene3roomtoggle = sceneEl.querySelectorAll('.scene3room');
+                const scene3animations = sceneEl.querySelectorAll('.scene3anim');
+                const camelsit1 = document.querySelector('#camel-sit-1');
+                const camelsit2 = document.querySelector('#camel-sit-2');
+                const camelstand1 = document.querySelector('#camel-stand-1');
+                const camelstand2 = document.querySelector('#camel-stand-2');
+                const camelstand3 = document.querySelector('#camel-stand-3');
+                const camelstand4 = document.querySelector('#camel-stand-4');
+                const camelstand5 = document.querySelector('#camel-stand-5');
+                const camelchew1 = document.querySelector('#camel-chew-1');
+                const camelchew2 = document.querySelector('#camel-chew-2');
+                const camelroll = document.querySelector('#camel-roll');
+                const scene4coyote = document.querySelector('#coyote-1');
+                const scene4harlan = document.querySelector('#harlanssloth-1');
+                const pronghorn1 = document.querySelector('#pronghorn-1');
+                const pronghorn2 = document.querySelector('#pronghorn-2');
+                const pronghorn3 = document.querySelector('#pronghorn-3');
+                const pronghorn4 = document.querySelector('#pronghorn-4');
+                const pronghorn5 = document.querySelector('#pronghorn-5');
+                const scene3endtoggle = sceneEl.querySelectorAll('.scene3end');
+
+                const scene3sounds = sceneEl.querySelectorAll('.scene3sound'); // Scene 3 Sounds
+                const camels1 = document.querySelector('#camel1-s');
+                const camels2 = document.querySelector('#camel2-s');
+                const camelchews1 = document.querySelector('#camelchew-1-s');
+                const camelchews2 = document.querySelector('#camelchew-2-s');
+                const harlans1 = document.querySelector('#harlan-sequence-s');
+
+                const scene4gateanimation = sceneEl.querySelectorAll('.scene4bush');
+                const scene4animations = sceneEl.querySelectorAll('.scene4anim');
+
+                const scene4sounds = sceneEl.querySelectorAll('.scene4sound'); // Scene 4 Sounds
+                const mammoths1 = document.querySelector('#mammoth-buckbush-s');
+                const mammoths2 = document.querySelector('#mammoth-fight-s');
+                const scene4butt1 = sceneEl.querySelectorAll('.scene4planttext');
+                const scene4butt2 = sceneEl.querySelectorAll('.scene4mammothtext');
+
                 const timetunnel3insidesound = document.querySelector('#timetunnel3-inside-s');
                 const timetunneldoor2 = sceneEl.querySelectorAll('.linkedtunnelout');
                 const timetunnel2 = sceneEl.querySelectorAll('.linkedtunnel');
@@ -883,6 +924,19 @@ rig.addEventListener("movingended__#trackdismount", function(){
                     sbc1cat.setAttribute('animation-mixer', {clip: '*stalk', clampWhenFinished: 'true', loop: 'once', timeScale: '0'});
                     sbc1cat.setAttribute('sound', {src: '#sbc-steps', autoplay: 'false', loop: 'true', distanceModel: 'linear', maxDistance: '5'});
                     sbc1plant.setAttribute('animation-mixer', {clip: '*push', clampWhenFinished: 'true', loop: 'once', timeScale: '0'});
+
+                    for (let each of scene3animations) {
+                            each.setAttribute('animation-mixer', {timeScale: '0'})
+                        };
+                        for (let each of scene3sounds) {
+                            each.components.sound.pauseSound();
+                        };
+                    for (let each of scene4animations) {
+                            each.setAttribute('animation-mixer', {timeScale: '0'})
+                        };
+                        for (let each of scene4sounds) {
+                            each.components.sound.pauseSound();
+                        };
                 };
     
                 let scene2switches = function() { // Turns on Scene 2 for Walk Mode
@@ -904,8 +958,41 @@ rig.addEventListener("movingended__#trackdismount", function(){
                     sbc1plant.setAttribute('animation-mixer', {clip: '*flat', clampWhenFinished: 'true', loop: 'once', timeScale: '1'})
                 };
 
-                let scene3switches = function() { // Turns on Scene 3 for Walk Mode
+                let scene34switches = function() { // Turns on Scene 3 for Walk Mode
+                    visiswitch(scene2endtoggle, true);
+                    visiswitch(scene3toggle, true);
+                    visiswitch(scene4toggle, true);
+                    setAttributes(light1, {"position":  {x: 42, y: 10, z: -7.6}, "color": "#d5e0f4", "intensity": 1.44, "decay": 0.1, "distance": 14.4});
+                    setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.75, dur: 500}});
+                    setAttributes(warpmap1, {"position": {x: 49, y: 0.85, z: -14.56}, "rotation": {x: -62.1, y: -1, z: 0}})
+                    setAttributes(warpmap2, {"position": {x: 35.1, y: 0.812, z: 13.1}, "rotation": {x: -62.1, y: 90, z: 0}})
+                    camelsit1.setAttribute('animation-mixer', {clip: '*look', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelsit2.setAttribute('animation-mixer', {clip: '*scratch', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelstand1.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '3000', timeScale: '0.9'});
+                        camelstand2.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'false', loop: 'true', startAt: '-2000', timeScale: '1'})
+                        camelstand3.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '-0.8'});
+                        camelstand4.setAttribute('animation-mixer', {clip: '*grazing', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelstand5.setAttribute('animation-mixer', {clip: '*idle2', clampWhenFinished: 'true', startAt: '1', timeScale: '0.9'});
+                        camelchew1.setAttribute('animation-mixer', {clip: '*chew1', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelchew2.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelroll.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        scene4coyote.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        scene4harlan.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '-4000', timeScale: '1'});
+                        harlans1.components.sound.playSound();
+                        camels1.components.sound.playSound();
+                        camels2.components.sound.playSound();
+                        camelchews1.components.sound.playSound();
+                        camelchews2.components.sound.playSound();
+                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", "intensity": 1.2, "decay": 0.6, "distance": 21.4});
 
+                        for (let each of scene4gateanimation) {
+                            each.setAttribute('animation-mixer', {clip: '*eating', timeScale: '1'})
+                        };
+                        for (let each of scene4animations) {
+                            each.setAttribute('animation-mixer', {timeScale: '1'})
+                        };
+                        mammoths2.components.sound.playSound();
+                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 22.8}, "color": "white", "intensity": 1.16, "decay": 0.25, "distance": 24.9});
                 };
     
                 let tunneldoorswitch = function() {
@@ -1260,6 +1347,48 @@ rig.addEventListener("movingended__#trackdismount", function(){
                             each.object3D.visible = !each.getAttribute("visible");
                         }; 
                         break;
+                    case "scene3-butt-1":
+                        var cent = document.getElementById("scene3-text-1");
+                        cent.object3D.visible = !cent.getAttribute("visible");
+                        break;
+                    case "scene3-butt-2":
+                        var cent = document.getElementById("scene3-text-2");
+                        cent.object3D.visible = !cent.getAttribute("visible");
+                        break;
+                    case "scene3-butt-3":
+                        var cent = document.getElementById("scene3-text-3");
+                        cent.object3D.visible = !cent.getAttribute("visible");
+                        break;
+                    case "scene3-butt-4":
+                        var cent = document.getElementById("scene3-text-4");
+                        cent.object3D.visible = !cent.getAttribute("visible");
+                        break;
+                    case "scene3-butt-5":
+                        var cent = document.getElementById("scene3-text-5");
+                        cent.object3D.visible = !cent.getAttribute("visible");
+                        break;
+                    case "scene3-butt-6":
+                        var cent = document.getElementById("scene3-text-6");
+                        cent.object3D.visible = !cent.getAttribute("visible");
+                        break;
+                    case "scene4-butt-1":
+                        for (let each of scene4butt1) {
+                            each.object3D.visible = !each.getAttribute("visible");
+                        }; 
+                        break;
+                    case "scene4-butt-2":
+                        for (let each of scene4butt2) {
+                            each.object3D.visible = !each.getAttribute("visible");
+                        }; 
+                        break;
+                    case "scene4-butt-3":
+                        var cent = document.getElementById("scene4-text-3");
+                        cent.object3D.visible = !cent.getAttribute("visible");
+                        break;
+                    case "scene4-butt-4":
+                        var cent = document.getElementById("scene4-text-4");
+                        cent.object3D.visible = !cent.getAttribute("visible");
+                        break;
     
                     case "scene0warpbutt1":
                     case "scene0warpbutt2":
@@ -1278,8 +1407,13 @@ rig.addEventListener("movingended__#trackdismount", function(){
                         transitionclosewarp(50, 0.05, -26.2, scene2switches);
                         break; 
                     case "scene3warpbutt1":
-                        transitionclosewarp(60, 0.05, 6, scene3switches);
+                    case "scene3warpbutt2":
+                        transitionclosewarp(46.88, 0.05, -12, scene34switches);
                         break;    
+                    case "scene4warpbutt1":
+                    case "scene4warpbutt2":
+                        transitionclosewarp(59.82, 0.05, 7.065, scene34switches);
+                        break;
                     case "narrationbutt":
                         narrationcounter++;
                         console.log("Narration Counter " + narrationcounter);
