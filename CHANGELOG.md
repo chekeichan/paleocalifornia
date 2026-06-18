@@ -1,18 +1,18 @@
 # PaleoCalifornia Changelog
 
-## 1.2 (6/30/26)
-The second quarter is now open! Continue on the time travelling expedition through the coastal prairie and valley oak savannah.
+## 1.2 (6/20/26)
+The second quarter is now open! Continue on the time travelling expedition through the coastal prairie and valley oak savanna.
 
 -   Here are some bullet pointed highlights!
-    - Scene 3, the coastal prairie, is here. Look across a field of western camels as they enjoy the California poppies and oatgrass. As you wind your way around them, you can spot a lone coyote and the imposing Harlan's ground sloth. Stand back because it may demonstrate its lunging attack to ward off predators like the Smilodon! Take in the coastline and observe a distant camel herd as well.
-    - Scene 4, the valley oak savannah, is your next destination! While the savanna sports younger oaks, the scene is dominated by the huge Columbian mammoths. In contrast, the dwarf pronghorn peek out from around the buckbushes and purple needle grass. 
-    - The new scenes occupy a new building that tries some new effects: the animals become the visual interest as the horizon opens up compared to the winding corridors of the preceding scenes. The illusion of distance is obtained through forced perspective and the use of wall decals. (In early testing, a visitor ran right into the wall thinking that the prairie kept going. Mission accomplished!) The multitude of plants is optimized by using linked duplicates in Blender.
+    - Scene 3, the coastal prairie, is here. It features a herd of animals a few lone standouts too.
+    - Scene 4, the valley oak savanna, is your next destination! While the savanna sports younger oaks, the scene is dominated by the largest of the animals that will on this ride. In contrast, the dwarf pronghorn peek out from around the buckbushes and purple needle grass. 
+    - The new scenes occupy a new building that tries some new effects: the animals become the visual interest as the horizon opens up compared to the winding corridors of the preceding scenes. The illusion of distance is obtained through forced perspective and the use of differently scaled models and wall decals. (In early testing, a visitor ran right into the wall thinking that the prairie kept going. Mission accomplished!) The multitude of plants is optimized by using linked duplicates in Blender.
     - Walking mode works in the new scenes, taking you off the pre-programmed ride path! You can even make a jump to the distant hill, though it may turn out to be closer than it appeared. Info signs and maps are also there (fun fact: there are 2 map objects that warp in to the scene you are occupying)
     - Narration for all three audio tracks are re-records! I accentuated the differences between the Adventure (fun) and Educational (ASMR) tracks and kept consistency in recording quality from Part 1 to Part 2. The developer track has fewer 'um's.
     - New button on options panel to start the ride from the beginning or with the new section
 
 -   But...
-    - Procedural rocks and plants are out for now as the plug-in that did it no longer works with the current version of A-Frame due to the great ThreeJS Geometry deprecation event of 2024
+    - Procedural rocks and plants are out for now as the plug-in that did it no longer works with the current version of A-Frame due to the great ThreeJS Geometry deprecation event of 2021 and I had to update A-Frame for other improvements.
 
 ## 1.1 (12/29/23)
 
