@@ -623,6 +623,12 @@ AFRAME.registerComponent("tour-mechanics", {
                         narration.components.sound.playSound();
                         console.log('Narration start');
                         break;
+                    case "track_straight0_0":
+                        narration.flushToDOM();
+                        console.log('2 '+ narration.getAttribute('sound').src)  
+                        narration.components.sound.playSound();
+                        console.log('Narration start at Part 2');
+                        break;
                 }    
             })
 
@@ -1417,7 +1423,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                     case "narrationbutt":
                         narrationcounter++;
                         console.log("Narration Counter " + narrationcounter);
-                        if (narrationcounter > 3) { // Value is total narration tracks (plus none) minus one
+                        if (narrationcounter > 3) { // Value is total narration tracks (including muted track) minus one
                             narrationcounter = 0;
                             AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: None");
                             narration.setAttribute('sound', {src: '#beep-sound'});
@@ -1427,20 +1433,32 @@ rig.addEventListener("movingended__#trackdismount", function(){
                             console.log(narration.getAttribute('sound').src)
                         
                         } else if (narrationcounter === 1) {
-                            narration.setAttribute('sound', {src: '#narration-adventure'})
+                            if (startareacounter === 0) {
+                                narration.setAttribute('sound', {src: '#narration-adventure'})
+                            } else if (startareacounter === 1) {
+                                narration.setAttribute('sound', {src: '#narration-adventure-2'})
+                            }
                             narration.setAttribute('sound', {volume: '1'});
                             AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Adventure");   
                             narration.flushToDOM();
                             console.log("adventure track set");              
                         } else if (narrationcounter === 2) {
-                            AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Educational");
-                            narration.setAttribute('sound', {src: '#narration-education'})
+                            if (startareacounter === 0) {
+                                narration.setAttribute('sound', {src: '#narration-education'})
+                            } else if (startareacounter === 1) {
+                                narration.setAttribute('sound', {src: '#narration-education-2'})
+                            }
                             narration.setAttribute('sound', {volume: '1'});
+                            AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Educational");
                             narration.flushToDOM();
                             console.log("education track set");            
                         } else if (narrationcounter === 3) {
+                            if (startareacounter === 0) {
+                                narration.setAttribute('sound', {src: '#narration-commentary'})
+                            } else if (startareacounter === 1) {
+                                narration.setAttribute('sound', {src: '#narration-commentary-2'})
+                            }
                             AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Behind-the-Scenes");
-                            narration.setAttribute('sound', {src: '#narration-commentary'})
                             narration.setAttribute('sound', {volume: '1'});
                             narration.flushToDOM();
                             console.log("commentary track set")               
@@ -1448,25 +1466,42 @@ rig.addEventListener("movingended__#trackdismount", function(){
                         break;
                     case "startareabutt": // Set tour scene start
                         startareacounter++;
-                        console.log("Start Area Counter " + narrationcounter);
+                        console.log("Start Area Counter " + startareacounter);
                         if (startareacounter > 1) { // Value 0 is scene 0 and value 1 is scene 4 (camels)
                             startareacounter = 0;
                             AFRAME.utils.entity.setComponentProperty(startareatext, "value", "Start: Beginning");
-
+                            if (narrationcounter === 0) {
+                                narration.setAttribute('sound', {src: '#beep-sound'})
+                            } else if (narrationcounter === 1) {
+                                narration.setAttribute('sound', {src: '#narration-adventure'})
+                            } else if (narrationcounter === 2) {
+                                narration.setAttribute('sound', {src: '#narration-education'})
+                            } else if (narrationcounter === 3) {
+                                narration.setAttribute('sound', {src: '#narration-commentary'})
+                            }
                             console.log("Start at scene 0 set")     
                         
                         } else if (startareacounter === 1) {
                             AFRAME.utils.entity.setComponentProperty(startareatext, "value", "Start: Part 2");
-
+                            if (narrationcounter === 0) {
+                                narration.setAttribute('sound', {src: '#beep-sound'})
+                            } else if (narrationcounter === 1) {
+                                narration.setAttribute('sound', {src: '#narration-adventure-2'})
+                            } else if (narrationcounter === 2) {
+                                narration.setAttribute('sound', {src: '#narration-education-2'})
+                            } else if (narrationcounter === 3) {
+                                narration.setAttribute('sound', {src: '#narration-commentary-2'})
+                            }
                             console.log("Start at scene 4 set");              
                         }
+                        narration.flushToDOM();
                         break;    
                     case "creditsbutt": // Flips credit panels
                         for (let each of creditslist) {
                             each.setAttribute("visible", false);     
                         }
                         creditcounter++;
-                        if (creditcounter > 6) { // Value is total panels minus one
+                        if (creditcounter > 9) { // Value is total panels minus one
                             creditcounter = 0;
                         }
                         creditslist[creditcounter].setAttribute("visible", true);

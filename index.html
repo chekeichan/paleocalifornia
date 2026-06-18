@@ -47,6 +47,9 @@
     <a-asset-item id="narration-adventure" response-type="arraybuffer" src="sounds/adventure.mp3"></a-asset-item>
     <a-asset-item id="narration-education" response-type="arraybuffer" src="sounds/educational.mp3"></a-asset-item>
     <a-asset-item id="narration-commentary" response-type="arraybuffer" src="sounds/commentary.mp3"></a-asset-item>
+    <a-asset-item id="narration-adventure-2" response-type="arraybuffer" src="sounds/adventure-2.mp3"></a-asset-item>
+    <a-asset-item id="narration-education-2" response-type="arraybuffer" src="sounds/educational-2.mp3"></a-asset-item>
+    <a-asset-item id="narration-commentary-2" response-type="arraybuffer" src="sounds/commentary-2.mp3"></a-asset-item>
     <a-asset-item id="narration-silence" response-type="arraybuffer" src="sounds/silence.mp3"></a-asset-item>
     <a-asset-item id="countdown-sound" response-type="arraybuffer" src="sounds/countdown.mp3"></a-asset-item>
     <a-asset-item id="swinging-door-sound" response-type="arraybuffer" src="sounds/swinging-door.mp3"></a-asset-item>
@@ -325,7 +328,7 @@
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="true" class="scene0" position="2.42 3.5 -2" rotation="0 -90 0" value="By Keith Chan" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="true" class="scene0" position="2.35 3.5 3.24" rotation="0 -90 0" value="Part Two" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="false" class="scene0" position="-6 1.4 14.4" rotation="0 90 0" value="Thank you for visiting PaleoCA!\nEven more scenes and features are planned" color="black" width="8" line-height="50" text="wrapCount: 40"></a-text>
+<a-text visible="false" class="scene0" position="-6 1.4 14.7" rotation="0 90 0" value="Thank you for visiting PaleoCA!" color="black" width="8" line-height="50" text="wrapCount: 40"></a-text>
 <a-text visible="true" class="scene0" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
 <a-entity gltf-model="models/track.glb" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
 <a-entity gltf-model="#start" class="scene0" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
@@ -459,8 +462,8 @@
 <!-- <a-light id="lightscene3end" visible="true" class="scene3 light" color="white" position="66 7 -1" light="type: point; intensity: 0.64; decay: 0.1; distance: 14"></a-light> -->
 
 <a-entity id="scene3-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="46.55 -2.1 -10.51" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
-<a-entity id="scene3-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="42.85 -1.486 -4.63" scale="0.25 0.1 0.25" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
-<a-entity id="scene3-butt-3" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="37.44 -2.1 -6.37" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene3-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="42.85 -1.486 -4.63" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene3-butt-3" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="37.44 -2.1 -6.373" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 <a-entity id="scene3-butt-4" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="45.11 -2.1 2.032" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 <a-entity id="scene3-butt-5" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="59.87 -2.1 -6.09" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 <a-entity id="scene3-butt-6" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="64.32 -2.1 0.339" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
@@ -542,13 +545,12 @@ Keith Chan (CC BY-NC-SA 3.0)
 Wilshire Grand Center
 Turner Construction Company (CC BY 4.0)
 https://www.thingiverse.com/thing:2383392
-
--Scene 2: Pinyon-Juniper Woodland-
-Landscape and Plants
-Keith Chan (CC BY-NC-SA 3.0)
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1.1 0 0" text="value: Low poly raccoon (Procyon lotor)
+<a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1.1 0 0" text="value: -Scene 2: Pinyon-Juniper Woodland Arroyo-
+Landscape and Plants
+Keith Chan (CC BY-NC-SA 3.0)Low poly raccoon (Procyon lotor)
+
 Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/otsOA
 
@@ -565,7 +567,37 @@ Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/ospTG
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-3" visible="false" position="-1.1 -0.1 0" text="value: -Sound Sources-
+<a-entity mixin="credit-text" class="credits" id="credits-3" visible="false" position="-1.1 0 0" text="-Scene 3: Coastal Prairie-
+Landscape and Plants
+Keith Chan (CC BY-NC-SA 3.0)
+
+Low poly western camel (Camelops hesternus)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/ospWx
+
+Low poly coyote (Canis latrans)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/otsOo
+
+Low poly Harlan's ground sloth (Paramylodon)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/ot67n
+"></a-entity>
+
+<a-entity mixin="credit-text" class="credits" id="credits-4" visible="false" position="-1.1 0 0" text="-Scene 4: Valley Oak Savanna-
+Landscape and Plants
+Keith Chan (CC BY-NC-SA 3.0)
+
+Low poly Columbian mammoth (Mammuthus columbi)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/osYAT
+
+Low poly dwarf pronghorn (Capromeryx minor)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/ot67o
+"></a-entity>
+
+<a-entity mixin="credit-text" class="credits" id="credits-5" visible="false" position="-1.1 -0.1 0" text="value: -Sound Sources-
 02-Lija.wav
 ZeritFreeman (CC0 1.0)
 https://freesound.org/s/472334/
@@ -578,6 +610,10 @@ A tree is creaking in the patagonian forest of Argentina in a deep creaky sound.
 felix.blume (CC0 1.0)
 https://freesound.org/s/140047/
 
+big log on dirt throwing.wav
+KrystianPawlowski (CC0 1.0)
+https://freesound.org/s/584891/
+
 Branch Crack
 Luka Bea (CC0 1.0)
 https://freesound.org/s/660471/
@@ -585,16 +621,38 @@ https://freesound.org/s/660471/
 bubble
 Ranner (CC0 1.0)
 https://freesound.org/s/487531/
+"></a-entity>
+
+<a-entity mixin="credit-text" class="credits" id="credits-6" visible="false" position="-1.1 -0.1 0" text="value: Camel Farm Bahrain (February 27th 2016) - 1 of 2
+Chris Weaver (CC BY 4.0)
+https://freesound.org/s/338282/
 
 Crickets At Night - Clean sound
 Defelozedd94 (CC0 1.0)
-https://freesound.org/s/522298/
+https://freesound.org/s/522298/Door open and close interior x3
+peridactyloptrix (CC0 1.0)
+https://freesound.org/s/195849/
+
+Dromedaries ruminating
+schots (CC0 1.0)
+https://freesound.org/s/693563/
+
+Foliage_Rustling_001.wav
+duckduckpony(CC BY 4.0)
+https://freesound.org/s/204030/
+
+G12-40-Elephants Trumpeting.wav
+craigsmith (CC0 1.0)
+https://freesound.org/s/437973/
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-4" visible="false" position="-1.1 -0.1 0" text="value: 
-hegelmoney-clip.flac
+<a-entity mixin="credit-text" class="credits" id="credits-7" visible="false" position="-1.1 -0.1 0" text="value: hegelmoney-clip.flac
 shimsewn (CC0 1.0)
 https://freesound.org/s/61299/
+
+Huff 1
+https://freesound.org/s/389652/
+_stubb (CC0 1.0)
 
 Human_Steps_Sand_Dry.wav
 LamaMakesMusic (CC0 1.0)
@@ -609,10 +667,14 @@ Eelke (CC0 1.0)
 https://freesound.org/s/185368/
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-5" visible="false" position="-1.1 -0.1 0" text="value: 
+<a-entity mixin="credit-text" class="credits" id="credits-8" visible="false" position="-1.1 -0.1 0" text="value: 
 Pig - Grunt 5 (deep) - 96kHz.wav
 Jarred Gibb (CC0 1.0)
 https://freesound.org/s/233173/
+
+S035_Camels_Mono.wav
+Pól (CC0 1.0) 
+https://freesound.org/s/385912/
 
 Sci-Fi Doors-Airlock Sound Effect
 Ryan King (CC0 1.0)
@@ -622,12 +684,16 @@ Short Beep Countdown
 gurie (CC0 1.0)
 https://freesound.org/s/368779/
 
+Slide Door
+RandomRecord19 (CC BY 4.0) 
+https://freesound.org/s/739824/
+
 tone beep.wav
 pan14 (CC0 1.0)
 https://freesound.org/s/263133/
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-6" position="-1.1 0 0" visible="false" text="value: VR Sources
+<a-entity mixin="credit-text" class="credits" id="credits-9" position="-1.1 0 0" visible="false" text="value: VR Sources
 A-Frame
 Diego Marcos, Don McCurdy, and Kevin Ngo
 https://github.com/aframevr/aframe
@@ -649,7 +715,7 @@ c-frame, Don McCurdy, n5ro
 https://github.com/c-frame/aframe-extras
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-7" position="-1.1 0 0" visible="false" text="value: A-Frame Surface Scatter
+<a-entity mixin="credit-text" class="credits" id="credits-10" position="-1.1 0 0" visible="false" text="value: A-Frame Surface Scatter
 Ada Rose Cannon
 https://github.com/AdaRoseCannon/aframe-surface-scatter
 
