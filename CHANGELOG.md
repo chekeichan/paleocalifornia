@@ -10,9 +10,12 @@ The second quarter is now open! Continue on the time travelling expedition throu
     - Walking mode works in the new scenes, taking you off the pre-programmed ride path! You can even make a jump to the distant hill, though it may turn out to be closer than it appeared. Info signs and maps are also there (fun fact: there are 2 map objects that warp in to the scene you are occupying)
     - Narration for all three audio tracks are re-records! I accentuated the differences between the Adventure (fun) and Educational (ASMR) tracks and kept consistency in recording quality from Part 1 to Part 2. The developer track has fewer 'um's.
     - New button on options panel to start the ride from the beginning or with the new section
+    - Using A-Frame 1.6.0
+    - Hand models were at an odd angle so I removed the hand component in favor of laser-controls. This fixes...
+    - Double-hits when selecting buttons in VR
 
 -   But...
-    - Procedural rocks and plants are out for now as the plug-in that did it no longer works with the current version of A-Frame due to the great ThreeJS Geometry deprecation event of 2021 and I had to update A-Frame for other improvements.
+    - Procedural rocks and plants are out for now as the component that did it no longer works with the version of A-Frame I'm using.
 
 ## 1.1 (12/29/23)
 
