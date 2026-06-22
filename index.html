@@ -18,19 +18,19 @@
   <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
   <meta http-equiv="pragma" content="no-cache" />
 <meta name="description" content="VR tour of California 40,000 years ago">
-<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
+<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
 <script src="js/aframe-alongpath-component.js"></script> <!-- Custom code to fix rig camera angle-->
 <script src="https://cdn.jsdelivr.net/npm/aframe-curves@1.0.0/build/curve.min.js"></script>
-<script src="js/aframe-surface-scatter.min.js"></script>
+<!-- <script src="js/aframe-surface-scatter.js"></script> -->
 <script src="https://cdn.jsdelivr.net/gh/diarmidmackenzie/instanced-mesh@v0.7.0/src/instanced-mesh.min.js"></script>
 <script src="js/paleoca.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/gh/kylebakerio/a-console@1.0.2/a-console.js"></script> -->
 </head>
  
 <body>
-<a-scene all-wait warp device-set device-orientation-permission-ui inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" loading-screen="backgroundColor: 4C5E7F" renderer="colorManagement: true; foveationLevel: 2;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false">
+  <a-scene all-wait warp device-set device-orientation-permission-ui inspector="url: https://cdn.jsdelivr.net/gh/c-frame/aframe-editor@1.7.0/dist/aframe-editor.min.js" loading-screen="backgroundColor: 336666" renderer="colorManagement: true; foveationLevel: 2;" loading-screen="enabled:true;" background="color: #bfbfbf" shadow="autoUpdate: false" gltf-model="meshoptDecoderPath: https://unpkg.com/meshoptimizer@0.16.0/meshopt_decoder.js; dracoDecoderPath: js/draco/" xr-mode-ui="enterAREnabled: false" raycaster="far: 4; objects: .clickable" cursor="">
 
 <a-assets timeout="80000"> <!-- Loads models -->
     <a-asset-item id="navmesh" response-type="arraybuffer" src="models/navmesh.glb"></a-asset-item>
@@ -44,6 +44,9 @@
     <a-asset-item id="narration-adventure" response-type="arraybuffer" src="sounds/adventure.mp3"></a-asset-item>
     <a-asset-item id="narration-education" response-type="arraybuffer" src="sounds/educational.mp3"></a-asset-item>
     <a-asset-item id="narration-commentary" response-type="arraybuffer" src="sounds/commentary.mp3"></a-asset-item>
+    <a-asset-item id="narration-adventure-2" response-type="arraybuffer" src="sounds/adventure-2.mp3"></a-asset-item>
+    <a-asset-item id="narration-education-2" response-type="arraybuffer" src="sounds/educational-2.mp3"></a-asset-item>
+    <a-asset-item id="narration-commentary-2" response-type="arraybuffer" src="sounds/commentary-2.mp3"></a-asset-item>
     <a-asset-item id="narration-silence" response-type="arraybuffer" src="sounds/silence.mp3"></a-asset-item>
     <a-asset-item id="countdown-sound" response-type="arraybuffer" src="sounds/countdown.mp3"></a-asset-item>
     <a-asset-item id="swinging-door-sound" response-type="arraybuffer" src="sounds/swinging-door.mp3"></a-asset-item>
@@ -57,6 +60,15 @@
     <a-asset-item id="sbc-plants1" response-type="arraybuffer" src="sounds/sbcplants1.mp3"></a-asset-item>
     <a-asset-item id="sbc-plants2" response-type="arraybuffer" src="sounds/sbcplants2.mp3"></a-asset-item>
     <a-asset-item id="sbc-steps" response-type="arraybuffer" src="sounds/sbc1lightsteps.mp3"></a-asset-item>
+    <a-asset-item id="scene2-plantgate-sound" response-type="arraybuffer" src="sounds/scene2-plantgate.mp3"></a-asset-item>
+    <a-asset-item id="scene2-exitdoor-sound" response-type="arraybuffer" src="sounds/scene2-exitdoor.mp3"></a-asset-item>
+    <a-asset-item id="camel1-sound" response-type="arraybuffer" src="sounds/camel1.mp3"></a-asset-item>
+    <a-asset-item id="camel2-sound" response-type="arraybuffer" src="sounds/camel2.mp3"></a-asset-item>
+    <a-asset-item id="camelchew1-sound" response-type="arraybuffer" src="sounds/camel-chew-1.mp3"></a-asset-item>
+    <a-asset-item id="camelchew2-sound" response-type="arraybuffer" src="sounds/camel-chew-2.mp3"></a-asset-item>
+    <a-asset-item id="harlan-sloth-sequence-sound" response-type="arraybuffer" src="sounds/harlan-sloth-sequence.mp3"></a-asset-item>
+    <a-asset-item id="mammoth-buckbush-sequence-sound" response-type="arraybuffer" src="sounds/mammoth-buckbush-sequence.mp3"></a-asset-item>
+    <a-asset-item id="mammoth-fight-sequence-sound" response-type="arraybuffer" src="sounds/mammoth-fight-sequence.mp3"></a-asset-item>
 
     <a-mixin id="obj" hoverable grabbable="startButtons: trackpaddown, triggerdown, gripclose, gripdown, abuttondown, bbuttondown, xbuttondown, ybuttondown, thumbstickdown, mousedown; endButtons: trackpadup, triggerup, gripopen, gripup, abuttonup, bbuttonup, xbuttonup, ybuttonup, thumbstickup, mouseup" scale="1 1 1" rotation="0 0 0" shadow></a-mixin>
     <a-mixin id="blink" blink-controls="cameraRig: #rig; teleportOrigin: #camera; collisionEntities:.nav;"></a-mixin>
@@ -67,6 +79,7 @@
     <a-mixin id="burial-label" position="0 0 -1" text="width: 2; color: black; lineHeight: 60; wrap-count: 35"></a-mixin>
     <a-mixin id="table-caption" text="align: right; color: black; lineHeight: 55; wrap-count: 50"></a-mixin>
     <a-mixin id="scale-label" visible="false" geometry="primitive: plane; height: 1; width: 1; buffer: false" material="color: #c5c5c5; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 30; width: 0.9"></a-mixin>
+    <a-mixin id="scale-label-tall" visible="false" geometry="primitive: plane; height: 1.5; width: 1; buffer: false" material="color: #c5c5c5; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 30; width: 0.9"></a-mixin>
     <a-mixin id="scale-label-tall-dark" visible="false" geometry="primitive: plane; height: 1.5; width: 1; buffer: false" material="color: #696893; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 30; width: 0.9"></a-mixin>
     <a-mixin id="scale-label-la" instanced-mesh-member="mesh:#scene1-text-1" rotation="0 90 0" geometry="primitive: plane; height: 0.6; width: 1.25; buffer: false" material="color: black; shader: flat;" text="color: #dadada; lineHeight: 60; wrap-count: 20; width: 1.2"></a-mixin>
     <a-mixin id="panel-background" geometry="primitive: box; height: 1; width: 1.25; depth: 0.1; buffer: false" material="color: #a4a4a4; shader: flat;" text="color: black; lineHeight: 75; wrap-count: 35"></a-mixin>
@@ -79,21 +92,57 @@
     <a-mixin id="sound" ></a-mixin>
 
  </a-assets>
+
+ <script>
+    // simple:
+    // window.initALoadScreen();
+    
+  // <!--  optionally, you can specify options.  -->
+    // with full options specified, with default values shown
+    window.initALoadScreen({
+      debug: [], // can include 'log','warn','error', etc.
+      showLogoLoader: true,
+      logoURL: "https://aframe.io/aframe-school/media/img/aframe-logo.png",
+      logoSize: "200,200",
+      showBarLoaders: true,
+      showLoadPercent: true, // not implemented
+      showFileNames: true,   // not complete
+      showFileSizes: true,   // not implemented
+      barLoaderPreset: "rainbow", // one of: line, fan, circle, bubble, rainbow, energy, stripe, text | see https://loading.io/progress/
+      customLoaderAttributes: null, // see usage of this object in this script to get a clearer idea, along with docs @ https://loading.io/progress
+      backgroundColor: "black",
+      backgroundOpacity: .5,
+      sceneOpacity: 1,
+      onComplete: function() {this.hideLoader()}, 
+      // this.hideLoader() will be added and made available to you on the object 
+      // (so: don't bind onComplete function to another context if you want access.)
+      // you probably always want to call this.hideLoader() eventually, 
+      // but it's your app :)
+      // you could also just inject a button first if you want for audio, etc.
+    })
+  </script>
+  
  <a-entity gltf-model="#navmesh" nav-mesh class="nav" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity>
  <a-entity gltf-model="models/infopoles.glb" class="walk" position="0 -3 0" rotation="0 0 0" visible="false"></a-entity>
- <a-entity gltf-model="models/placeholder.glb" position="0.23 0 0" rotation="0 0 0" visible="true"></a-entity>
 
 <!-- Player Character -->
 <a-entity id="rig" tour-mechanics tour-end rotation-reader position="-6.5 0.6 5" rotation="0 -90 0">
 <!-- <a-light id="podlight" color="white" position="0 3 0" light="type: point; intensity: 1; decay: 0.5; distance: 2"></a-light> -->
   <a-entity id="pod" gltf-model="models/pod-rig.glb" plane-hit static-body="shape: box" visible="false" position="0 1.0 -0.1"></a-entity> 
-  <a-entity id="camera" rotation="180 180 0" camera look-controls cursor="rayOrigin:mouse" raycaster="far: 4; objects: .clickable"  position="0 1.6 0">
-    <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity><!-- Transition animation -->
+  <a-entity id="camera" rotation="180 180 0" camera look-controls raycaster="far: 4; objects: .clickable"  position="0 1.6 0">
+    <a-entity
+            id="crosshairs"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            material="color: orange; shader: flat"
+            visible="false">
+  </a-entity>
+  <a-entity id="transition" position="0 0 -0.3" geometry="primitive: ring; radiusInner: 2; radiusOuter: 2" material="color: #ccc; side: front; shader: flat" animation__close="autoplay: false; property: geometry.radiusInner; from: 2; to: 0; startEvents: transitionclose; dur: 700;" animation__open="autoplay: false; property: geometry.radiusInner; from: 0; to: 2; startEvents: transitionopen; dur: 700;"></a-entity><!-- Transition animation -->
 </a-entity>
-        <a-entity id="lefthand" class="hand" hand-controls="hand: left; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: left; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange" >
+        <a-entity id="lefthand" class="hand" laser-controls="hand: left" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange" >
           <!-- <a-console thumbstick-scrolling="#left-hand" font-size="35" position="0 .13 -.36" scale=".33 .33 .33" rotation="-70.7 -1.77"></a-console>-->
         </a-entity> 
-        <a-entity id="righthand" class="hand" hand-controls="hand: right; handModelStyle: lowPoly; color: #0055ff" laser-controls="hand: right; model: false" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange"></a-entity>
+        <a-entity id="righthand" class="hand" laser-controls="hand: right" raycaster="far: 4; objects: .clickable; lineOpacity: 1; lineColor: orange"></a-entity>
 
         <a-entity id="boop-s" mixin="sound" class="scene0sound" position="0 1.6 0" sound="src: #boop-sound; loop: false; maxDistance: 4"></a-entity>
         <a-entity id="beep-s" mixin="sound" class="scene0sound" position="0 1.6 0" sound="src: #beep-sound; loop: false; maxDistance: 4"></a-entity>
@@ -101,7 +150,7 @@
         
  </a-entity>
  
-<a-light id="ambientlight" type="ambient" color="white" intensity="0.1"></a-light> 
+<a-light id="ambientlight" type="ambient" color="white" intensity="0.1"></a-light> <!-- 0.1 intensity usually -->
 <a-light id="light1" class="light" color="white" position="-4.2 3.6 5" light="type: point; intensity: 1.5; decay: 1; distance: 15"></a-light>
 <a-light id="light2" class="light" color="white" position="0 5.4 -17.4" light="type: point; intensity: 0.3; decay: 1; distance: 15"></a-light>
 <a-light id="timetunnellight" visible="true" color="#0bee8d" position="14.4 1.6 -20" light="type: point; intensity: 0.75; decay: 0.01; distance: 9"></a-light>
@@ -141,14 +190,47 @@
   <a-curve-point class="curve" id="track_asympt2" position="39.331 0 -40.581" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn4_1" position="44.277 0 -41.298" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_turn4_2" position="48.757 0 -40.452" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn4_3" position="49.585 0 -36.397" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_1" position="49.924 0 -31.4" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_2" position="49.96 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_3" position="49.96 0 -20.443" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_4" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn4_3" position="49.7 0 -36.17" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_1" position="49.7 0 -31.4" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_2a" position="49.7 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track3" class="track" closed="false" visible="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Ending -->
+<a-curve id="track3start" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model=""> <!-- Pre-Start for Starting Track 3 -->
+  <a-curve-point class="curve" id="track_straight0_0" position="49.7 0 -26.0101" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight1_0a" position="49.7 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
+</a-curve>
+
+<a-curve id="track34" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
+  <a-curve-point class="curve" id="track_straight5_2b" position="49.7 0 -26.01" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_3" position="49.7 0 -19.3" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight5_4" position="49.5 0 -14.5" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_1" position="47.28 0 -11.61" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_2" position="43.75 0 -11.1" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_3" position="39.722 0 -9.83" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_4" position="38.64 0 -6.8" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_5" position="38.75 0 -3.1" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_6" position="41.2 0 -0.2" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_7" position="45.1 0 0.46" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn5_8" position="49.1 0 -0.9" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_asympt2" position="51.8 0 -4.1" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn6_1" position="54.7 0 -6.7" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn6_2" position="58.6 0 -6.2" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn6_3" position="61.43 0 -3.8" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn6_4" position="62.46 0 0.06" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn6_5" position="61.87 0 4.16" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn6_6" position="59.44 0 7.27" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn6_7" position="56.21 0 9.71" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn6_8" position="52.61 0 11.3" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_turn6_9" position="48.7 0 12.16" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight6_1" position="44.3 0 12.55" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight6_2" position="39.8 0 12.55" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight6_3" position="35.1 0 12.55" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight6_4" position="30.5 0 12.55" gltf-model="models/trackorb.glb"></a-curve-point>
+  <a-curve-point class="curve" id="track_straight6_5" position="26 0 12.55" gltf-model="models/trackorb.glb"></a-curve-point>
+  <!-- <a-curve-point class="curve" id="track_straight6_6" position="23.4 0 12.4" gltf-model="models/trackorb.glb"></a-curve-point> -->
+</a-curve>
+
+<a-curve id="trackend" class="track" closed="false" visible="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Ending -->
   <a-curve-point class="curve" id="track_straight_end_1_1" position="0 0 23.548" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight_end_1_2" position="0 0 19.828" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight_end_1_3" position="0 0 16.128" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -157,25 +239,12 @@
   <a-curve-point class="curve" id="track_straight_end_1_6" position="0 0 5" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track3b" class="track-off" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb">
-  <a-curve-point class="curve" id="track_straight5_2b" position="49.96 0 -25" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_3" position="49.96 0 -20" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_straight5_4" position="49.96 0 -15.6" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn5_1" position="48.1 0 -12.3" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn5_3" position="44 0 -11" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn6_1" position="42 0 -8" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn6_2" position="39 0 -5.5" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn6_3" position="43 0 -2" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn6_4" position="45 0 0.5" gltf-model="models/trackorb.glb"></a-curve-point>
-  <a-curve-point class="curve" id="track_turn7_1" position="53 0 -5" gltf-model="models/trackorb.glb"></a-curve-point>
-</a-curve>
-
 <a-curve id="trackdismount" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Pre-Start -->
   <a-curve-point class="curve" id="track_straight_dismount_1" position="0 0 5" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight_dismount_2" position="0 0 4.9999" gltf-model="models/trackorb.glb"></a-curve-point>
 </a-curve>
 
-<a-curve id="track-fake1" class="track" visible="false" closed="false" tension="0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
+<a-curve id="track-fake1" class="track" visible="false" closed="false" tension="0" position="5.54 0 -37.41" rotation="0 -90 0" clone-along-curve="spacing: 1; scale:0.4 0.4 0.4;" gltf-model="models/trackorb.glb"> <!-- Fake Continuation -->
   <a-curve-point class="curve" id="track_straight_fake_1_1" position="49.96 0 -20.443" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight_fake_1_2" position="49.96 0 -15" gltf-model="models/trackorb.glb"></a-curve-point>
   <a-curve-point class="curve" id="track_straight_fake_1_3" position="49.96 0 -11.3" gltf-model="models/trackorb.glb"></a-curve-point>
@@ -201,6 +270,8 @@
   <a-text id="podwarningtext" mixin="text-label" visible="false" position="0.62 0 0.054" rotation="0 0 0" value="For VR pros!"></a-text>
   <a-entity id="narrationbutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
   <a-text id="narrationtext" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Narration: Adventure"></a-text>
+  <a-entity id="startareabutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.30 0.05" visible="true"></a-entity>
+  <a-text id="startareatext" mixin="text-label" position="0.1 -0.30 0.05" rotation="0 0 0" value="Start: Beginning"></a-text>
   
   <!-- <a-entity id="soundcheck" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
   <a-text id="soundchecktext" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Sound Check"></a-text> -->
@@ -210,7 +281,7 @@
 <a-entity id="instructionspanel" position="-5.342 1.237 2.811" rotation="-62.62 -52.71 0">
   <a-text id="instructionsstitle" mixin="text-title" position="0.063 0.525 0" rotation="0 0 0" value="Instructions: Ride Mode"></a-text>
   <a-text id="GL-VR" mixin="text-label" position="0.068 0.123 -0.006" rotation="0 0 0" visible="false" value="Turn: use headset or right thumbstick\nSelect: point and use trigger\n\n1. Check options on right panel\n2. Get comfortable\n3. Center your view in VR\n4. Select button on ramp to start ride!"></a-text>
-  <a-text id="GL-AVP" mixin="text-label" position="0.068 0.123 -0.006" rotation="0 0 0" visible="false" value="\nImportant: reload page for sound\n\nTurn: use headset\nSelect: point to orange button\nwith face and pinch fingers\n\n1. Check options on right panel\n2. Get comfortable\n3. Select button on ramp to start ride!"></a-text>
+  <a-text id="GL-AVP" mixin="text-label" position="0.073 0.102 0.003" rotation="0 0 0" visible="false" value="\nNo sound?: reload and just pinch VR\nbutton without turning\n\nTurn: turn head; Select: aim crosshairs \n with face then pinch fingers\n\n1. Check options on right panel\n2. Get comfortable\n3. Select button on ramp to start ride!"></a-text>
   <a-text id="GL-PC" mixin="text-label" position="0.08 0.19 0" rotation="0 0 0" visible="false" value="Turn: drag with mouse\nSelect: left click\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
   <a-text id="GL-SP" mixin="text-label" position="0.072 0.084 0" rotation="0 0 0" visible="false" value="Turn: drag across screen or turn device\nSelect: aim screen center to button and\ntap screen or tap button directly\n\n1. Check options on right panel\n2. Select button on ramp to start ride!"></a-text>
   <a-entity id="movemodebutt" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.12 -0.30 0" visible="true"></a-entity>
@@ -219,34 +290,42 @@
 
 <!-- Map Panel 1-->
 <a-entity id="warp-map1" class="walk" position="-4.527 -1.763 6.344" rotation="-62.1 -126.72 0" visible="false"> <!-- Movable map 1-->
-  <a-text id="warpmaptitle1" mixin="text-title" position="-0.032 0.356 0.052" rotation="0 0 0" value="Visit A Scene"></a-text>
-  <a-entity id="scene0warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
-  <a-text id="scene0warpstext1" mixin="text-label" position="0.1 0.15 0.05" rotation="0 0 0" value="Loading Bay"></a-text>
-  <a-entity id="scene1warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0 0.05" visible="true"></a-entity>
-  <a-text id="scene1warpstext1" mixin="text-label" position="0.1 0 0.05" rotation="0 0 0" value="Los Angeles"></a-text>
-  <a-entity id="scene2awarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
-  <a-text id="scene2awarpstext1" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
-  <a-entity id="scene2bwarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
-  <a-text id="scene2bwarpstext1" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
+  <a-text id="warpmaptitle1" mixin="text-title" position="-0.04 0.420 0.053" rotation="0 0 0" value="Visit A Scene"></a-text>
+  <a-entity id="scene0warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.283 0.05" visible="true"></a-entity>
+  <a-text id="scene0warpstext1" mixin="text-label" position="0.084 0.283 0.05" rotation="0 0 0" value="Loading Bay"></a-text>
+  <a-entity id="scene1warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.12 0.05" visible="true"></a-entity>
+  <a-text id="scene1warpstext1" mixin="text-label" position="0.082 0.12 0.05" rotation="0 0 0" value="Los Angeles"></a-text>
+  <a-entity id="scene2awarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.03 0.05" visible="true"></a-entity>
+  <a-text id="scene2awarpstext1" mixin="text-label" position="0.076 -0.03 0.05" rotation="0 0 0" value="Arroyo Entrance"></a-text>
+  <a-entity id="scene2bwarpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.19 0.05" visible="true"></a-entity>
+  <a-text id="scene2bwarpstext1" mixin="text-label" position="0.076 -0.19 0.06" rotation="0 0 0" value="Arroyo Exit"></a-text>
+  <a-entity id="scene3warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.0 -0.36 0.05" visible="true"></a-entity>
+  <a-text id="scene3warpstext1" mixin="text-label" position="0.075 -0.36 0.05" rotation="0 0 0" value="Coastal Plains"></a-text>
+  <a-entity id="scene4warpbutt1" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.642 0.284 0.05" visible="true"></a-entity>
+  <a-text id="scene4warpstext1" mixin="text-label" position="0.682 0.284 0.05" rotation="0 0 0" value="Oak Savannah"></a-text>
 </a-entity>
 
 <!-- Map Panel 2-->
 <a-entity id="warp-map2" class="walk" position="4.83 -2.157 -20.6" rotation="-62.1 -91.9 0" visible="false"> <!-- Movable map 2-->
-  <a-text id="warpmaptitle2" mixin="text-title" position="-0.032 0.356 0.052" rotation="0 0 0" value="Visit A Scene"></a-text>
-  <a-entity id="scene0warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.15 0.05" visible="true"></a-entity>
-  <a-text id="scene0warpstext2" mixin="text-label" position="0.1 0.15 0.05" rotation="0 0 0" value="Loading Bay"></a-text>
-  <a-entity id="scene1warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0 0.05" visible="true"></a-entity>
-  <a-text id="scene1warpstext2" mixin="text-label" position="0.1 0 0.05" rotation="0 0 0" value="Los Angeles"></a-text>
-  <a-entity id="scene2awarpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.15 0.05" visible="true"></a-entity>
-  <a-text id="scene2awarpstext2" mixin="text-label" position="0.1 -0.15 0.05" rotation="0 0 0" value="Nighttime Entrance"></a-text>
-  <a-entity id="scene2bwarpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.3 0.05" visible="true"></a-entity>
-  <a-text id="scene2bwarpstext2" mixin="text-label" position="0.1 -0.3 0.05" rotation="0 0 0" value="Nighttime Exit"></a-text>
+  <a-text id="warpmaptitle2" mixin="text-title" position="-0.04 0.420 0.053" rotation="0 0 0" value="Visit A Scene"></a-text>
+  <a-entity id="scene0warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.283 0.05" visible="true"></a-entity>
+  <a-text id="scene0warpstext2" mixin="text-label" position="0.084 0.283 0.05" rotation="0 0 0" value="Loading Bay"></a-text>
+  <a-entity id="scene1warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="clickable static" position="0 0.12 0.05" visible="true"></a-entity>
+  <a-text id="scene1warpstext2" mixin="text-label" position="0.082 0.12 0.05" rotation="0 0 0" value="Los Angeles"></a-text>
+  <a-entity id="scene2awarpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.03 0.05" visible="true"></a-entity>
+  <a-text id="scene2awarpstext2" mixin="text-label" position="0.076 -0.03 0.05" rotation="0 0 0" value="Arroyo Entrance"></a-text>
+  <a-entity id="scene2bwarpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0 -0.19 0.05" visible="true"></a-entity>
+  <a-text id="scene2bwarpstext2" mixin="text-label" position="0.076 -0.19 0.06" rotation="0 0 0" value="Arroyo Exit"></a-text>
+  <a-entity id="scene3warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.0 -0.36 0.05" visible="true"></a-entity>
+  <a-text id="scene3warpstext2" mixin="text-label" position="0.075 -0.36 0.05" rotation="0 0 0" value="Coastal Plains"></a-text>
+  <a-entity id="scene4warpbutt2" mixin="settingsbutton button" buttonlogic static-body="shape: box;"  class="clickable static" position="0.642 0.284 0.05" visible="true"></a-entity>
+  <a-text id="scene4warpstext2" mixin="text-label" position="0.682 0.284 0.05" rotation="0 0 0" value="Oak Savannah"></a-text>
 </a-entity>
 
 <a-text visible="true" class="scene0" position="2.4 4.4 -2.15" rotation="0 -90 0" value="PaleoCA" color="black" width="15" line-height="50" text="wrapCount: 20"></a-text>
 <a-text visible="true" class="scene0" position="2.42 3.5 -2" rotation="0 -90 0" value="By Keith Chan" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="true" class="scene0" position="2.35 3.5 3.24" rotation="0 -90 0" value="Part One" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
-<a-text visible="false" class="scene0" position="-6 1.4 14.4" rotation="0 90 0" value="Thank you for visiting PaleoCA!\nMore scenes and features are planned" color="black" width="8" line-height="50" text="wrapCount: 40"></a-text>
+<a-text visible="true" class="scene0" position="2.35 3.5 3.24" rotation="0 -90 0" value="Part Two" color="black" width="3" line-height="50" text="wrapCount: 20"></a-text>
+<a-text visible="false" class="scene0" position="-6 1.4 14.7" rotation="0 90 0" value="Thank you for visiting PaleoCA!" color="black" width="8" line-height="50" text="wrapCount: 40"></a-text>
 <a-text visible="true" class="scene0" position="2.35 4.28 3.24" rotation="0 -90 0" value="Travel 40,000 years into Southern California's past!"  color="black" width="3" line-height="50" text="wrapCount: 16.5"></a-text>
 <a-entity gltf-model="models/track.glb" position="0 0.05 0" rotation="0 0 0" visible="false"></a-entity> <!-- Temp Track -->
 <a-entity gltf-model="#start" class="scene0" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
@@ -268,16 +347,16 @@
 <a-entity id="scene1-room" gltf-model="models/scene1.glb" class="scene1" position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-outside" gltf-model="#timetunnel-outside" position="0 0 0" rotation="0 0 0"></a-entity>
 <a-entity id="timetunnel1-inside" gltf-model="models/timetunnel-inside.glb" position="0 0 0" rotation="0 0 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
-<a-entity id="timetunnel2-outside" class="scene2 hide linkedtunnelout" visible="true" gltf-model="#timetunnel-outside" position="29.8 0 -29" rotation="0 -90 0"></a-entity>
-<a-entity id="timetunnel2-inside" class="scene2 hide linkedtunnel" visible="true" gltf-model="models/timetunnel-inside.glb" position="29.8 0 -29" rotation="0 -90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
+<a-entity id="timetunnel2-outside" class="scene4 hide linkedtunnelout" visible="true" gltf-model="#timetunnel-outside" position="40 0 -7.6" rotation="0 180 0"></a-entity>
+<a-entity id="timetunnel2-inside" class="scene4 hide linkedtunnel" visible="true" gltf-model="models/timetunnel-inside.glb" position="40 0 -7.6" rotation="0 180 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
 <a-entity id="timetunnel3-outside" class="scene0 linkedtunnelout" gltf-model="#timetunnel-outside" position="20.16 0 37.65" rotation="0 90 0"></a-entity>
 <a-entity id="timetunnel3-inside" class="scene0 linkedtunnel" gltf-model="models/timetunnel-inside.glb" position="20.16 0 37.65" rotation="0 90 0"  animation-mixer="clip: TimeTunnel.Undulate; timeScale: 0"></a-entity>
 <a-entity id="swinging-door-s" mixin="sound" class="scene1sound" position="0.07 1.7 -3.4" sound="src: #swinging-door-sound; loop: false; maxDistance: 10"></a-entity>
 <a-entity id="timetunnel1-inside-s" mixin="sound" class="scene1sound" position="13.9 1.7 -20" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel-door-1-entrance-s" mixin="sound" class="scene1sound" position="5.69 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 <a-entity id="timetunnel-door-1-exit-s" mixin="sound" class="scene1sound" position="22.22 1.6 -20.14" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel-door-2-entrance-s" mixin="sound" class="scene2sound" position="49.89 1.6 -23.2" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
-<a-entity id="timetunnel2-inside-s" mixin="sound" class="" position="50 1.7 -15" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
+<a-entity id="timetunnel-door-2-entrance-s" mixin="sound" class="scene2sound" position="34.06 1.6 12.9" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="timetunnel2-inside-s" mixin="sound" class="" position="25.8 1.7 12.76" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel3-inside-s" mixin="sound" class="" position="0.1 1.7 23.5" sound="src: #timetunnel-sound; loop: true; maxDistance: 10; refDistance: 8"></a-entity>
 <a-entity id="timetunnel-door-3-exit-s" mixin="sound" class="scene0sound" position="0.02 1.6 15.06" sound="src: #timetunnel-door-sound; loop: false; maxDistance: 4"></a-entity>
 <a-entity id="scene1-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="1.815 -2.1 -7.87" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
@@ -304,9 +383,8 @@
 </a-entity>
 </a-entity>
 
-
-
-<a-entity id="scene2-room" gltf-model="models/scene2.glb" class="hide scene2" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity>
+<a-entity id="scene2-room" gltf-model="models/scene2.glb" class="scene2 hide" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> 
+<a-entity id="scene2-end" gltf-model="models/scene2end.glb" class="scene2end hide" visible="true" position="0 0 0" rotation="0 0 0" shadow="receive: false"></a-entity> 
 <a-entity id="crickets1-s" mixin="sound" class="scene2sound" position="30 1.35 -20" sound="src: #cricket-sound; loop: true; maxDistance: 8; distanceModel: linear"></a-entity>
 <a-entity id="crickets2-s" mixin="sound" class="scene2sound" position="28 1.35 -39" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
 <a-entity id="crickets3-s" mixin="sound" class="scene2sound" position="39 0.25 -45.8" sound="src: #cricket-sound; loop: true; maxDistance: 10; distanceModel: linear"></a-entity>
@@ -316,8 +394,9 @@
 <a-entity id="shasta-eating-s" mixin="sound" class="scene2sound" position="42.8 1.54 -42.55" sound="src: #shasta-eating-sound; maxDistance: 6; distanceModel: linear"></a-entity>
 <a-entity id="sbcplants1-s" mixin="sound" class="scene2sound" position="51.8 2 -40.5" sound="src: #sbc-plants1; maxDistance: 10"></a-entity>
 <a-entity id="sbcplants2-s" mixin="sound" class="scene2sound" position="53.3 2.17 -34.3" sound="src: #sbc-plants2; maxDistance: 10"></a-entity>
+<a-entity id="scene2-plantgate-s" mixin="sound" class="scene2sound" position="49.6 1.01 -22.6" sound="src: #scene2-plantgate-sound; loop: false; maxDistance: 4"></a-entity>
+<a-entity id="scene2-exitdoor-s" mixin="sound" class="scene2sound" position="49.5 1.0 -15.8" sound="src: #scene2-exitdoor-sound; loop: false; maxDistance: 4"></a-entity>
 
-<!-- <a-entity gltf-model="models/mammoth.glb" position="39 0 -44.6" rotation="0 -42 0" visible="true"></a-entity> -->
 <a-entity gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" position="29.7 1.25 -21" rotation="0 -90 0" animation-mixer="clip: raccoon.adult.standing; timeScale: 0"></a-entity>
 <a-entity id="scrounging-raccoon" gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" position="26.892 1.13 -36.67" rotation="0 65 0" animation-mixer="clip: raccoon.adult.scrounging; timeScale: 0"></a-entity>
 <a-entity gltf-model="models/raccoon-adult.glb" class="hide scene2 scene2anim" position="29.5 3.49 -30.15" rotation="0 75 0" animation-mixer="clip: raccoon.adult.log; timeScale: 0"></a-entity>
@@ -326,15 +405,17 @@
 <a-entity gltf-model="models/raccoon-baby.glb" class="hide scene2 scene2anim" position="27.16 1.65 -30.07" rotation="0 -7 0" animation-mixer="clip: raccoon.baby.Climbing2; timeScale: 0"></a-entity>
 <a-entity id="wheatgrassnight" gltf-model="models/westernwheatgrass-night.glb" visible="false"></a-entity>
 <a-entity id="scene2rocknight" gltf-model="models/scene2rock-night.glb" visible="false"></a-entity>
-<a-entity gltf-model="models/grassspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter="object:#wheatgrassnight; count:100; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
-<a-entity gltf-model="models/rockspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter="object:#scene2rocknight; count:30; scaleJitter: 1 1 1; rotationJitter: 360 360 360; uniformJitter: false" shadow="cast: false; receive: false"></a-entity>
+<a-entity gltf-model="models/grassspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter__wheatgrass="object:#wheatgrassnight; count:100; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
+<a-entity gltf-model="models/rockspawn.glb" class="hide scene2" position="0 -0.04 0" surface-scatter__scene2rocks="object:#scene2rocknight; count:30; scaleJitter: 1 1 1; rotationJitter: 360 360 360; uniformJitter: false" shadow="cast: false; receive: false"></a-entity>
 <a-entity id="mountainlion1" gltf-model="models/mountainlion.glb" class="hide scene2 scene2anim" position="29.585 1.636 -46.27" rotation="-7 124 0" animation-mixer="clip: *resting; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="sleepy-shasta" gltf-model="models/shastasloth.glb" class="hide scene2 scene2anim" position="38.86 -0.03 -43.54" rotation="0 -63.7 0" animation-mixer="clip: shasta.sleeping; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="eating-shasta" gltf-model="models/shastasloth.glb" class="hide scene2 scene2anim" position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: shasta.eating; clampWhenFinished: true; timeScale: 0"></a-entity>
 <a-entity id="joshua-tree" gltf-model="models/joshuatree.glb" class="hide scene2 scene2anim" position="42.458 -0.04 -42.82" rotation="0 49.3 0" animation-mixer="clip: *; timeScale: 0"></a-entity>
-<a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="hide scene2 scene2sbc" visible="true" position="52.07 1.76 -40.62" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *; clampWhenFinished: true; loop: once; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="sbc1-plant" gltf-model="models/plants-scene2-anim.glb" class="hide scene2 scene2sbc" visible="true" position="52.07 1.76 -40.62" rotation="0 0 0" shadow="receive: false" animation-mixer="clip: *push; clampWhenFinished: true; loop: once; timeScale: 0" shadow="recieve: true"></a-entity>
 <a-entity id="sbc1a" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2sbc" position="52 1.88 -40.63" rotation="0 0 3" shadow="cast: false; receive: false" animation-mixer="clip: *stalk; clampWhenFinished: true; loop: once; timeScale: 0" sound="src: #sbc-steps; autoplay: false; loop: true; maxDistance: 5; distanceModel: linear"></a-entity>
 <a-entity id="sbc1b" gltf-model="models/saber-toothed-cat-scene2.glb" class="hide scene2 scene2anim" position="52.31 2.5 -24.23" rotation="0 90 0" animation-mixer="clip: *pose;  timeScale: 0"></a-entity>
+<a-entity id="scene2-exitplant-door" gltf-model="models/scene2endplants.glb" class="scene2end hide" position="0 0 0" rotation="0 0 0" animation-mixer="clip: *open; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
+<a-entity id="scene2-exit-door" gltf-model="models/scene2exit.glb" class="scene2end hide" position="0 0 0" rotation="0 0 0" animation-mixer="clip: *open; clampWhenFinished: true; loop: once; timeScale: 0"></a-entity>
 
 <a-entity id="scene2-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="29.64 -2.1 -22.23" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 <a-entity id="scene2-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="32.65 -2.1 -40.9" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
@@ -342,12 +423,86 @@
 <a-entity id="scene2-butt-4" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="50.48 -2.1 -39.4" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
 
 <!-- Scene 2 Info Boxes -->
-<a-entity id="scene2-text-1a" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2raccoontext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Raccoon\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
-<a-entity id="scene2-text-1b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2raccoontext" position="26.7 -1.1 -28.5" rotation="0 70 0" text="value: Raccoon\nScientific name: Procyon lotor\nPleistocene Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons mate between winter and spring. Litters are born in April or May with an average of four cubs per litter.; "></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-1a" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2raccoontext" position="31.7 -0.9 -22.6" rotation="0 -90 0" text="value: Raccoon\nScientific name: Procyon lotor\nPast Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons of the Pleistocene were similar to the ones in the present. They are known as adaptable, omnivorous, and intelligent nocturnal foragers that have agile use of their hands.; "></a-entity><!-- Info Box -->
+<a-entity id="scene2-text-1b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2raccoontext" position="26.7 -1.1 -28.5" rotation="0 70 0" text="value: Raccoon\nScientific name: Procyon lotor\nPast Range: Likely across United States\nCurrent Range: Naturally from southern Canada to Panama. Human-introduced populations across Europe and Asia.\n\nRaccoons mate between winter and spring. Litters are born in April or May with an average of four cubs per litter.; "></a-entity><!-- Info Box -->
 <a-entity id="scene2-text-2" visible="false" mixin="scale-label-tall-dark" class="walk-label" position="33.6 -1.4 -42" rotation="0 20 0" text="value: Mountain Lion\nScientific name: Puma concolor\nPast Range: Across South and North America\nPresent Range: Fragmented population across South and North\n\nWhile the past and present ranges are similar, mountain lions experienced extinction in North America 12,000 years ago. The North American cats are from a South American population that repopulated North America. The ability to consume a more varied diet than larger Pleistocene cats may have allowed the species to rebound."></a-entity><!-- Info Box -->
 <a-entity id="scene2-text-3" visible="false" mixin="scale-label-tall-dark" class="walk-label" position="40.5 -1.84 -44.5" rotation="0 0 0" text="value: Shasta Ground Sloth\nScientific name: Nothrotheriops shastensis\nPast Range: Mainly from the American Southwest to Central Mexico\nModern Range: None\n\nThis species was named for its initial discovery in Shasta County, California. They are among the smallest of the extinct ground sloths. Well-preserved remains including stomach contents show a diet of Joshua trees.";></a-entity><!-- Info Box -->
 <a-entity id="scene2-text-4a" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2sbctext" position="50.2 -1.6 -42" rotation="0 -20 0" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nSmilodon are a side lineage of cats not directly related to modern cats. They are California's state fossil, and the second most common mammal found at the La Brea Tar Pits.;"></a-entity><!-- Info Box -->
 <a-entity id="scene2-text-4b" visible="false" mixin="scale-label-tall-dark" class="walk-label scene2sbctext" position="51.404 -1.45 -26.06" rotation="0 -90 0" material="color: #8f856b" text="value: Saber-Toothed Cat\nScientific name: Smilodon fatalis\nPast Range: Western Canada south across the United States and south down the Andean coast\nPresent Range: None\n\nThe muscular bodies and long canine teeth would have assisted a hunting strategy of pouncing on large prey from cover. The lighter jaw muscle structure produced less biting force than other cats, but allowed the jaw to open 120 degrees;"></a-entity><!-- Info Box -->
+
+<!-- Scene 3 -->
+<a-entity gltf-model="models/scene3.glb" class="scene3 scene3room hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene3end.glb" class="scene3 scene3end hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity gltf-model="models/scene34divider.glb" class="scene3 scene34 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+
+<a-entity id="camel1-s" mixin="sound" class="scene3sound" position="50.31 1.38 -9.86" sound="src: #camel1-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="camel2-s" mixin="sound" class="scene3sound" position="33.64 1.54 -9.18" sound="src: #camel2-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="camelchew-1-s" mixin="sound" class="scene3sound" position="48.4 1.02 0.69" sound="src: #camelchew1-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="camelchew-2-s" mixin="sound" class="scene3sound" position="47.75 1.45 -1.74" sound="src: #camelchew2-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="harlan-sequence-s" mixin="sound" class="scene3sound" position="60 0.58 -7.13" sound="src: #harlan-sloth-sequence-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+
+<a-entity id="caoatgrasssmall" gltf-model="models/caoatgrass-small.glb" visible="false"></a-entity>
+<a-entity gltf-model="models/plantspawn3.glb" class="" position="0 -0.04 0" surface-scatter__oatgrass="object:#caoatgrasssmall; count:200; rotationJitter: 0 360 0" shadow="cast: false; receive: false"></a-entity>
+<a-entity no-cull id="camel-sit-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-sit1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *look; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-sit-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-sit2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *scratch; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *grazing; timeScale: 0; startAt: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-3" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand3.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle; timeScale: 0; startAt: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-4" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand4.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *grazing; timeScale: 0; startAt: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-stand-5" class="hide scene3 scene3anim" gltf-model="models/westerncamel-stand5.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *idle2; timeScale: 0; startAt: 1" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-chew-1" class="hide scene3 scene3anim" gltf-model="models/westerncamel-chew1.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew1; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-chew-2" class="hide scene3 scene3anim" gltf-model="models/westerncamel-chew2.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *chew2; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity no-cull id="camel-roll" class="hide scene3 scene3anim" gltf-model="models/westerncamel-roll.glb" position="0 0 0" rotation="0 0 0" visible="true" animation-mixer="clip: *roll; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="coyote-1" class="hide scene3 scene3anim" gltf-model="models/coyote.glb" position="45.143 0 3.845" rotation="0 162.16 0" visible="true" animation-mixer="clip: *idle; timeScale: 0" shadow="recieve: true"></a-entity>
+<a-entity id="harlanssloth-1" class="hide scene3 scene3anim" gltf-model="models/harlanssloth.glb" position="60.3 0.1 -7.524" rotation="0 -21 0" visible="true" animation-mixer="clip: *idle; timeScale: 0;" shadow="recieve: true"></a-entity>
+<!-- <a-light id="lightscene3" visible="true" class="scene3 light" color="d5e0f4" position="41 10 -4.8" light="type: point; intensity: 0.6; decay: 0.1; distance: 17.3"></a-light> -->
+<!-- <a-light id="lightscene3end" visible="true" class="scene3 light" color="white" position="66 7 -1" light="type: point; intensity: 0.64; decay: 0.1; distance: 14"></a-light> -->
+
+<a-entity id="scene3-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="46.55 -2.1 -10.51" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene3-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="42.85 -1.486 -4.63" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene3-butt-3" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="37.44 -2.1 -6.373" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene3-butt-4" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="45.11 -2.1 2.032" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene3-butt-5" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="59.87 -2.1 -6.09" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene3-butt-6" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="64.32 -2.1 0.339" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+
+<!-- Scene 3 Info Boxes -->
+<a-entity id="scene3-text-1" visible="false" mixin="scale-label-tall" class="walk-label scene3cameltext" position="45.34 -1.84 -9.85" rotation="0 154 0" text="value: Western Camel\nScientific name: Camelops hesternus\nPast Range: Western North America from Alaska to Honduras\nModern Range: None\n\nThe Camelidae family originally evolved in North America from 46 to 42 million years ago. The Western Camel ranged along the West Coast from Alaska to Mexico and eastward to the Midwest. Ancient DNA studies found that these camels are more related to modern African and Asian camelids than the South American llamas and alpacas."></a-entity><!-- Info Box -->
+<a-entity id="scene3-text-2" visible="false" mixin="scale-label-tall" class="walk-label scene3poppytext" position="43.97 -1.43 -5.1" rotation="0 -67.6 0" text="value: California Poppy\nScientific name: Eschscholzia californica\nCurrent range: West Coast of North America from Washington State to Mexico\n\nRThese flowering plants are known for their blue-green foliage and yellow, orange, and red flowers. Currently, these plants are invasive in countries such as Chile and Australia, where they traveled with miners following gold rushes from California in the 1800s. In 1903, they were declared the California state plant.; "></a-entity><!-- Info Box -->
+<a-entity id="scene3-text-3" visible="false" mixin="scale-label-tall" class="walk-label scene3prairietext" position="36.07 -1.84 -4.629" rotation="0 120 0" text="value: California Coastal Prairie\nThis type of grassland extended from the coast of Oregon and California to over 60 miles (96.5 km) inland. Danthonia, oatgrass, is the dominant plant species of this coastal prairie, while others favor Deschampsia, or hair grsss.\n\nThis species-rich ecosystem was widespread during the Pleistocene, but is now severely threatened, with only 1% remaining due to farming and invasive species.; "></a-entity><!-- Info Box -->
+<a-entity id="scene3-text-4" visible="false" mixin="scale-label-tall" class="walk-label scene3coyotetext" position="46.54 -1.84 2.57" rotation="0 220 0" text="value: Coyote\nScientific name: Canis latrans\nWestern North America from Southern California to Idaho\nCurrent Range: NNorth and Central America\n\nPrehistoric coyotes were larger than their modern descendants. The reduction in body sized is timed with the extinction of North American megafauna such as the western camel. While present-day coyotes in urban areas are often nocturnal to avoid humans, wild coyotes are active in the daytime.; "></a-entity><!-- Info Box -->
+<a-entity id="scene3-text-5" visible="false" mixin="scale-label-tall" class="walk-label scene3harlantext" position="58.48 -1.84 -7.65" rotation="0 -20 0" text="value: Harlan's Ground Sloth\nScientific name: Paramylodon harlani\nPast Range: North and Central America\nCurrent Range: None\n\nGiant sloths were the typical members of the sloth suborder in the past. The three large claws on each hand could have aided survival in numerous ways, including defense from predators, digging, and grabbing tree branches for food. Preserved trackways in New Mexico confirm that they walked slowly on the insides of their hindfeet."></a-entity><!-- Info Box -->
+<a-entity id="scene3-text-6" visible="false" mixin="scale-label-tall" class="walk-label scene3coasttext" position="64.68 -1.84 -4.54" rotation="0 -90 0" text="value: Pleistocene Coastline\n\nThe cooler temperatures of the Ice Age trapped more of Earth&#39;s water as glaciers, resulting in a sea level that was over 100 meters lower than today&#39;s coastline. The warming that occurred in the last 30,000 years produced estuaries from the Pleistocene river valleys and moved the coastline miles inland.; "></a-entity><!-- Info Box -->
+
+
+<!-- Scene 4 -->
+<a-entity gltf-model="models/scene4.glb" class="scene4 hide" position="0 0 0" rotation="0 0 0" visible="true"></a-entity>
+<a-entity id="mammoth-buckbush-s" mixin="sound" class="scene4sound" position="59.63 1.55 4.43" sound="src: #mammoth-buckbush-sequence-sound; maxDistance: 20; distanceModel: linear; loop: true"></a-entity>
+<a-entity id="mammoth-fight-s" mixin="sound" class="scene4sound" position="47.48 3.31 11.82" sound="src: #mammoth-fight-sequence-sound; maxDistance: 16; distanceModel: linear; loop: true"></a-entity>
+<!-- <a-light id="lightscene4" visible="true" class="scene4 light" color="white" position="48.6 9 12.4" light="type: point; intensity: 1.16; decay: 0.01; distance: 17.24"></a-light> -->
+<a-entity id="mammoth-pullbranch" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4bush" position="55.413 0 3.003" rotation="0 70 0" animation-mixer="clip: *eating; startAt: 0; timeScale: 0"></a-entity>
+<a-entity id="buckbush-pulled" gltf-model="models/buckbush.glb" class="scene4 hide scene4bush" position="55.4 0 3" rotation="0 70 0" animation-mixer="clip: *eating; startAt: 0; timeScale: 0"></a-entity>
+<a-entity id="mammoth-fight-right" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="48.825 0 9.572" rotation="0 150 0" animation-mixer="clip: *fight.right; timeScale: 0"></a-entity>
+<a-entity id="mammoth-fight-left" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="45.8 0 14.7" rotation="0 150 0" animation-mixer="clip: *fight.left; timeScale: 0"></a-entity>
+<a-entity id="mammoth-laying" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="57 0 13.3" rotation="0 -90 0" animation-mixer="clip: *laying; timeScale: 0"></a-entity>
+<a-entity id="mammoth-standing" gltf-model="models/columbianmammoth.glb" class="scene4 hide scene4anim" position="38 0 8.6" rotation="0 70 0" animation-mixer="clip: *standing; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-1" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="52.37 0 16.6" rotation="0 -110 0" animation-mixer="clip: *grazing; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-2" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="51.25 0.114 14.86" rotation="0 -150 0" animation-mixer="clip: *look.left.short; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-3" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="43.1 0 7.016" rotation="0 30 0" animation-mixer="clip: *look.right.long; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-4" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="41.15 0 14.7" rotation="0 120 0" animation-mixer="clip: *look.right.short; timeScale: 0"></a-entity>
+<a-entity id="pronghorn-5" gltf-model="models/dwarfpronghorn.glb" class="scene4 hide scene4anim" position="36.65 0 16.06" rotation="0 160 0" animation-mixer="clip: *look.right.short; timeScale: 0"></a-entity>
+
+<a-entity id="scene4-butt-1" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="58.67 -2.1 6.323" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene4-butt-2" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="56.26 -2.1 11.18" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene4-butt-3" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="49.98 -2.1 13.9" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+<a-entity id="scene4-butt-4" mixin="settingsbutton button" buttonlogic static-body="shape: box;" class="walk clickable static" position="42.83 -2.1 14.51" scale="0.25 0.1 0.25" rotation="0 0 0" geometry="height: 1" visible="false"></a-entity>
+
+<!-- Scene 4 Info Boxes -->
+<a-entity id="scene4-text-1a" visible="false" mixin="scale-label-tall" class="walk-label scene4planttext" position="63.35 -1.84 6.11" rotation="0 -109 0"  text="value: Valley Oak\nScientific name: Quercus lobata\nCurrent Range: California Central Valley surrounding foothills\n\nThe largest of the California oaks tolerates a variety of climates given abundant water. The acorns are food for many birds and mammals. The valley oak can live up to 600 years. This species is currently threatened by the use of its habitat for farming and urban development.; "></a-entity><!-- Info Box -->
+<a-entity id="scene4-text-1b" visible="false" mixin="scale-label-tall" class="walk-label scene4planttext" position="57.73 -1.84 6.3" rotation="0 57 0" text="value: Buckbush\nScientific name: Ceanothus cuneatus\nCurrent Range: Widespread from Oregon to Baja California\n\nThis flowering shrub blooms with small bluish or lavender flowers. The plant supports many insects as larval hosts and pollinators. The seeds of the buckbush are also cached by harvester ants.;"></a-entity><!-- Info Box -->
+<a-entity id="scene4-text-2a" visible="false" mixin="scale-label-tall" class="walk-label scene4mammothtext" position="57.28 -1.84 11.07" rotation="0 -100 0" text="value: Columbian Mammoth\nScientific name: Ceanothus cuneatus\nPast Range: Southern Canada to Costa Rica\nCurrent Range: None\n\nThe Columbian mammoth was one of the largest mammoth species. Genetic evidence shows ancestry from Eurasian steppe mammoths and possible hybridization with wooly mammoths. The modern Asian elephant is the closest living lineage.;"></a-entity><!-- Info Box -->
+<a-entity id="scene4-text-2b" visible="false" mixin="scale-label-tall" class="walk-label scene4mammothtext" position="53.4 -1.84 12.15" rotation="0 139 0" geometry="height: 1.0;" text="value: The first scientifically described mammoth fossils were found by enslaved Africans in South Carolina in 1725. They correctly identified the fossils as the teeth of an elephant-like animal.; "></a-entity><!-- Info Box -->
+<a-entity id="scene4-text-3" visible="false" mixin="scale-label-tall" class="walk-label scene4pronghorntext" position="50 -1.84 15.1" rotation="0 150 0" text="value: Dwarf Pronghorn\nScientific name: Capromeryx minor\nPast Range: Across the southern United States and northern Mexico\nCurrent Range: None\n\nThe diminutive pronghorn likely preferred open plains with shrubs and trees for cover. They likely behaved similarly to modern pronghorn, though research is sparse. The cause for their extinction is unclear since they are dissimilar in ecology from the megafauna that went extinct in the Late Pleistocene and Early Holocene.; "></a-entity><!-- Info Box -->
+<a-entity id="scene4-text-4" visible="false" mixin="scale-label-tall" class="walk-label scene4savannatext" position="41.98 -1.84 15.236" rotation="0 140.2 0" text="value: Valley Oak Savanna\n\nSavannas anchored by the large valley oaks occupied alluvial terraces and flat plains from the California Central Valley to Los Angeles County. The valley oak savannas in the Pleistocene were multi-layered with many species of grasses, wildflowers, forbs, and oaks of varying ages. Modern savannas are mostly old oaks and invasive grasses.; "></a-entity><!-- Info Box -->
 
 <!-- Welcome Panel -->
 <a-entity id="welcomebackground" mixin="index-background" static-body="shape: box;" class="scene0 clickable static" position="-7.238 2.14 2.95" rotation="0 21.77 0" visible="true">
@@ -387,13 +542,12 @@ Keith Chan (CC BY-NC-SA 3.0)
 Wilshire Grand Center
 Turner Construction Company (CC BY 4.0)
 https://www.thingiverse.com/thing:2383392
-
--Scene 2: Pinyon-Juniper Woodland-
-Landscape and Plants
-Keith Chan (CC BY-NC-SA 3.0)
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1.1 0 0" text="value: Low poly raccoon (Procyon lotor)
+<a-entity mixin="credit-text" class="credits" id="credits-2" visible="false" position="-1.1 0 0" text="value: -Scene 2: Pinyon-Juniper Woodland Arroyo-
+Landscape and Plants
+Keith Chan (CC BY-NC-SA 3.0)Low poly raccoon (Procyon lotor)
+
 Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/otsOA
 
@@ -410,7 +564,37 @@ Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
 https://skfb.ly/ospTG
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-3" visible="false" position="-1.1 -0.1 0" text="value: -Sound Sources-
+<a-entity mixin="credit-text" class="credits" id="credits-3" visible="false" position="-1.1 0 0" text="value: -Scene 3: Coastal Prairie-
+Landscape and Plants
+Keith Chan (CC BY-NC-SA 3.0)
+
+Low poly western camel (Camelops hesternus)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/ospWx
+
+Low poly coyote (Canis latrans)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/otsOo
+
+Low poly Harlan's ground sloth (Paramylodon)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/ot67n
+"></a-entity>
+
+<a-entity mixin="credit-text" class="credits" id="credits-4" visible="false" position="-1.1 0 0" text="value: -Scene 4: Valley Oak Savanna-
+Landscape and Plants
+Keith Chan (CC BY-NC-SA 3.0)
+
+Low poly Columbian mammoth (Mammuthus columbi)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/osYAT
+
+Low poly dwarf pronghorn (Capromeryx minor)
+Natural History Museum of Los Angeles County (CC BY-NC-SA 4.0)
+https://skfb.ly/ot67o
+"></a-entity>
+
+<a-entity mixin="credit-text" class="credits" id="credits-5" visible="false" position="-1.1 -0.1 0" text="value: -Sound Sources-
 02-Lija.wav
 ZeritFreeman (CC0 1.0)
 https://freesound.org/s/472334/
@@ -423,6 +607,10 @@ A tree is creaking in the patagonian forest of Argentina in a deep creaky sound.
 felix.blume (CC0 1.0)
 https://freesound.org/s/140047/
 
+big log on dirt throwing.wav
+KrystianPawlowski (CC0 1.0)
+https://freesound.org/s/584891/
+
 Branch Crack
 Luka Bea (CC0 1.0)
 https://freesound.org/s/660471/
@@ -430,16 +618,40 @@ https://freesound.org/s/660471/
 bubble
 Ranner (CC0 1.0)
 https://freesound.org/s/487531/
+"></a-entity>
+
+<a-entity mixin="credit-text" class="credits" id="credits-6" visible="false" position="-1.1 -0.1 0" text="value: Camel Farm Bahrain (February 27th 2016) - 1 of 2
+Chris Weaver (CC BY 4.0)
+https://freesound.org/s/338282/
 
 Crickets At Night - Clean sound
 Defelozedd94 (CC0 1.0)
 https://freesound.org/s/522298/
+
+Door open and close interior x3
+peridactyloptrix (CC0 1.0)
+https://freesound.org/s/195849/
+
+Dromedaries ruminating
+schots (CC0 1.0)
+https://freesound.org/s/693563/
+
+Foliage_Rustling_001.wav
+duckduckpony(CC BY 4.0)
+https://freesound.org/s/204030/
+
+G12-40-Elephants Trumpeting.wav
+craigsmith (CC0 1.0)
+https://freesound.org/s/437973/
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-4" visible="false" position="-1.1 -0.1 0" text="value: 
-hegelmoney-clip.flac
+<a-entity mixin="credit-text" class="credits" id="credits-7" visible="false" position="-1.1 -0.1 0" text="value: hegelmoney-clip.flac
 shimsewn (CC0 1.0)
 https://freesound.org/s/61299/
+
+Huff 1
+https://freesound.org/s/389652/
+_stubb (CC0 1.0)
 
 Human_Steps_Sand_Dry.wav
 LamaMakesMusic (CC0 1.0)
@@ -452,12 +664,15 @@ https://freesound.org/s/377827/
 moving plant
 Eelke (CC0 1.0)
 https://freesound.org/s/185368/
-"></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-5" visible="false" position="-1.1 -0.1 0" text="value: 
 Pig - Grunt 5 (deep) - 96kHz.wav
 Jarred Gibb (CC0 1.0)
 https://freesound.org/s/233173/
+"></a-entity>
+
+<a-entity mixin="credit-text" class="credits" id="credits-8" visible="false" position="-1.1 -0.1 0" text="value: S035_Camels_Mono.wav
+Pól (CC0 1.0) 
+https://freesound.org/s/385912/
 
 Sci-Fi Doors-Airlock Sound Effect
 Ryan King (CC0 1.0)
@@ -467,12 +682,20 @@ Short Beep Countdown
 gurie (CC0 1.0)
 https://freesound.org/s/368779/
 
+Slide Door
+RandomRecord19 (CC BY 4.0) 
+https://freesound.org/s/739824/
+
 tone beep.wav
 pan14 (CC0 1.0)
 https://freesound.org/s/263133/
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-6" position="-1.1 0 0" visible="false" text="value: VR Sources
+<a-entity mixin="credit-text" class="credits" id="credits-9" position="-1.1 0 0" visible="false" text="value: VR Sources
+a-console
+Kyle Baker
+https://github.com/kylebakerio/a-console
+
 A-Frame
 Diego Marcos, Don McCurdy, and Kevin Ngo
 https://github.com/aframevr/aframe
@@ -488,13 +711,17 @@ https://github.com/AdaRoseCannon/aframe-curves
 A-Frame Event Set
 Kevin Ngo
 https://github.com/amitwaghmare/aframe-event-set-component
-
-A-Frame Extras
-c-frame, Don McCurdy, n5ro
-https://github.com/c-frame/aframe-extras
 "></a-entity>
 
-<a-entity mixin="credit-text" class="credits" id="credits-7" position="-1.1 0 0" visible="false" text="value: A-Frame Surface Scatter
+<a-entity mixin="credit-text" class="credits" id="credits-10" position="-1.1 0 0" visible="false" text="value: A-Frame Extras
+c-frame, Don McCurdy, n5ro
+https://github.com/c-frame/aframe-extras
+
+Instanced-Mesh
+Diarmid Mackenzie
+https://github.com/diarmidmackenzie/instanced-mesh
+
+A-Frame Surface Scatter
 Ada Rose Cannon
 https://github.com/AdaRoseCannon/aframe-surface-scatter
 
