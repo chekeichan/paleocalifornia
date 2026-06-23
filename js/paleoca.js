@@ -21,20 +21,36 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
     init: function() {
         const sceneEl = document.querySelector('a-scene');
         const rig = document.querySelector('#rig');
-
+        const camera = document.querySelector('#camera');
+        const lhand = document.querySelector('#lefthand');
+        const rhand = document.querySelector('#righthand');
+function isVisionPro() {
+  const isMacIntel = navigator.platform === 'MacIntel';
+  const isTouchCapable = navigator.maxTouchPoints > 1;
+  const isVisionOSWidth = screen.width === 1306;
+  const isVisionOSHeight = screen.height === 735;
+  
+  return isMacIntel && isTouchCapable && isVisionOSWidth && isVisionOSHeight;
+}
          if (AFRAME.utils.device.isMobile() === true) { // Smartphone
-            // rig.setAttribute("movement-controls", "speed", 0.15);
+            //  rig.setAttribute("movement-controls", "speed", 0.15);
                 document.querySelector('#GL-SP').object3D.visible = true;
-                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
                 setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
+                setAttributes(camera, {"raycaster": {far: 4, objects: '.clickable'}})
         } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
-            if (screen.width == 1306) { // AVP Mode
+              isVisionPro();
+                if (isVisionPro) { // AVP Mode
                 document.querySelector('#GL-AVP').object3D.visible = true;
                 document.querySelector('#movemodebutt').object3D.visible = false;
                 AFRAME.utils.entity.setComponentProperty(movemodetext, "value", " ");
                 document.querySelector('#crosshairs').object3D.visible = true;
+                setAttributes(lhand, {"hand-tracking-controls": {hand: 'left',}})
+                setAttributes(rhand, {"hand-tracking-controls": {hand: 'right',}})
+camera.setAttribute('cursor', 'rayOrigin: entity; fuse: false; downEvents: selectstart; upEvents: selectend;');
+camera.setAttribute('raycaster', 'objects: .clickable; far: 4; interval: 100;');
                 console.log('AVP detected');
             } else {
+                // All other VR Mode
                 document.querySelector('#GL-VR').object3D.visible = true;
                 AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode");
                 console.log('VR detected');
@@ -43,6 +59,7 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
             rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
             console.log('PC detected' + screen.width);
+            setAttributes(camera, {"raycaster": {far: 4, objects: '.clickable'}})
             document.querySelector('#GL-PC').object3D.visible = true;
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
@@ -50,6 +67,7 @@ AFRAME.registerComponent('device-set', { // Device-specific settings
         } else { // Mystery Mode
             console.log('No known device detected');
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
+            setAttributes(camera, {"raycaster": {far: 4, objects: '.clickable'}})
             AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Walk Mode");
     }
 
@@ -130,6 +148,8 @@ AFRAME.registerComponent("tour-start", {
             } else if (startareacounter === 1) { // Start at scene 3
                 visiswitch(scene2toggle, true);
                 sbc2cat.setAttribute('animation-mixer', {timeScale: '1'})
+                setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "intensity": 6.47, "decay": 0.1, "distance": 5.5})
+                console.log('light2 move to sbc dawn')
                 visiswitch(scene2endtoggle, true);
                 visiswitch(scene3toggle, true);
                 rig.setAttribute('alongpath', {curve: '#track3start', dur: 10000, triggerRadius: 0.001}) 
@@ -168,7 +188,7 @@ AFRAME.registerComponent("tour-end", {
             }
             podplaceholder.object3D.visible = true;
             pod.object3D.visible = false;
-            setAttributes(light1, {"position": {x: -4.2, y: 3.6, z: 5}, "color": "white", "animation": {property: 'light.intensity', from: 2, to: 1.5, dur: 2000}, "decay": 1, "distance": 15})
+            setAttributes(light1, {"position": {x: -4.65, y: 3.6, z: 5.28}, "color": "white", "animation": {property: 'light.intensity', to: 4.7, dur: 2000}, "decay": 0.2, "distance": 15})
             console.log('light1 move to end')
             setTimeout(function(){transitionopen();}, 700)
         };
@@ -346,7 +366,7 @@ AFRAME.registerComponent("tour-mechanics", {
                             each.setAttribute('animation-mixer', {timeScale: '1'})
                         };
                         console.log('scene 2 animations on');
-                        setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 1.5, to: 2, dur: 2000}, "decay": 0.01, "distance": 11.9})
+                        setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 4.7, to: 9.42, dur: 2000}, "decay": 0.01, "distance": 15})
                         console.log('light1 move to raccoons')
                         break;
                     case "track_straight2_1b":
@@ -359,7 +379,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('play cricket sounds')
                         break;
                     case "track_straight2_2":
-                        setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "intensity": 2, "decay": 0.1, "distance": 5.5})
+                        setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "intensity": 6.47, "decay": 0.1, "distance": 5.5})
                         console.log('light2 move to sbc dawn')
                         break;
                     case "track_turn2_1":
@@ -405,11 +425,11 @@ AFRAME.registerComponent("tour-mechanics", {
                         visiswitch(scene3toggle, true);
                         break;
                     case "track_turn4_3":
-                        setAttributes(light1, {"position":  {x: 42, y: 10, z: -7.6}, "color": "#d5e0f4", "intensity": 1.44, "decay": 0.1, "distance": 14.4})
+                        setAttributes(light1, {"position":  {x: 42, y: 10, z: -7.6}, "color": "#d5e0f4", "intensity": 4.52, "decay": 0.1, "distance": 14.4})
                         console.log('light1 move to scene3')
                     break;
                     case "track_straight5_1":
-                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.02, dur: 10000}})
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 2, dur: 10000}})
                         console.log('ambient light brighten');
                         break;
                     case "track_straight5_2b":
@@ -428,7 +448,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         camelchew2.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
                         camelroll.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
                         scene4coyote.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
-                        scene4harlan.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '-8000', timeScale: '1'});
+                        scene4harlan.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
                         harlans1.components.sound.playSound();
                         console.log('scene 3 animations on');
                     break;
@@ -443,7 +463,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         audiswitchdelay(camelchews2, "play", 5950);
                         console.log('camel sounds start');
 
-                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.75, dur: 8000}});
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 2, dur: 8000}});
                         console.log('ambient light brighten');
                     break;
                     case "track_straight5_4":
@@ -465,7 +485,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 2 hide');
                     break;
                     case "track_turn5_3":
-                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", 'animation': {property: 'light.intensity', to: 1.1, dur: 4000}, "decay": 0.6, "distance": 21.4});
+                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", 'animation': {property: 'light.intensity', to: 2, dur: 4000}, "decay": 0.1, "distance": 21.4});
                         console.log('light3 move to scene 3 end');
                     break;
                     case "track_turn5_4":
@@ -490,7 +510,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 4 general animations on');
                     break;
                     case "track_turn6_1":
-                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 22.8}, "color": "white", "intensity": 1.16, "decay": 0.25, "distance": 24.9});
+                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 11.4}, "color": "white", "intensity": 4, "decay": 0.01, "distance": 20});
                         console.log('light2 move to scene 4');
                     break;
                     case "track_turn6_4":
@@ -521,7 +541,7 @@ AFRAME.registerComponent("tour-mechanics", {
                             each.setAttribute('animation-mixer', {timeScale: '1'})
                         };
                         console.log('Time Tunnel 2 undulate on');
-                        setAttributes(timelight1, {"position":  {x: 25.6, y: 1.6, z: 12.457}, "intensity": 0.05})
+                        setAttributes(timelight1, {"position":  {x: 25.6, y: 1.6, z: 12.457}, "intensity": 0.6})
                         console.log('Time Tunnel light move to position 3');
                     break;
                     case "track_straight6_2":
@@ -537,7 +557,7 @@ AFRAME.registerComponent("tour-mechanics", {
                     case "track_straight6_3":
                         setAttributes(light2, {'animation': {property: 'light.intensity', to: 0.0, dur: 10000}})
                         console.log('light2 dims')
-                        setAttributes(timelight1, {'animation': {property: 'light.intensity', to: 0.75, dur: 10000}})
+                        setAttributes(timelight1, {'animation': {property: 'light.intensity', to: 2.4, dur: 10000}})
                         console.log('Time Tunnel light brightens')
                         visiswitch(scene0toggle, true);
                     break;
@@ -548,7 +568,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         };
                         timetunneldoor2ent.components.sound.playSound();
                         console.log('time door entrance 2 close');
-                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
+                        setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.314, dur: 4000}})
                         console.log('ambient light back to original');
                     break;
 
@@ -559,7 +579,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         break;
                     case "track_straight_end_1_2":
                         visiswitch(scene1toggle, true);
-                        setAttributes(light1, {"position": {x: -0.123, y: 4.9, z: 5}, "color": "white", "animation": {property: 'light.intensity', from: 2, to: 1.5, dur: 10000}, "decay": 1, "distance": 15})
+                        setAttributes(light1, {"position": {x: -4.65, y: 3.6, z: 5.28}, "color": "white", "animation": {property: 'light.intensity', from: 6.28, to: 4.7, dur: 10000}, "decay": 0.2, "distance": 15})
                         console.log('light1 move to scene 0 for dismount')
                         for (let each of timetunneldoor2) {
                             each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.open', loop: 'once', clampWhenFinished: 'true'})
@@ -576,10 +596,10 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('Scene 4 looping sounds off');
                     break;
                     case "track_straight_end_1_3":
-                        setAttributes(timelight1, {"position":  {x: 14.4, y: 1.6, z: -20}, "intensity": 0.75})
+                        setAttributes(timelight1, {"position":  {x: 14.4, y: 1.6, z: -20}, "intensity": 2.4})
                     break;
                     case "track_straight_end_1_4":
-                        setAttributes(light2, {"position": {x: 0, y: 5.4, z: -17.4}, "color": "white", "animation": {property: 'light.intensity', to: 0.3, dur: 4000}, "decay": 1, "distance": 11})
+                        setAttributes(light2, {"position": {x: 0, y: 5.4, z: -17.4}, "color": "white", "animation": {property: 'light.intensity', to: 0.94, dur: 4000}, "decay": 1, "distance": 15})
                         console.log('light2 move to scene1')
                         for (let each of timetunneldoor2) {
                             each.setAttribute('animation-mixer', {clip: 'TimeTunnel.door.exit.close', loop: 'once', clampWhenFinished: 'true'})
@@ -591,7 +611,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('time tunnel 2 inside sound off');
                     break;
                     case "track_straight_end_1_5":
-                        setAttributes(timelight1, {"position":  {x: 14.4, y: 1.6, z: -20}, "intensity": 0.75})
+                        setAttributes(timelight1, {"position":  {x: 14.4, y: 1.6, z: -20}, "intensity": 2.4})
                         console.log('time light 1 to original position');
                         for (let each of timetunnel2) {
                             each.setAttribute('animation-mixer', {timeScale: '0'})
@@ -605,7 +625,7 @@ AFRAME.registerComponent("tour-mechanics", {
                     case "track_straight_end_1_6":
                         visiswitch(scene3toggle, false);
                         visiswitch(scene4toggle, false);
-                        setAttributes(light3, {"position":  {x: 39.5, y: 4.5, z: -42}, "color": "#3657f3", "intensity": 0.4, "decay": 0.01, "distance": 16.5})
+                        setAttributes(light3, {"position":  {x: 39.5, y: 4.5, z: -42}, "color": "#3657f3", "intensity": 2.15, "decay": 0.12, "distance": 20})
                         console.log('light3 move to original position')
                     break;
                     case "track_straight_dismount_2":
@@ -618,13 +638,13 @@ AFRAME.registerComponent("tour-mechanics", {
             sceneEl.addEventListener("alongpath-trigger-activated", function(e) { // Handlers for narration
                 switch(e.target.id) {
                     case "track_straight0_0":
-                        narration.flushToDOM();
+                        // narration.flushToDOM();
                         console.log('2 '+ narration.getAttribute('sound').src)  
                         narration.components.sound.playSound();
                         console.log('Narration start');
                         break;
                     case "track_straight0_0":
-                        narration.flushToDOM();
+                        // narration.flushToDOM();
                         console.log('2 '+ narration.getAttribute('sound').src)  
                         narration.components.sound.playSound();
                         console.log('Narration start at Part 2');
@@ -842,6 +862,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                 const scene4toggle = sceneEl.querySelectorAll('.scene4');
                 const light1 = document.querySelector('#light1');
                 const light2 = document.querySelector('#light2');
+                const light3 = document.querySelector('#light3');
                 const ambilight = document.querySelector('#ambientlight');
                 const sbc1cat = document.querySelector('#sbc1a');
                 const sbc1plant = document.querySelector('#sbc1-plant');
@@ -914,8 +935,9 @@ rig.addEventListener("movingended__#trackdismount", function(){
                     visiswitch(scene2toggle, false);
                     visiswitch(scene3toggle, false);
                     visiswitch(scene4toggle, false);
-                    setAttributes(light1, {"position": {x: -0.123, y: 4.9, z: 5}, "color": "white", "animation": {property: 'light.intensity', from: 2, to: 1.5, dur: 500}, "decay": 1, "distance": 15})
+                    setAttributes(light1, {"position": {x: -4.65, y: 4.9, z: 5.28}, "color": "white", "animation": {property: 'light.intensity', from: 6.28, to: 4.71, dur: 500}, "decay": 0.2, "distance": 15})
                     setAttributes(light2, {"position": {x: 0, y: 5.4, z: -17.4}, "color": "white", "animation": {property: 'light.intensity', to: 0.3, dur: 500}, "decay": 1, "distance": 11})
+                    setAttributes(light3, {"position":  {x: 39.5, y: 4.5, z: -42}, "color": "#3657f3", "intensity": 2.15, "decay": 0.12, "distance": 20});
                     setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.1, dur: 4000}})
                     for (let each of scene2sounds) {
                         each.components.sound.stopSound();
@@ -947,12 +969,14 @@ rig.addEventListener("movingended__#trackdismount", function(){
     
                 let scene2switches = function() { // Turns on Scene 2 for Walk Mode
                     visiswitch(scene2toggle, true);
+                    visiswitch(scene2endtoggle, true);
                     crickets1.components.sound.playSound();
-                    setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 1.5, to: 2, dur: 500}, "decay": 0.01, "distance": 11.9})
-                    setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "light.intensity": 2, "decay": 0.1, "distance": 5.5})
+                    setAttributes(light1, {"position": {x: 31, y: 9.1, z: -29}, "color": "#6458fa", "animation": {property: 'light.intensity', from: 4.7, to: 9.42, dur: 500}, "decay": 0.01, "distance": 15})
+                    setAttributes(light2, {"position":  {x: 49.65, y: 4.7, z: -22.5}, "color": "#fedccb", "light.intensity": 6.47, "decay": 0.1, "distance": 5.5})
+                    setAttributes(light3, {"position":  {x: 39.5, y: 4.5, z: -42}, "color": "#3657f3", "intensity": 2.15, "decay": 0.12, "distance": 20});
                     setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.015, dur: 1000}})
                     setAttributes(warpmap1, {"position": {x: 23.77, y: 0.85, z: -19.6}, "rotation": {x: -62.1, y: 90, z: 0}})
-                    setAttributes(warpmap2, {"position": {x: 50.44, y: 0.812, z: -23.95}, "rotation": {x: -62.1, y: 180.22, z: 0}})
+                    setAttributes(warpmap2, {"position": {x: 50.1, y: 0.833, z: -16.46}, "rotation": {x: -62.1, y: 178.76, z: 0}})
                     crickets2.components.sound.playSound();
                     raccoonyelp.components.sound.playSound();
                     crickets3.components.sound.playSound();
@@ -964,12 +988,14 @@ rig.addEventListener("movingended__#trackdismount", function(){
                     sbc1plant.setAttribute('animation-mixer', {clip: '*flat', clampWhenFinished: 'true', loop: 'once', timeScale: '1'})
                 };
 
-                let scene34switches = function() { // Turns on Scene 3 for Walk Mode
+                let scene34switches = function() { // Turns on Scenes 3 and 4 for Walk Mode
                     visiswitch(scene2endtoggle, true);
                     visiswitch(scene3toggle, true);
                     visiswitch(scene4toggle, true);
-                    setAttributes(light1, {"position":  {x: 42, y: 10, z: -7.6}, "color": "#d5e0f4", "intensity": 1.44, "decay": 0.1, "distance": 14.4});
-                    setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 0.75, dur: 500}});
+                    setAttributes(light1, {"position":  {x: 42, y: 10, z: -7.6}, "color": "#d5e0f4", "intensity": 4.52, "decay": 0.1, "distance": 14.4});
+                    setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 11.4}, "color": "white", "intensity": 4, "decay": 0.01, "distance": 20});
+                    setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", "intensity": 2, "decay": 0.1, "distance": 21.4});
+                    setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 2, dur: 500}});
                     setAttributes(warpmap1, {"position": {x: 49, y: 0.85, z: -14.56}, "rotation": {x: -62.1, y: -1, z: 0}})
                     setAttributes(warpmap2, {"position": {x: 35.1, y: 0.812, z: 13.1}, "rotation": {x: -62.1, y: 90, z: 0}})
                     camelsit1.setAttribute('animation-mixer', {clip: '*look', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
@@ -989,7 +1015,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                         camels2.components.sound.playSound();
                         camelchews1.components.sound.playSound();
                         camelchews2.components.sound.playSound();
-                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", "intensity": 1.2, "decay": 0.6, "distance": 21.4});
+                        setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", "intensity": 2, "decay": 0.1, "distance": 21.4});
 
                         for (let each of scene4gateanimation) {
                             each.setAttribute('animation-mixer', {clip: '*eating', timeScale: '1'})
@@ -1264,7 +1290,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                                     };
                         
                                     const warpwarptele = function() {
-                                        rig.setAttribute("movement-controls", 'enabled', false); 
+                                        rig.setAttribute("movement-controls", 'enabled', true); 
                                         movementgeneralwalk();
                                         if (podvisibility === false) { // Makes pod visible again for walk mode
                                             podplaceholder.object3D.visible = true;
