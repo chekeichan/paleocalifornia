@@ -508,7 +508,7 @@ AFRAME.registerComponent("tour-mechanics", {
                         console.log('scene 4 general animations on');
                     break;
                     case "track_turn6_1":
-                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 11.4}, "color": "white", "intensity": 4, "decay": 0.01, "distance": 20});
+                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 10.8}, "color": "white", "intensity": 4, "decay": 0.01, "distance": 20});
                         console.log('light2 move to scene 4');
                     break;
                     case "track_turn6_4":
@@ -991,7 +991,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                     visiswitch(scene3toggle, true);
                     visiswitch(scene4toggle, true);
                     setAttributes(light1, {"position":  {x: 42, y: 10, z: -7.6}, "color": "#d5e0f4", "intensity": 4.52, "decay": 0.1, "distance": 14.4});
-                    setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 11.4}, "color": "white", "intensity": 4, "decay": 0.01, "distance": 20});
+                    setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 10.8}, "color": "white", "intensity": 4, "decay": 0.01, "distance": 20});
                     setAttributes(light3, {"position":  {x: 63.75, y: 7, z: -4.66}, "color": "white", "intensity": 2, "decay": 0.1, "distance": 21.4});
                     setAttributes(ambilight, {'animation': {property: 'light.intensity', to: 2, dur: 500}});
                     setAttributes(warpmap1, {"position": {x: 49, y: 0.85, z: -14.56}, "rotation": {x: -62.1, y: -1, z: 0}})
@@ -1005,7 +1005,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                         camelstand5.setAttribute('animation-mixer', {clip: '*idle2', clampWhenFinished: 'true', startAt: '1', timeScale: '0.9'});
                         camelchew1.setAttribute('animation-mixer', {clip: '*chew1', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
                         camelchew2.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
-                        camelroll.setAttribute('animation-mixer', {clip: '*chew2', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
+                        camelroll.setAttribute('animation-mixer', {clip: '*roll', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
                         scene4coyote.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '1', timeScale: '1'});
                         scene4harlan.setAttribute('animation-mixer', {clip: '*idle', clampWhenFinished: 'true', startAt: '-4000', timeScale: '1'});
                         harlans1.components.sound.playSound();
@@ -1022,7 +1022,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                             each.setAttribute('animation-mixer', {timeScale: '1'})
                         };
                         mammoths2.components.sound.playSound();
-                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 22.8}, "color": "white", "intensity": 1.16, "decay": 0.25, "distance": 24.9});
+                        setAttributes(light2, {"position":  {x: 45.2, y: 9, z: 10.8}, "color": "white", "intensity": 4, "decay": 0.25, "distance": 24.9});
                 };
     
                 let tunneldoorswitch = function() {

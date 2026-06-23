@@ -1,7 +1,7 @@
 # PaleoCalifornia Changelog
 
-## 1.2 (6/20/26)
-The second quarter is now open! Continue on the time travelling expedition through the coastal prairie and valley oak savanna.
+## 1.2 (6/22/26)
+The second quarter is now open! Continue on the time traveling expedition through the coastal prairie and valley oak savanna.
 
 -   Here are some bullet pointed highlights!
     - Scene 3, the coastal prairie, is here. It features a herd of animals a few lone standouts too.
@@ -17,6 +17,7 @@ The second quarter is now open! Continue on the time travelling expedition throu
 
 -   But...
     - Procedural rocks and plants are out for now as the component that did it no longer works with the version of A-Frame I'm using.
+    - The audio tracks may get desynced from the selection in VR but not on desktop for reasons unknown.
 
 ## 1.1 (12/29/23)
 
