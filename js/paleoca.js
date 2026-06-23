@@ -39,26 +39,24 @@ function isVisionPro() {
                 setAttributes(camera, {"raycaster": {far: 4, objects: '.clickable'}})
         } else if (AFRAME.utils.device.checkHeadsetConnected() === true) { // VR Mode
               isVisionPro();
-                if (isVisionPro) { // AVP Mode
-                document.querySelector('#GL-AVP').object3D.visible = true;
-                document.querySelector('#movemodebutt').object3D.visible = false;
-                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", " ");
-                document.querySelector('#crosshairs').object3D.visible = true;
-                setAttributes(lhand, {"hand-tracking-controls": {hand: 'left',}})
-                setAttributes(rhand, {"hand-tracking-controls": {hand: 'right',}})
-camera.setAttribute('cursor', 'rayOrigin: entity; fuse: false; downEvents: selectstart; upEvents: selectend;');
-camera.setAttribute('raycaster', 'objects: .clickable; far: 4; interval: 100;');
+                if (isVisionPro()) { // AVP Mode
+                    document.querySelector('#GL-AVP').object3D.visible = true;
+                    document.querySelector('#movemodebutt').object3D.visible = false;
+                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", " ");
+                    setAttributes(lhand, {"hand-tracking-controls": {hand: 'left',}})
+                    setAttributes(rhand, {"hand-tracking-controls": {hand: 'right',}})
+                    camera.setAttribute('cursor', 'rayOrigin: entity; fuse: false; downEvents: selectstart; upEvents: selectend;');
+                    camera.setAttribute('raycaster', 'objects: .clickable; far: 4; interval: 100;');
                 console.log('AVP detected');
-            } else {
-                // All other VR Mode
-                document.querySelector('#GL-VR').object3D.visible = true;
-                AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode");
-                console.log('VR detected');
+                } else { // All other VR Mode
+                    document.querySelector('#GL-VR').object3D.visible = true;
+                    AFRAME.utils.entity.setComponentProperty(movemodetext, "value", "Switch to Teleport Mode");
+                    console.log('VR detected');
             }
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'xrselect', fuseTimeout: 0}})
             rig.setAttribute("movement-controls", "speed", 0.0); // No movement speed just to use head turning with thumbstick
         } else if (AFRAME.utils.device.checkHeadsetConnected() === false) { // PC Mode
-            console.log('PC detected' + screen.width);
+            console.log('PC detected');
             setAttributes(camera, {"raycaster": {far: 4, objects: '.clickable'}})
             document.querySelector('#GL-PC').object3D.visible = true;
             setAttributes(sceneEl, {"cursor": {rayOrigin: 'mouse', fuseTimeout: 0}})
@@ -1467,7 +1465,8 @@ rig.addEventListener("movingended__#trackdismount", function(){
                             narration.setAttribute('sound', {volume: '1'});
                             AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Adventure");   
                             narration.flushToDOM();
-                            console.log("adventure track set");              
+                            console.log("adventure track set");
+                            console.log(narration.getAttribute('sound').src)              
                         } else if (narrationcounter === 2) {
                             if (startareacounter === 0) {
                                 narration.setAttribute('sound', {src: '#narration-education'})
@@ -1477,7 +1476,8 @@ rig.addEventListener("movingended__#trackdismount", function(){
                             narration.setAttribute('sound', {volume: '1'});
                             AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Educational");
                             narration.flushToDOM();
-                            console.log("education track set");            
+                            console.log("education track set"); 
+                            console.log(narration.getAttribute('sound').src)           
                         } else if (narrationcounter === 3) {
                             if (startareacounter === 0) {
                                 narration.setAttribute('sound', {src: '#narration-commentary'})
@@ -1487,7 +1487,8 @@ rig.addEventListener("movingended__#trackdismount", function(){
                             AFRAME.utils.entity.setComponentProperty(narrationtext, "value", "Narration: Behind-the-Scenes");
                             narration.setAttribute('sound', {volume: '1'});
                             narration.flushToDOM();
-                            console.log("commentary track set")               
+                            console.log("commentary track set")
+                            console.log(narration.getAttribute('sound').src)               
                         }
                         break;
                     case "startareabutt": // Set tour scene start
@@ -1505,6 +1506,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                             } else if (narrationcounter === 3) {
                                 narration.setAttribute('sound', {src: '#narration-commentary'})
                             }
+                            narration.flushToDOM();
                             console.log("Start at scene 0 set")     
                         
                         } else if (startareacounter === 1) {
@@ -1518,6 +1520,7 @@ rig.addEventListener("movingended__#trackdismount", function(){
                             } else if (narrationcounter === 3) {
                                 narration.setAttribute('sound', {src: '#narration-commentary-2'})
                             }
+                            narration.flushToDOM();
                             console.log("Start at scene 4 set");              
                         }
                         narration.flushToDOM();
